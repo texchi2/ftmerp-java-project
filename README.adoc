@@ -40,6 +40,7 @@ https://nightlies.apache.org/ofbiz/trunk/readme/html5/README.html[HTML]
 or https://nightlies.apache.org/ofbiz/trunk/readme/pdf/README.pdf[PDF] format
 
 ---
+The Apache OFBiz Project (porked FMT ERP project 2026)
 
 Welcome to *Apache OFBiz*! A powerful top level Apache software project. OFBiz
 is an Enterprise Resource Planning (ERP) System written in Java and houses a
