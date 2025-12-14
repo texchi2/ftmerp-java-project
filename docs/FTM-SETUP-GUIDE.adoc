@@ -1,0 +1,803 @@
+= FTM ERP Development Setup Guide
+:toc:
+:toclevels: 3
+
+== Overview
+
+This guide covers the complete setup for FTM Garments ERP development on Raspberry Pi 5 (rpitex), including:
+
+* Version control setup for both ofbiz-framework and ofbiz-plugins
+* PostgreSQL database configuration
+* Vim/Tmux CLI development environment
+* Ollama AI-assisted coding integration
+
+== Architecture
+
+=== Repository Structure
+
+----
+rpitex (Raspberry Pi 5)
+├── ~/development/ofbiz-framework/          # Main ERP framework
+│   ├── plugins -> ../ofbiz-plugins         # Symlink to plugins
+│   └── [framework source code]
+└── ~/development/ofbiz-plugins/            # Plugin repository
+    ├── ftm-garments/                       # FTM custom plugin
+    └── [other plugins]
+----
+
+=== GitHub Repositories
+
+* **Framework**: https://github.com/texchi2/ftmerp-java-project
+* **Plugins**: https://github.com/texchi2/ftmerp-java-plugins (to be created)
+
+== Version Control Setup
+
+=== Option 1: Separate Repositories (Recommended)
+
+This follows the standard Apache OFBiz pattern and provides maximum flexibility.
+
+==== On rpitex (Raspberry Pi 5):
+
+[source,bash]
+----
+# 1. Navigate to your development directory
+cd ~/development
+
+# 2. Initialize git repository for ofbiz-plugins (if not already done)
+cd ofbiz-plugins
+
+# Check if already a git repository
+if [ ! -d .git ]; then
+    git init
+    git add .
+    git commit -m "Initial commit: FTM ERP plugins including ftm-garments"
+fi
+
+# 3. Create GitHub repository for plugins
+# You can do this via GitHub web interface or gh CLI:
+# gh repo create texchi2/ftmerp-java-plugins --public --source=. --remote=origin
+
+# 4. Add remote and push
+git remote add origin https://github.com/texchi2/ftmerp-java-plugins.git
+git branch -M main
+git push -u origin main
+
+# 5. Update ofbiz-framework repository
+cd ~/development/ofbiz-framework
+
+# Ensure symlink is tracked
+git add plugins
+git commit -m "Track plugins symlink for ofbiz-plugins integration"
+git push
+----
+
+==== Cloning on New Machines:
+
+[source,bash]
+----
+# On any new development machine
+mkdir -p ~/development
+cd ~/development
+
+# Clone both repositories
+git clone https://github.com/texchi2/ftmerp-java-project.git ofbiz-framework
+git clone https://github.com/texchi2/ftmerp-java-plugins.git ofbiz-plugins
+
+# Create symlink (if not already present)
+cd ofbiz-framework
+ln -sf ../ofbiz-plugins plugins
+----
+
+=== Option 2: Git Submodule Approach
+
+This provides tighter integration but less flexibility.
+
+[source,bash]
+----
+# On rpitex
+cd ~/development/ofbiz-framework
+
+# Remove the symlink
+rm plugins
+
+# Initialize plugins repository
+cd ~/development/ofbiz-plugins
+git init
+git add .
+git commit -m "Initial commit: FTM ERP plugins"
+
+# Create GitHub repo and push
+git remote add origin https://github.com/texchi2/ftmerp-java-plugins.git
+git branch -M main
+git push -u origin main
+
+# Back to framework, add as submodule
+cd ~/development/ofbiz-framework
+git rm plugins  # Remove from .gitignore if needed
+git submodule add https://github.com/texchi2/ftmerp-java-plugins.git plugins
+git commit -m "Add ofbiz-plugins as submodule"
+git push
+----
+
+==== Cloning with Submodules:
+
+[source,bash]
+----
+# Clone with submodules
+git clone --recursive https://github.com/texchi2/ftmerp-java-project.git ofbiz-framework
+
+# Or if already cloned:
+cd ofbiz-framework
+git submodule init
+git submodule update
+----
+
+== Database Configuration
+
+=== PostgreSQL Setup on rpitex
+
+[source,bash]
+----
+# 1. Install PostgreSQL (if not already installed)
+sudo apt update
+sudo apt install postgresql postgresql-contrib
+
+# 2. Create database and user for FTM ERP
+sudo -u postgres psql <<EOF
+CREATE DATABASE ftmerp;
+CREATE USER ftmuser WITH ENCRYPTED PASSWORD 'your_secure_password';
+GRANT ALL PRIVILEGES ON DATABASE ftmerp TO ftmuser;
+ALTER DATABASE ftmerp OWNER TO ftmuser;
+\q
+EOF
+
+# 3. Configure OFBiz to use PostgreSQL
+----
+
+=== OFBiz Database Configuration
+
+Edit `~/development/ofbiz-framework/framework/entity/config/entityengine.xml`:
+
+[source,xml]
+----
+<delegator name="default" entity-model-reader="main" entity-group-reader="main" entity-eca-reader="main" distributed-cache-clear-enabled="false">
+    <group-map group-name="org.apache.ofbiz" datasource-name="localpostgres"/>
+    <group-map group-name="org.apache.ofbiz.olap" datasource-name="localpostgresolap"/>
+    <group-map group-name="org.apache.ofbiz.tenant" datasource-name="localpostgrestenant"/>
+</delegator>
+
+<datasource name="localpostgres"
+        helper-class="org.apache.ofbiz.entity.datasource.GenericHelperDAO"
+        field-type-name="postgres"
+        check-on-start="true"
+        add-missing-on-start="true"
+        use-pk-constraint-names="false"
+        use-indices-unique="false"
+        alias-view-columns="false">
+    <read-data reader-name="seed"/>
+    <read-data reader-name="seed-initial"/>
+    <read-data reader-name="demo"/>
+    <read-data reader-name="ext"/>
+    <inline-jdbc
+            jdbc-driver="org.postgresql.Driver"
+            jdbc-uri="jdbc:postgresql://127.0.0.1/ftmerp"
+            jdbc-username="ftmuser"
+            jdbc-password="your_secure_password"
+            isolation-level="ReadCommitted"
+            pool-minsize="2"
+            pool-maxsize="250"
+            time-between-eviction-runs-millis="600000"/>
+</datasource>
+----
+
+Add PostgreSQL JDBC driver to `build.gradle`:
+
+[source,gradle]
+----
+dependencies {
+    // ... existing dependencies ...
+    implementation 'org.postgresql:postgresql:42.7.1'
+}
+----
+
+== Development Environment
+
+=== Vim/Tmux CLI IDE Setup
+
+==== Essential Vim Plugins for Java Development
+
+Create `~/.vimrc` configuration:
+
+[source,vim]
+----
+" ~/.vimrc - FTM ERP Development Configuration
+
+" Plugin Manager - vim-plug
+call plug#begin('~/.vim/plugged')
+
+" Language Server Protocol (LSP) support
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
+
+" Auto-completion
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+
+" File navigation
+Plug 'preservim/nerdtree'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
+" Git integration
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+
+" Java syntax and formatting
+Plug 'artur-shaik/vim-javacomplete2'
+
+" Syntax highlighting
+Plug 'sheerun/vim-polyglot'
+
+" Status line
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+" Code formatting
+Plug 'google/vim-maktaba'
+Plug 'google/vim-codefmt'
+
+" Tmux integration
+Plug 'christoomey/vim-tmux-navigator'
+
+call plug#end()
+
+" Basic settings
+set number relativenumber
+set tabstop=4 shiftwidth=4 expandtab
+set autoindent smartindent
+set ignorecase smartcase
+set hlsearch incsearch
+set hidden
+set updatetime=300
+set signcolumn=yes
+set mouse=a
+
+" Java-specific settings
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
+autocmd FileType java JCEnable
+
+" Key mappings
+let mapleader = " "
+nnoremap <leader>n :NERDTreeToggle<CR>
+nnoremap <leader>f :Files<CR>
+nnoremap <leader>g :Rg<CR>
+nnoremap <leader>b :Buffers<CR>
+
+" Git mappings
+nnoremap <leader>gs :Git<CR>
+nnoremap <leader>gc :Git commit<CR>
+nnoremap <leader>gp :Git push<CR>
+
+" LSP mappings
+nnoremap gd :LspDefinition<CR>
+nnoremap gr :LspReferences<CR>
+nnoremap K :LspHover<CR>
+nnoremap <leader>rn :LspRename<CR>
+
+" Save and build
+nnoremap <leader>w :w<CR>
+nnoremap <leader>b :!./gradlew build<CR>
+----
+
+==== Installing Vim Plugins
+
+[source,bash]
+----
+# Install vim-plug
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+# Install plugins
+vim +PlugInstall +qall
+
+# Install Java language server
+mkdir -p ~/.local/share/vim-lsp-settings/servers/
+cd ~/.local/share/vim-lsp-settings/servers/
+curl -LO https://download.eclipse.org/jdtls/milestones/1.9.0/jdt-language-server-1.9.0-202203031534.tar.gz
+mkdir eclipse.jdt.ls
+tar -xzf jdt-language-server-*.tar.gz -C eclipse.jdt.ls
+----
+
+==== Tmux Configuration
+
+Create `~/.tmux.conf`:
+
+[source,bash]
+----
+# ~/.tmux.conf - FTM ERP Development Configuration
+
+# Set prefix to Ctrl-a (instead of Ctrl-b)
+unbind C-b
+set -g prefix C-a
+bind C-a send-prefix
+
+# Enable mouse support
+set -g mouse on
+
+# Start windows and panes at 1, not 0
+set -g base-index 1
+setw -g pane-base-index 1
+
+# Reload config
+bind r source-file ~/.tmux.conf \; display "Config reloaded!"
+
+# Split panes using | and -
+bind | split-window -h -c "#{pane_current_path}"
+bind - split-window -v -c "#{pane_current_path}"
+unbind '"'
+unbind %
+
+# Vim-style pane navigation
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
+
+# Vim-tmux navigator integration
+is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
+    | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
+bind -n C-h if-shell "$is_vim" "send-keys C-h"  "select-pane -L"
+bind -n C-j if-shell "$is_vim" "send-keys C-j"  "select-pane -D"
+bind -n C-k if-shell "$is_vim" "send-keys C-k"  "select-pane -U"
+bind -n C-l if-shell "$is_vim" "send-keys C-l"  "select-pane -R"
+
+# Resize panes
+bind -r H resize-pane -L 5
+bind -r J resize-pane -D 5
+bind -r K resize-pane -U 5
+bind -r L resize-pane -R 5
+
+# Status bar
+set -g status-style bg=black,fg=white
+set -g status-left-length 40
+set -g status-left "#[fg=green]Session: #S #[fg=yellow]#I #[fg=cyan]#P"
+set -g status-right "#[fg=cyan]%d %b %R"
+
+# Activity monitoring
+setw -g monitor-activity on
+set -g visual-activity on
+
+# 256 colors
+set -g default-terminal "screen-256color"
+
+# Vi mode
+setw -g mode-keys vi
+bind -T copy-mode-vi v send -X begin-selection
+bind -T copy-mode-vi y send -X copy-selection-and-cancel
+----
+
+==== FTM ERP Development Tmux Layout Script
+
+Create `~/bin/ftm-dev.sh`:
+
+[source,bash]
+----
+#!/bin/bash
+# FTM ERP Development Session
+
+SESSION="ftm-erp"
+
+# Check if session exists
+tmux has-session -t $SESSION 2>/dev/null
+
+if [ $? != 0 ]; then
+    # Create new session
+    tmux new-session -d -s $SESSION -n editor -c ~/development/ofbiz-framework
+
+    # Window 1: Editor (vim)
+    tmux send-keys -t $SESSION:editor "cd ~/development/ofbiz-framework/plugins/ftm-garments" C-m
+    tmux send-keys -t $SESSION:editor "vim ." C-m
+
+    # Window 2: Build & Run
+    tmux new-window -t $SESSION -n build -c ~/development/ofbiz-framework
+    tmux split-window -h -t $SESSION:build -c ~/development/ofbiz-framework
+    tmux send-keys -t $SESSION:build.0 "# Build commands" C-m
+    tmux send-keys -t $SESSION:build.1 "# Run server" C-m
+
+    # Window 3: Database
+    tmux new-window -t $SESSION -n database -c ~/development/ofbiz-framework
+    tmux send-keys -t $SESSION:database "psql -U ftmuser -d ftmerp" C-m
+
+    # Window 4: Git
+    tmux new-window -t $SESSION -n git -c ~/development/ofbiz-framework
+    tmux split-window -h -t $SESSION:git -c ~/development/ofbiz-plugins
+    tmux send-keys -t $SESSION:git.0 "# Framework git" C-m
+    tmux send-keys -t $SESSION:git.1 "# Plugins git" C-m
+
+    # Window 5: Logs
+    tmux new-window -t $SESSION -n logs -c ~/development/ofbiz-framework/runtime/logs
+    tmux send-keys -t $SESSION:logs "tail -f ofbiz.log" C-m
+
+    # Select first window
+    tmux select-window -t $SESSION:editor
+fi
+
+# Attach to session
+tmux attach-session -t $SESSION
+----
+
+Make it executable:
+
+[source,bash]
+----
+chmod +x ~/bin/ftm-dev.sh
+----
+
+Usage:
+
+[source,bash]
+----
+# Start FTM development environment
+~/bin/ftm-dev.sh
+----
+
+== Ollama AI-Assisted Coding Integration
+
+=== Ollama Server Setup
+
+[source,bash]
+----
+# Install Ollama on rpitex (if not already installed)
+curl -fsSL https://ollama.com/install.sh | sh
+
+# Pull recommended models for code assistance
+ollama pull codellama:13b        # For general code generation
+ollama pull deepseek-coder:6.7b  # For code completion
+ollama pull mistral:7b           # For documentation and explanations
+
+# Start Ollama server (runs on http://localhost:11434 by default)
+ollama serve
+----
+
+=== Vim Integration with Ollama
+
+Create `~/.vim/plugin/ollama.vim`:
+
+[source,vim]
+----
+" Ollama integration for Vim
+
+function! OllamaComplete() abort
+    let l:current_line = line('.')
+    let l:code_context = join(getline(max([1, l:current_line - 20]), l:current_line), "\n")
+
+    let l:prompt = "Complete this Java code:\n" . l:code_context
+
+    let l:cmd = 'curl -s -X POST http://localhost:11434/api/generate -d ' .
+        \ shellescape(json_encode({
+        \ 'model': 'codellama:13b',
+        \ 'prompt': l:prompt,
+        \ 'stream': v:false
+        \ }))
+
+    let l:response = system(l:cmd)
+    let l:result = json_decode(l:response)
+
+    if has_key(l:result, 'response')
+        call append(l:current_line, split(l:result.response, "\n"))
+    endif
+endfunction
+
+function! OllamaExplain() abort
+    let l:start = line("'<")
+    let l:end = line("'>")
+    let l:code = join(getline(l:start, l:end), "\n")
+
+    let l:prompt = "Explain this Java code:\n" . l:code
+
+    let l:cmd = 'curl -s -X POST http://localhost:11434/api/generate -d ' .
+        \ shellescape(json_encode({
+        \ 'model': 'mistral:7b',
+        \ 'prompt': l:prompt,
+        \ 'stream': v:false
+        \ }))
+
+    let l:response = system(l:cmd)
+    let l:result = json_decode(l:response)
+
+    if has_key(l:result, 'response')
+        echo l:result.response
+    endif
+endfunction
+
+function! OllamaRefactor() abort
+    let l:start = line("'<")
+    let l:end = line("'>")
+    let l:code = join(getline(l:start, l:end), "\n")
+
+    let l:prompt = "Refactor and improve this Java code:\n" . l:code
+
+    let l:cmd = 'curl -s -X POST http://localhost:11434/api/generate -d ' .
+        \ shellescape(json_encode({
+        \ 'model': 'codellama:13b',
+        \ 'prompt': l:prompt,
+        \ 'stream': v:false
+        \ }))
+
+    let l:response = system(l:cmd)
+    let l:result = json_decode(l:response)
+
+    if has_key(l:result, 'response')
+        " Replace selected lines with refactored code
+        call deletebufline('%', l:start, l:end)
+        call append(l:start - 1, split(l:result.response, "\n"))
+    endif
+endfunction
+
+" Key mappings
+nnoremap <leader>oc :call OllamaComplete()<CR>
+vnoremap <leader>oe :call OllamaExplain()<CR>
+vnoremap <leader>or :call OllamaRefactor()<CR>
+----
+
+=== Shell Integration with Ollama
+
+Create `~/bin/ollama-help.sh`:
+
+[source,bash]
+----
+#!/bin/bash
+# Ollama command-line helper for FTM ERP development
+
+OLLAMA_HOST="${OLLAMA_HOST:-http://localhost:11434}"
+
+ask_ollama() {
+    local prompt="$1"
+    local model="${2:-mistral:7b}"
+
+    curl -s -X POST "$OLLAMA_HOST/api/generate" \
+        -d "$(jq -n --arg prompt "$prompt" --arg model "$model" \
+            '{model: $model, prompt: $prompt, stream: false}')" \
+        | jq -r '.response'
+}
+
+# Usage examples:
+# ollama-help.sh "How do I configure PostgreSQL in OFBiz?"
+# ollama-help.sh "Explain this error: [error message]"
+# ollama-help.sh "Write a Gradle task to run tests"
+
+if [ $# -eq 0 ]; then
+    echo "Usage: $0 <question> [model]"
+    echo "Example: $0 'How do I configure PostgreSQL in OFBiz?'"
+    exit 1
+fi
+
+ask_ollama "$@"
+----
+
+Make it executable:
+
+[source,bash]
+----
+chmod +x ~/bin/ollama-help.sh
+----
+
+=== Ollama API Usage Examples
+
+==== From Command Line:
+
+[source,bash]
+----
+# Ask for code explanation
+ollama-help.sh "Explain how OFBiz entity engine works"
+
+# Generate code
+ollama-help.sh "Write a service to calculate garment production cost in OFBiz" codellama:13b
+
+# Debug help
+ollama-help.sh "How to debug Java in OFBiz without an IDE?"
+----
+
+==== From Python Scripts:
+
+[source,python]
+----
+import requests
+import json
+
+def ollama_generate(prompt, model="codellama:13b"):
+    """Generate code using Ollama API"""
+    response = requests.post(
+        "http://localhost:11434/api/generate",
+        json={
+            "model": model,
+            "prompt": prompt,
+            "stream": False
+        }
+    )
+    return response.json()["response"]
+
+# Example usage
+prompt = """
+Create a Java service method for OFBiz to calculate garment production cost.
+Include material cost, labor cost, and overhead.
+"""
+
+code = ollama_generate(prompt)
+print(code)
+----
+
+== Development Workflow
+
+=== Daily Development Routine
+
+[source,bash]
+----
+# 1. Start Ollama server (if not running)
+ollama serve &
+
+# 2. Start FTM development environment
+~/bin/ftm-dev.sh
+
+# 3. Within tmux session:
+#    - Window 1 (editor): Edit code in vim
+#    - Window 2 (build): Run gradle commands
+#    - Window 3 (database): Query database
+#    - Window 4 (git): Manage version control
+#    - Window 5 (logs): Monitor application logs
+----
+
+=== Building and Running OFBiz
+
+[source,bash]
+----
+# Navigate to framework directory
+cd ~/development/ofbiz-framework
+
+# Clean build
+./gradlew cleanAll
+
+# Build
+./gradlew build
+
+# Load seed and demo data
+./gradlew loadAll
+
+# Start OFBiz
+./gradlew ofbiz
+
+# Or start with specific component
+./gradlew "ofbiz --load-data readers=seed,seed-initial,ext"
+
+# Run tests
+./gradlew test
+
+# Run specific plugin tests
+./gradlew :plugins:ftm-garments:test
+----
+
+=== Git Workflow for Dual Repositories
+
+[source,bash]
+----
+# Work on ftm-garments plugin
+cd ~/development/ofbiz-plugins/ftm-garments
+
+# Make changes, test, commit
+git add .
+git commit -m "Add production cost calculation service"
+git push
+
+# If framework changes are needed
+cd ~/development/ofbiz-framework
+
+# Make changes, test, commit
+git add .
+git commit -m "Update entity definitions for FTM garments"
+git push
+
+# Keep both repositories in sync
+----
+
+=== Remote Development via SSH
+
+[source,bash]
+----
+# From your workstation, connect to rpitex
+ssh user@rpitex
+
+# Start or attach to tmux session
+tmux attach -t ftm-erp || ~/bin/ftm-dev.sh
+
+# All development happens on rpitex
+# Benefits:
+# - Full access to local Ollama server
+# - Direct PostgreSQL access
+# - Consistent environment
+# - Vim/tmux persists across disconnections
+----
+
+== Troubleshooting
+
+=== Common Issues
+
+==== Symlink not working
+
+[source,bash]
+----
+cd ~/development/ofbiz-framework
+rm plugins
+ln -sf ../ofbiz-plugins plugins
+ls -la plugins  # Verify symlink
+----
+
+==== PostgreSQL connection errors
+
+[source,bash]
+----
+# Check PostgreSQL is running
+sudo systemctl status postgresql
+
+# Test connection
+psql -U ftmuser -d ftmerp -h localhost
+
+# Check logs
+sudo tail -f /var/log/postgresql/postgresql-*.log
+----
+
+==== Gradle build issues
+
+[source,bash]
+----
+# Clear Gradle cache
+rm -rf ~/.gradle/caches/
+
+# Clean and rebuild
+cd ~/development/ofbiz-framework
+./gradlew clean build --refresh-dependencies
+----
+
+==== Ollama not responding
+
+[source,bash]
+----
+# Check if Ollama is running
+ps aux | grep ollama
+
+# Restart Ollama
+killall ollama
+ollama serve &
+
+# Test API
+curl http://localhost:11434/api/tags
+----
+
+=== Log Locations
+
+[source,bash]
+----
+# OFBiz logs
+~/development/ofbiz-framework/runtime/logs/ofbiz.log
+
+# PostgreSQL logs
+/var/log/postgresql/postgresql-*.log
+
+# Systemd journal
+journalctl -u postgresql -f
+----
+
+== Next Steps
+
+. Complete version control setup for ofbiz-plugins
+. Configure PostgreSQL database
+. Set up vim/tmux development environment
+. Test Ollama integration
+. Begin FTM garments customization
+
+== Resources
+
+* Apache OFBiz Documentation: https://ofbiz.apache.org/documentation.html
+* PostgreSQL Documentation: https://www.postgresql.org/docs/
+* Vim Documentation: https://www.vim.org/docs.php
+* Tmux Cheat Sheet: https://tmuxcheatsheet.com/
+* Ollama Documentation: https://github.com/ollama/ollama
