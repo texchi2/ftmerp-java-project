@@ -76,7 +76,7 @@ FTM ERP System
 ## 🔗 GitHub Repositories
 
 - **Framework**: https://github.com/texchi2/ftmerp-java-project
-- **Plugins**: https://github.com/texchi2/ftmerp-java-plugins (to be created)
+- **Plugins**: https://github.com/texchi2/ftmerp-java-plugins (created)
 
 ## 🛠️ Development Environment
 
