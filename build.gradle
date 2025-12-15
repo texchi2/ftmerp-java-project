@@ -263,6 +263,7 @@ dependencies {
     getDirectoryInActiveComponentsIfExists('lib').each { libDir ->
         implementation fileTree(dir: libDir, include: '**/*.jar')
     }
+    implementation 'org.postgresql:postgresql:42.7.1'
 }
 
 def excludedJavaSources = [

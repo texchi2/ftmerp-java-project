@@ -143,7 +143,7 @@ else
         exit 1
     fi
 
-    git remote add origin "https://github.com/$GITHUB_USER/$PLUGINS_REPO.git"
+    git remote add origin "git@github.com:$GITHUB_USER/$PLUGINS_REPO.git"
     echo "✓ Remote added"
 fi
 
