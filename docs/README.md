@@ -82,18 +82,18 @@ FTM ERP System
 
 ### Required Software
 
-- **Java**: OpenJDK 11 or later (17 recommended)
+- **Java**: OpenJDK 17 or later (21 recommended)
 - **PostgreSQL**: 12 or later
 - **Git**: For version control
 - **Vim**: Text editor (with plugins)
 - **Tmux**: Terminal multiplexer
-- **Ollama**: AI coding assistant (optional)
+- **Ollama**: AI coding assistant (recommended); or Claude Code
 
 ### Hardware
 
 - **Primary Development**: Raspberry Pi 5 (rpitex)
   - Local PostgreSQL database
-  - Local Ollama server
+  - remote Ollama server
   - SSH access for remote development
 
 ## 📚 Additional Resources
