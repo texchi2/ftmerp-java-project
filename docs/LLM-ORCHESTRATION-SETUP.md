@@ -55,9 +55,164 @@ Complete guide to setting up distributed LLM-assisted development environment wi
 
 | Model | Hardware | Use Case | API Endpoint |
 |-------|----------|----------|--------------|
+| **Claude Code (Sonnet 4.5)** | **Cloud (Anthropic)** | **Orchestration, GitHub Operations, Complex Refactoring** | **GitHub/Web Interface** |
 | Llama-4-Scout-17B-16E | macOS M2 Ultra | Reasoning, Architecture | `/reason`, `/chat` |
 | CodeLlama-70b-4bit | macOS M2 Ultra | Code Generation | `/generate`, `/refactor` |
 | phind-codellama:34b-fp16 | macOS M2 Ultra (Ollama) | Code Completion, FIM | `/complete` |
+
+### Claude Code Integration
+
+**Claude Code** (this assistant) serves as the **orchestration layer** for the entire LLM-assisted development workflow:
+
+#### Role in Development Process
+
+1. **Repository Management**
+   - Create and manage GitHub branches
+   - Commit changes with comprehensive messages
+   - Push code to remote repositories
+   - Review and organize project structure
+
+2. **Complex Code Operations**
+   - Large-scale refactoring across multiple files
+   - Architecture design and implementation
+   - Code review and analysis
+   - Documentation generation
+
+3. **Workflow Orchestration**
+   - Coordinates between local LLMs (macOS) and cloud AI (Claude)
+   - Routes tasks to appropriate models based on complexity
+   - Manages multi-step development workflows
+   - Integrates with Vim/Tmux environment on rpitex
+
+4. **GitHub Operations**
+   - **Branch Management**: Creates feature branches with proper naming
+   - **Commit Strategy**: Writes detailed commit messages following best practices
+   - **Pull Requests**: Can assist in creating and reviewing PRs
+   - **Issue Tracking**: Links commits to issues
+   - **Code Search**: Searches across codebase using specialized agents
+
+#### Claude Code Workflow
+
+```
+Developer Request
+     ↓
+Claude Code (Orchestration)
+     ↓
+   ┌─────────────────┬──────────────────┐
+   │                 │                  │
+Simple Task    Complex Task        GitHub Operation
+   ↓                 ↓                  ↓
+Route to Local  Handle Directly    Git Commands
+(macOS LLM)     (Claude Sonnet)    (Branch/Commit/Push)
+   ↓                 ↓                  ↓
+phind-codellama  Analysis/Refactor  Update Repository
+CodeLlama-70b    Documentation
+Llama-4-Scout
+```
+
+#### When to Use Claude Code vs Local LLMs
+
+**Use Claude Code for:**
+- ✅ Repository operations (branch, commit, push)
+- ✅ Multi-file refactoring
+- ✅ Architecture decisions requiring broad context
+- ✅ Complex OFBiz workflow analysis
+- ✅ Documentation generation
+- ✅ Code review and quality assessment
+- ✅ BOM analysis and dataset creation
+
+**Use Local LLMs (macOS) for:**
+- ✅ Quick code completion (phind-codellama)
+- ✅ Single-file code generation (CodeLlama-70b)
+- ✅ Reasoning about specific problems (Llama-4-Scout)
+- ✅ Real-time assistance while coding in Vim
+- ✅ Fast iteration during development
+
+#### Example: Collaborative Workflow
+
+**Scenario**: Implement new BOM validation service
+
+```
+1. Developer describes requirement to Claude Code
+   "Create a service to validate BOM completeness"
+
+2. Claude Code:
+   - Analyzes existing OFBiz BOM structure
+   - Creates feature branch: claude/bom-validation-feature
+   - Searches codebase for similar validation patterns
+   - Designs service interface
+
+3. Developer uses Vim on rpitex:
+   - Opens service file in Vim
+   - Uses <Space>lc (local LLM) for code completion
+   - Uses <Space>lg to generate utility methods
+   - Quick iterations with fast local models
+
+4. Claude Code reviews:
+   - Checks code quality
+   - Suggests improvements
+   - Adds comprehensive documentation
+   - Commits changes with detailed message
+   - Pushes to GitHub
+
+5. Result: High-quality implementation with:
+   - Fast local development (macOS LLMs)
+   - Strategic guidance (Claude Code)
+   - Proper version control (GitHub)
+```
+
+#### GitHub Branch Editing with Claude Code
+
+Claude Code can directly edit branches on GitHub, making it ideal for:
+
+**Creating Features**:
+```
+User: "Add a service to calculate garment production cost with BOM data"
+
+Claude Code:
+1. Creates branch: claude/garment-cost-calculation-XYZ
+2. Analyzes existing cost calculation patterns
+3. Implements service with proper OFBiz conventions
+4. Adds unit tests
+5. Updates documentation
+6. Commits with comprehensive message:
+   "Add garment production cost calculation service
+
+   - Implements calculateGarmentCost service
+   - Explodes BOM and sums material costs
+   - Includes scrap factor calculations
+   - Adds labor and overhead allocation
+   - Unit tests with sample data
+
+   Refs #123"
+7. Pushes to GitHub
+```
+
+**Fixing Bugs**:
+```
+User: "Fix the BOM explosion issue where scrap factors aren't applied"
+
+Claude Code:
+1. Creates branch: claude/fix-bom-scrap-factor-XYZ
+2. Searches codebase for BOM explosion logic
+3. Identifies issue in getManufacturingComponents service
+4. Fixes calculation
+5. Adds regression test
+6. Commits and pushes
+```
+
+**Refactoring**:
+```
+User: "Refactor MRP code to use modern OFBiz patterns"
+
+Claude Code:
+1. Creates branch: claude/refactor-mrp-modern-patterns-XYZ
+2. Analyzes multiple files in manufacturing module
+3. Refactors with modern patterns (EntityQuery, ServiceUtil)
+4. Maintains backward compatibility
+5. Updates related documentation
+6. Commits with migration notes
+```
 
 ### Data Flow
 
