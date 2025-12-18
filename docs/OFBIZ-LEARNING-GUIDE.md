@@ -287,6 +287,8 @@ This is the complete process from when a customer orders to when they receive th
          ↓
     Order Approved → Status changes to APPROVED
          ↓
+    BOM Analysis → Explode Bill of Materials
+         ↓
     MRP Runs → Checks if we have materials
          ↓
     Production Run Created → WorkEffort entity created
@@ -332,6 +334,302 @@ This is the complete process from when a customer orders to when they receive th
 | Complete Task | `changeProductionRunTaskStatus` | workEffortId, statusId | - |
 | Create Shipment | `createShipment` | orderId | shipmentId |
 | Ship Order | `quickShipEntireOrder` | orderId, shipmentId | - |
+
+### Understanding Bill of Materials (BOM)
+
+**⚠️ CRITICAL CONCEPT**: The Bill of Materials is the **foundation** of all manufacturing operations in OFBiz. Without an accurate BOM, you cannot calculate costs, order materials, or plan production.
+
+**📚 Complete BOM Guide**: For an in-depth understanding with real garment manufacturing examples, see [BOM-DEEP-DIVE.md](BOM-DEEP-DIVE.md)
+
+#### What is a BOM?
+
+A **Bill of Materials** (BOM) is a complete, structured list of all components, raw materials, and sub-assemblies needed to manufacture one unit of a finished product.
+
+**Think of it as a recipe**:
+- Recipe tells you ingredients for a cake
+- BOM tells you materials for a garment
+
+#### BOM in OFBiz: ProductAssoc Entity
+
+```xml
+<entity entity-name="ProductAssoc">
+    <field name="productId" type="id"/>           <!-- Parent (finished good) -->
+    <field name="productIdTo" type="id"/>         <!-- Component (raw material) -->
+    <field name="productAssocTypeId" type="id"/>  <!-- MANUF_COMPONENT -->
+    <field name="quantity" type="fixed-point"/>   <!-- Qty per parent -->
+    <field name="scrapFactor" type="fixed-point"/> <!-- Waste % (1.15 = 15%) -->
+    <field name="fromDate" type="date-time"/>     <!-- Version control -->
+    <field name="thruDate" type="date-time"/>
+</entity>
+```
+
+#### Example: Men's Casual Shirt BOM
+
+**Finished Product**: 1 Blue Shirt (Size M)
+
+**Components Required**:
+
+| Component | Product ID | Qty | Unit | Scrap | Actual Qty | Reason for Scrap |
+|-----------|-----------|-----|------|-------|------------|------------------|
+| **Fabric** | FTM-FABRIC-COTTON-BLUE | 1.5 | m | 15% | **1.725 m** | Cutting waste, pattern |
+| **Buttons** | FTM-BTN-WHITE-20MM | 6 | ea | 5% | **6.3** | Defects, damage |
+| **Zipper** | FTM-ZIP-METAL-50CM | 1 | ea | 2% | **1.02** | Defects |
+| **Thread** | FTM-THREAD-BLUE | 50 | m | 20% | **60 m** | Breaks, trimming, waste |
+| **Label** | FTM-LABEL-CARE | 1 | ea | 3% | **1.03** | Damage |
+
+**Why Scrap Factors Matter**:
+
+Without scrap factors:
+```
+Order: 100 shirts
+Fabric calculation: 100 × 1.5m = 150m ordered
+Reality: 150m ÷ 1.725m actual = Only 87 shirts possible!
+→ 13 shirts short! Production stops!
+```
+
+With correct scrap factors:
+```
+Order: 100 shirts
+Fabric calculation: 100 × 1.5m × 1.15 = 172.5m ordered
+Reality: Can make 100 shirts with small buffer
+→ Production succeeds! ✓
+```
+
+#### Creating a BOM in OFBiz
+
+**Method 1: Via Web UI**
+
+```
+1. Navigate to: Catalog → Product
+2. Find your product: FTM-SHIRT-BLUE-M
+3. Go to: Associations tab
+4. Click: Create Product Association
+5. Select:
+   - Association Type: MANUF_COMPONENT
+   - To Product: FTM-FABRIC-COTTON-BLUE
+   - Quantity: 1.5
+   - Scrap Factor: 1.15
+   - Sequence: 10
+6. Save
+```
+
+**Method 2: Via Service Call**
+
+```groovy
+def dispatcher = dctx.getDispatcher()
+
+def bomEntry = [
+    productId: "FTM-SHIRT-BLUE-M",
+    productIdTo: "FTM-FABRIC-COTTON-BLUE",
+    productAssocTypeId: "MANUF_COMPONENT",
+    fromDate: UtilDateTime.nowTimestamp(),
+    quantity: 1.5,
+    scrapFactor: 1.15,
+    sequenceNum: 10,
+    instruction: "Cut according to shirt pattern",
+    userLogin: userLogin
+]
+
+dispatcher.runSync("createBOMAssoc", bomEntry)
+```
+
+**Method 3: Via Data Load (XML)**
+
+```xml
+<!-- File: plugins/ftm-garments/data/FtmBomData.xml -->
+<entity-engine-xml>
+    <ProductAssoc
+        productId="FTM-SHIRT-BLUE-M"
+        productIdTo="FTM-FABRIC-COTTON-BLUE"
+        productAssocTypeId="MANUF_COMPONENT"
+        fromDate="2025-01-01 00:00:00"
+        quantity="1.5"
+        scrapFactor="1.15"
+        sequenceNum="10"
+        instruction="Cut according to shirt pattern"/>
+
+    <ProductAssoc
+        productId="FTM-SHIRT-BLUE-M"
+        productIdTo="FTM-BTN-WHITE-20MM"
+        productAssocTypeId="MANUF_COMPONENT"
+        fromDate="2025-01-01 00:00:00"
+        quantity="6"
+        scrapFactor="1.05"
+        sequenceNum="20"
+        instruction="Attach to front placket"/>
+</entity-engine-xml>
+```
+
+Load with:
+```bash
+./gradlew "ofbiz --load-data file=plugins/ftm-garments/data/FtmBomData.xml"
+```
+
+#### How BOM Drives the Entire Manufacturing Process
+
+```
+Sales Order (100 shirts)
+        ↓
+    [BOM EXPLOSION]
+        ↓
+    ┌───────────────────────────────────────┐
+    │ Service: getManufacturingComponents   │
+    │                                       │
+    │ Input: productId, quantity            │
+    │ Output: List of all materials needed  │
+    └───────────────────────────────────────┘
+        ↓
+    Material Requirements:
+    - Fabric: 100 × 1.5m × 1.15 = 172.5m
+    - Buttons: 100 × 6 × 1.05 = 630 units
+    - Thread: 100 × 50m × 1.20 = 6,000m
+        ↓
+    [MRP COMPARES WITH INVENTORY]
+        ↓
+    Current Stock:
+    - Fabric: 50m (shortage: 122.5m)
+    - Buttons: 1,000 (sufficient)
+    - Thread: 10,000m (sufficient)
+        ↓
+    [CREATE PURCHASE ORDERS]
+        ↓
+    PO-001: Buy 125m fabric from Supplier ABC
+        ↓
+    [RECEIVE MATERIALS]
+        ↓
+    [START PRODUCTION]
+        ↓
+    Materials issued to production run
+    based on exact BOM quantities
+```
+
+#### Key BOM Services
+
+| Service | Purpose | When Used |
+|---------|---------|-----------|
+| `createBOMAssoc` | Add component to BOM | Setting up products |
+| `updateBOMAssoc` | Modify component quantity/scrap | BOM maintenance |
+| `getBOMTree` | Get complete BOM hierarchy | Display BOM structure |
+| `getManufacturingComponents` | Calculate all materials needed | MRP planning |
+| `copyBOMAssocs` | Clone BOM to new product | Similar products |
+
+#### Common BOM Mistakes to Avoid
+
+**❌ Mistake 1: Forgetting Small Components**
+
+```
+BOM has: Fabric, Buttons, Zipper
+Missing: Thread, Labels, Packaging
+
+Result: Production stops when packaging missing!
+```
+
+**✓ Solution**: Review complete product. Include EVERYTHING.
+
+**❌ Mistake 2: Wrong Scrap Factor**
+
+```
+Scrap factor: 1.0 (0% waste - unrealistic!)
+Reality: Always have waste in cutting, sewing, etc.
+
+Result: Constant material shortages
+```
+
+**✓ Solution**:
+- Test with pilot run (make 10 units)
+- Measure actual material used
+- Calculate real scrap percentage
+- Add safety margin
+
+**❌ Mistake 3: Not Using Version Control**
+
+```
+Changed zipper length from 50cm to 60cm
+But didn't expire old BOM entry
+
+Result: System uses both! Wrong calculations!
+```
+
+**✓ Solution**: Use `fromDate` and `thruDate`:
+
+```xml
+<!-- Old version - expire it -->
+<ProductAssoc productId="SHIRT-001" productIdTo="ZIP-50CM"
+              fromDate="2025-01-01" thruDate="2025-03-31"/>
+
+<!-- New version -->
+<ProductAssoc productId="SHIRT-001" productIdTo="ZIP-60CM"
+              fromDate="2025-04-01"/>
+```
+
+#### Checking BOM in Database
+
+```sql
+-- View complete BOM for a product
+SELECT
+    pa.product_id AS "Finished Product",
+    p1.internal_name AS "Finished Product Name",
+    pa.product_id_to AS "Component",
+    p2.internal_name AS "Component Name",
+    pa.quantity AS "Qty per Unit",
+    pa.scrap_factor AS "Scrap Factor",
+    (pa.quantity * pa.scrap_factor) AS "Actual Qty Needed",
+    pa.sequence_num AS "Sequence",
+    pa.instruction AS "Instructions"
+FROM product_assoc pa
+JOIN product p1 ON pa.product_id = p1.product_id
+JOIN product p2 ON pa.product_id_to = p2.product_id
+WHERE pa.product_id = 'FTM-SHIRT-BLUE-M'
+  AND pa.product_assoc_type_id = 'MANUF_COMPONENT'
+  AND (pa.thru_date IS NULL OR pa.thru_date > CURRENT_DATE)
+ORDER BY pa.sequence_num;
+```
+
+#### Multi-Level BOM (Advanced)
+
+For complex products, you can have sub-assemblies:
+
+```
+Finished Shirt
+  ├─ Shirt Body Assembly (sub-assembly)
+  │   ├─ Front Panel (cut parts)
+  │   ├─ Back Panel (cut parts)
+  │   └─ Sleeves (cut parts)
+  │
+  ├─ Collar Assembly (sub-assembly)
+  │   ├─ Collar Fabric
+  │   └─ Interfacing
+  │
+  └─ Button Placket Assembly (sub-assembly)
+      ├─ Placket Fabric
+      └─ Buttons
+```
+
+This is useful for:
+- Complex products
+- Outsourced sub-assemblies
+- Different production locations
+
+#### BOM Best Practices Summary
+
+1. **Include EVERYTHING**: From fabric to thread to packaging
+2. **Accurate Scrap Factors**: Test in pilot production
+3. **Version Control**: Use date ranges for changes
+4. **Clear Instructions**: Add assembly notes
+5. **Regular Reviews**: Quarterly BOM audits
+6. **Document Changes**: Log why BOM was changed
+7. **Test Before Production**: Validate BOM with small batch
+
+**📚 For detailed examples including:**
+- Complete men's pant BOM (17+ components)
+- Exact quantities and costs
+- OFBiz service implementations
+- BOM-driven MRP workflows
+- Troubleshooting guide
+
+**See: [BOM-DEEP-DIVE.md](BOM-DEEP-DIVE.md)**
+
+---
 
 ### Workflow 2: Purchase Order (Buying Raw Materials)
 
