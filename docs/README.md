@@ -87,7 +87,7 @@ FTM ERP System
 - **Git**: For version control
 - **Vim**: Text editor (with plugins)
 - **Tmux**: Terminal multiplexer
-- **Ollama** **mlx-lm**: AI coding assistant (recommended); and Claude Code
+- **Ollama** + **mlx-lm** + **Claude Code**: AI coding assistant (recommended)
 
 ### Hardware
 
