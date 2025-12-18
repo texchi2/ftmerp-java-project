@@ -101,7 +101,7 @@ FTM ERP System
 ### Apache OFBiz Resources
 
 - [Official Documentation](https://ofbiz.apache.org/documentation.html)
-- [Developer Guide](https://cwiki.apache.org/confluence/display/OFBIZ/Developer+Resources), (https://ofbizextra.org/ofbiz_adocs/docs/asciidoc/developer-manual.pdf)
+- [Developer Guide](https://cwiki.apache.org/confluence/display/OFBIZ/Developer+Resources), and https://ofbizextra.org/ofbiz_adocs/docs/asciidoc/developer-manual.pdf
 - [Data Model](https://cwiki.apache.org/confluence/display/OFBIZ/Data+Model)
 - [Service Engine](https://cwiki.apache.org/confluence/display/OFBIZ/Service+Engine+Guide)
 
@@ -185,7 +185,7 @@ FTM customizations and plugins are proprietary to FTM Garments Company.
 - [x] Set up version control for framework and plugins
 - [x] Configure PostgreSQL database
 - [x] Set up development environment (vim/tmux)
-- [x] Integrate Ollama AI assistance
+- [ ] Integrate Ollama AI assistance
 - [ ] Implement garment production tracking
 - [ ] Add inventory management features
 - [ ] Create production cost calculation
