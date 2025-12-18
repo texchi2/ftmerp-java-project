@@ -87,13 +87,13 @@ FTM ERP System
 - **Git**: For version control
 - **Vim**: Text editor (with plugins)
 - **Tmux**: Terminal multiplexer
-- **Ollama**: AI coding assistant (recommended); or Claude Code
+- **Ollama** **mlx-lm**: AI coding assistant (recommended); and Claude Code
 
 ### Hardware
 
 - **Primary Development**: Raspberry Pi 5 (rpitex)
   - Local PostgreSQL database
-  - remote Ollama server
+  - remote LLM server
   - SSH access for remote development
 
 ## 📚 Additional Resources
@@ -101,7 +101,7 @@ FTM ERP System
 ### Apache OFBiz Resources
 
 - [Official Documentation](https://ofbiz.apache.org/documentation.html)
-- [Developer Guide](https://cwiki.apache.org/confluence/display/OFBIZ/Developer+Resources)
+- [Developer Guide](https://cwiki.apache.org/confluence/display/OFBIZ/Developer+Resources), (https://ofbizextra.org/ofbiz_adocs/docs/asciidoc/developer-manual.pdf)
 - [Data Model](https://cwiki.apache.org/confluence/display/OFBIZ/Data+Model)
 - [Service Engine](https://cwiki.apache.org/confluence/display/OFBIZ/Service+Engine+Guide)
 
