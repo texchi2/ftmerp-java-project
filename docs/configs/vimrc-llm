@@ -1,0 +1,431 @@
+" FTM ERP Vim Configuration with LLM Orchestration
+" Add this to your ~/.vimrc on rpitex
+
+" ============================================================================
+" Plugin Management with vim-plug
+" ============================================================================
+call plug#begin('~/.vim/plugged')
+
+" LLM and AI Integration
+Plug 'github/copilot.vim'              " GitHub Copilot (optional)
+Plug 'benmills/vimux'                  " Tmux integration
+
+" Language Server Protocol (LSP) support
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
+
+" Auto-completion
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+
+" File navigation
+Plug 'preservim/nerdtree'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
+" Git integration
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+
+" Java syntax and formatting
+Plug 'artur-shaik/vim-javacomplete2'
+
+" Syntax highlighting
+Plug 'sheerun/vim-polyglot'
+
+" Status line
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+" Code formatting
+Plug 'google/vim-maktaba'
+Plug 'google/vim-codefmt'
+
+" Tmux integration
+Plug 'christoomey/vim-tmux-navigator'
+
+" Comments
+Plug 'tpope/vim-commentary'
+
+" Surround
+Plug 'tpope/vim-surround'
+
+call plug#end()
+
+" ============================================================================
+" Basic Settings
+" ============================================================================
+set number relativenumber
+set tabstop=4 shiftwidth=4 expandtab
+set autoindent smartindent
+set ignorecase smartcase
+set hlsearch incsearch
+set hidden
+set updatetime=300
+set signcolumn=yes
+set mouse=a
+set clipboard=unnamedplus
+set encoding=utf-8
+set fileencoding=utf-8
+set backspace=indent,eol,start
+
+" ============================================================================
+" LLM Server Configuration
+" ============================================================================
+" Set your macOS M2 Ultra IP address here
+let g:ftm_llm_server = $LLM_SERVER_URL
+if empty(g:ftm_llm_server)
+    let g:ftm_llm_server = 'http://192.168.1.100:5000'
+endif
+
+" Path to LLM client script
+let g:ftm_llm_client = $HOME . '/development/ofbiz-framework/docs/scripts/llm-client.py'
+
+" ============================================================================
+" LLM Integration Functions
+" ============================================================================
+
+" Get visual selection
+function! s:get_visual_selection()
+    let [line_start, column_start] = getpos("'<")[1:2]
+    let [line_end, column_end] = getpos("'>")[1:2]
+    let lines = getline(line_start, line_end)
+    if len(lines) == 0
+        return ''
+    endif
+    let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
+    let lines[0] = lines[0][column_start - 1:]
+    return join(lines, "\n")
+endfunction
+
+" Detect file language
+function! s:detect_language()
+    let ext = expand('%:e')
+    if ext == 'java'
+        return 'java'
+    elseif ext == 'js'
+        return 'javascript'
+    elseif ext == 'xml'
+        return 'xml'
+    elseif ext == 'groovy'
+        return 'groovy'
+    elseif ext == 'ftl'
+        return 'freemarker'
+    else
+        return 'java'  " Default to Java for OFBiz
+    endif
+endfunction
+
+" Call LLM server via curl
+function! s:call_llm(endpoint, data)
+    let data_json = json_encode(a:data)
+    let cmd = 'curl -s -X POST ' . shellescape(g:ftm_llm_server . a:endpoint) .
+        \ ' -H "Content-Type: application/json" -d ' . shellescape(data_json)
+    let response = system(cmd)
+    return json_decode(response)
+endfunction
+
+" ============================================================================
+" LLM Commands - Code Completion
+" ============================================================================
+
+function! FTM_Complete()
+    " Get code before cursor
+    let line = line('.')
+    let col = col('.')
+    let lines_before = getline(max([1, line - 30]), line - 1)
+    let current_line = getline(line)[:col - 2]
+    let prefix = join(lines_before + [current_line], "\n")
+
+    " Get code after cursor (for FIM)
+    let lines_after = getline(line + 1, min([line('$'), line + 10]))
+    let current_line_after = getline(line)[col - 1:]
+    let suffix = join([current_line_after] + lines_after, "\n")
+
+    let language = s:detect_language()
+
+    echo "Requesting completion from LLM server..."
+
+    let data = {
+        \ 'prefix': prefix,
+        \ 'suffix': suffix,
+        \ 'language': language,
+        \ 'model': 'phind-codellama',
+        \ 'max_tokens': 300
+        \ }
+
+    let result = s:call_llm('/complete', data)
+
+    if has_key(result, 'completion')
+        let completion = result['completion']
+        " Insert completion at cursor
+        let lines = split(completion, "\n")
+        call append(line, lines)
+        echo "✓ Completion inserted"
+    else
+        echoerr "Error: " . get(result, 'error', 'Unknown error')
+    endif
+endfunction
+
+" ============================================================================
+" LLM Commands - Explain Code
+" ============================================================================
+
+function! FTM_Explain() range
+    " Get selected code
+    let code = s:get_visual_selection()
+    if empty(code)
+        echo "No code selected"
+        return
+    endif
+
+    let language = s:detect_language()
+
+    echo "Analyzing code with LLM..."
+
+    let data = {
+        \ 'code': code,
+        \ 'language': language
+        \ }
+
+    let result = s:call_llm('/explain', data)
+
+    if has_key(result, 'explanation')
+        " Show explanation in new split
+        new
+        setlocal buftype=nofile bufhidden=wipe noswapfile
+        call setline(1, split(result['explanation'], "\n"))
+        setlocal nomodifiable
+        echo "✓ Explanation ready"
+    else
+        echoerr "Error: " . get(result, 'error', 'Unknown error')
+    endif
+endfunction
+
+" ============================================================================
+" LLM Commands - Refactor Code
+" ============================================================================
+
+function! FTM_Refactor(...) range
+    " Get selected code
+    let code = s:get_visual_selection()
+    if empty(code)
+        echo "No code selected"
+        return
+    endif
+
+    let language = s:detect_language()
+    let instructions = a:0 > 0 ? a:1 : "Improve code quality, readability, and performance"
+
+    echo "Refactoring code with LLM..."
+
+    let data = {
+        \ 'code': code,
+        \ 'language': language,
+        \ 'instructions': instructions
+        \ }
+
+    let result = s:call_llm('/refactor', data)
+
+    if has_key(result, 'refactored')
+        " Show refactored code in new split
+        vnew
+        setlocal buftype=nofile bufhidden=wipe noswapfile
+        call setline(1, split(result['refactored'], "\n"))
+        echo "✓ Refactored code ready (review and copy if needed)"
+    else
+        echoerr "Error: " . get(result, 'error', 'Unknown error')
+    endif
+endfunction
+
+" ============================================================================
+" LLM Commands - Generate Code
+" ============================================================================
+
+function! FTM_Generate(description)
+    let language = s:detect_language()
+
+    echo "Generating code with LLM..."
+
+    let data = {
+        \ 'description': a:description,
+        \ 'language': language,
+        \ 'framework': 'OFBiz'
+        \ }
+
+    let result = s:call_llm('/generate', data)
+
+    if has_key(result, 'code')
+        " Insert generated code at cursor
+        let lines = split(result['code'], "\n")
+        call append(line('.'), lines)
+        echo "✓ Code generated and inserted"
+    else
+        echoerr "Error: " . get(result, 'error', 'Unknown error')
+    endif
+endfunction
+
+" ============================================================================
+" LLM Commands - Reasoning (via Vimux)
+" ============================================================================
+
+function! FTM_Ask(question)
+    " Get context from current file
+    let context = "Working on: " . expand('%:p') . "\n"
+    let context .= "Current directory: " . getcwd()
+
+    " Use vimux to run LLM client in tmux pane
+    let cmd = 'python3 ' . shellescape(g:ftm_llm_client) .
+        \ ' --server ' . shellescape(g:ftm_llm_server) .
+        \ ' reason ' . shellescape(a:question) .
+        \ ' --context ' . shellescape(context)
+
+    call VimuxRunCommand(cmd)
+endfunction
+
+" ============================================================================
+" Vimux Configuration
+" ============================================================================
+let g:VimuxHeight = "30"
+let g:VimuxOrientation = "v"
+
+" ============================================================================
+" Key Mappings for LLM Features
+" ============================================================================
+let mapleader = " "
+
+" LLM Completion
+nnoremap <leader>lc :call FTM_Complete()<CR>
+inoremap <C-Space> <C-o>:call FTM_Complete()<CR>
+
+" LLM Explain (visual mode)
+vnoremap <leader>le :call FTM_Explain()<CR>
+
+" LLM Refactor (visual mode)
+vnoremap <leader>lr :call FTM_Refactor()<CR>
+vnoremap <leader>lR :call FTM_Refactor(input('Refactoring instructions: '))<CR>
+
+" LLM Generate
+nnoremap <leader>lg :call FTM_Generate(input('Describe code to generate: '))<CR>
+
+" LLM Ask (reasoning)
+nnoremap <leader>la :call FTM_Ask(input('Ask LLM: '))<CR>
+
+" Vimux commands
+nnoremap <leader>vp :VimuxPromptCommand<CR>
+nnoremap <leader>vl :VimuxRunLastCommand<CR>
+nnoremap <leader>vz :VimuxZoomRunner<CR>
+nnoremap <leader>vq :VimuxCloseRunner<CR>
+
+" ============================================================================
+" Standard Key Mappings
+" ============================================================================
+
+" File navigation
+nnoremap <leader>n :NERDTreeToggle<CR>
+nnoremap <leader>f :Files<CR>
+nnoremap <leader>g :Rg<CR>
+nnoremap <leader>b :Buffers<CR>
+
+" Git mappings
+nnoremap <leader>gs :Git<CR>
+nnoremap <leader>gc :Git commit<CR>
+nnoremap <leader>gp :Git push<CR>
+nnoremap <leader>gd :Gdiff<CR>
+
+" LSP mappings
+nnoremap gd :LspDefinition<CR>
+nnoremap gr :LspReferences<CR>
+nnoremap K :LspHover<CR>
+nnoremap <leader>rn :LspRename<CR>
+
+" Save and build
+nnoremap <leader>w :w<CR>
+nnoremap <leader>bb :VimuxRunCommand("cd ~/development/ofbiz-framework && ./gradlew build")<CR>
+nnoremap <leader>bt :VimuxRunCommand("cd ~/development/ofbiz-framework && ./gradlew test")<CR>
+nnoremap <leader>br :VimuxRunCommand("cd ~/development/ofbiz-framework && ./gradlew ofbiz")<CR>
+
+" ============================================================================
+" Java-specific settings
+" ============================================================================
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
+autocmd FileType java JCEnable
+
+" ============================================================================
+" Status Line
+" ============================================================================
+let g:airline_theme='dark'
+let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#hunks#enabled = 1
+
+" Show LLM server status in status line
+function! LLMServerStatus()
+    if exists('g:ftm_llm_server')
+        return ' LLM:' . matchstr(g:ftm_llm_server, '[0-9.]\+')
+    else
+        return ''
+    endif
+endfunction
+
+let g:airline_section_x = '%{LLMServerStatus()}'
+
+" ============================================================================
+" Help Message
+" ============================================================================
+function! FTM_Help()
+    echo "FTM ERP LLM-Assisted Development"
+    echo "================================"
+    echo ""
+    echo "LLM Commands:"
+    echo "  <Space>lc  - Code completion (FIM-aware)"
+    echo "  <C-Space>  - Code completion (insert mode)"
+    echo "  <Space>le  - Explain selected code (visual)"
+    echo "  <Space>lr  - Refactor selected code (visual)"
+    echo "  <Space>lR  - Refactor with custom instructions"
+    echo "  <Space>lg  - Generate new code from description"
+    echo "  <Space>la  - Ask LLM for reasoning/help"
+    echo ""
+    echo "Vimux (Tmux integration):"
+    echo "  <Space>vp  - Run command in tmux pane"
+    echo "  <Space>vl  - Repeat last command"
+    echo "  <Space>vz  - Zoom tmux pane"
+    echo "  <Space>vq  - Close tmux pane"
+    echo ""
+    echo "Build Commands:"
+    echo "  <Space>bb  - Build project (gradlew build)"
+    echo "  <Space>bt  - Run tests (gradlew test)"
+    echo "  <Space>br  - Run OFBiz (gradlew ofbiz)"
+    echo ""
+    echo "LLM Server: " . g:ftm_llm_server
+endfunction
+
+nnoremap <leader>h :call FTM_Help()<CR>
+
+" ============================================================================
+" Auto-commands
+" ============================================================================
+
+" Check LLM server on startup
+augroup FTM_LLM
+    autocmd!
+    autocmd VimEnter * call timer_start(1000, {-> s:check_llm_server()})
+augroup END
+
+function! s:check_llm_server()
+    let cmd = 'curl -s -m 2 ' . shellescape(g:ftm_llm_server . '/health')
+    let response = system(cmd)
+
+    if v:shell_error == 0
+        echo "✓ LLM Server connected: " . g:ftm_llm_server
+    else
+        echohl WarningMsg
+        echo "⚠ LLM Server not reachable: " . g:ftm_llm_server
+        echo "Start server on macOS: ~/ftmerp-java-project/docs/scripts/start-llm-server.sh"
+        echohl None
+    endif
+endfunction
+
+" ============================================================================
+" Welcome Message
+" ============================================================================
+autocmd VimEnter * if argc() == 0 | call FTM_Help() | endif
