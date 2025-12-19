@@ -1269,7 +1269,7 @@ https://cwiki.apache.org/confluence/display/OFBENDUSER/Manufacturing+Glossary+an
    - OFBiz User Mailing List: user@ofbiz.apache.org
    - OFBiz Wiki: https://cwiki.apache.org/confluence/display/OFBIZ
    - OFBiz MRP: https://docs.huihoo.com/apache/ofbiz/Getting-Started-With-Apache-OFBiz-Manufacturing-MRP-In-5-Easy-Steps-v3.pdf
-
+   - How to create Sales Order with Apache OFBiz 14.12: https://www.youtube.com/watch?v=RKFITkxccio
 
 4. **Code Analysis**
    - Use vim/tmux with LLM assistance (see LLM setup guide)
