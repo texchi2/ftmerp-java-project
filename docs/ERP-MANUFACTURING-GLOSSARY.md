@@ -198,6 +198,336 @@ Raw Material Supplier → Manufacturer → Agent → Retailer → Consumer
 
 ---
 
+## OFBiz Technical Terms (OFBiz 技術術語)
+
+### Entity (實體)
+**Definition**: A data structure representing a database table in Apache OFBiz. Entities are defined in XML and mapped to database tables.
+
+**Characteristics**:
+- Defined in `entitymodel.xml` files
+- Contains fields, primary keys, and relationships
+- Provides abstraction layer over database
+- Automatically handles CRUD operations
+
+**Example**:
+```xml
+<entity entity-name="OrderHeader">
+    <field name="orderId" type="id"/>
+    <field name="orderDate" type="date-time"/>
+    <prim-key field="orderId"/>
+</entity>
+```
+
+**OFBiz Location**: `/applications/datamodel/entitydef/`
+
+---
+
+### Service (服務)
+**Definition**: A reusable piece of business logic in OFBiz that performs specific operations.
+
+**Types**:
+- **Simple** (XML-defined)
+- **Java** (Java class)
+- **Groovy** (Groovy script)
+- **Entity-auto** (automatic CRUD)
+
+**Characteristics**:
+- Input/output parameters
+- Transaction management
+- Error handling
+- Can call other services
+
+**Example Service Call**:
+```groovy
+def result = dispatcher.runSync("createOrder", [
+    orderTypeId: "SALES_ORDER",
+    partyId: "CUSTOMER-001",
+    userLogin: userLogin
+])
+```
+
+**OFBiz Location**: `/applications/*/servicedef/services.xml`
+
+---
+
+### Delegator (委托器)
+**Definition**: The core OFBiz object for database operations. Provides methods to create, read, update, and delete entity data.
+
+**Common Operations**:
+```groovy
+// Find by primary key
+def order = delegator.findOne("OrderHeader", [orderId: "SO-001"], false)
+
+// Find list
+def orders = delegator.findByAnd("OrderHeader", [statusId: "ORDER_APPROVED"], null, false)
+
+// Create
+def newProduct = delegator.makeValue("Product", [productId: "PROD-001"])
+delegator.create(newProduct)
+```
+
+---
+
+### EntityQuery (實體查詢)
+**Definition**: Modern API for querying entities in OFBiz. Provides fluent interface for database queries.
+
+**Example**:
+```groovy
+def orders = EntityQuery.use(delegator)
+    .from("OrderHeader")
+    .where("orderTypeId", "SALES_ORDER")
+    .filterByDate()
+    .orderBy("orderDate DESC")
+    .queryList()
+```
+
+**Benefits**: Type-safe, readable, chainable
+
+---
+
+### SECA (Service Event Condition Action) (服務事件條件動作)
+**Definition**: Event-driven automation in OFBiz. Triggers services based on other service events.
+
+**Example**:
+```xml
+<eca service="changeOrderStatus" event="commit">
+    <condition field-name="statusId" operator="equals" value="ORDER_APPROVED"/>
+    <action service="createAutoRequirementsForOrder" mode="sync"/>
+</eca>
+```
+
+**Use Cases**:
+- Automatic requirement creation when order approved
+- Send email notification after shipment
+- Update related records automatically
+
+---
+
+## Manufacturing Terms (製造術語)
+
+### Bill of Materials (BOM) (物料清單)
+**Definition**: Complete structured list of all raw materials, components, and quantities required to manufacture one unit of finished product.
+
+**Structure in OFBiz**: `ProductAssoc` entity with `MANUF_COMPONENT` type
+
+**Key Fields**:
+- **quantity**: Amount needed per parent unit
+- **scrapFactor**: Waste multiplier (1.15 = 15% waste)
+- **sequenceNum**: Assembly order
+- **instruction**: Assembly notes
+
+**Example**:
+```xml
+<ProductAssoc
+    productId="FTM-PANT-CASUAL-32X32-NAVY"
+    productIdTo="FTM-FABRIC-COTTON-TWILL-NAVY-60"
+    productAssocTypeId="MANUF_COMPONENT"
+    quantity="1.8"
+    scrapFactor="1.15"
+    sequenceNum="10"
+    instruction="Cut according to pant pattern"/>
+```
+
+**Related Document**: [BOM-DEEP-DIVE.md](BOM-DEEP-DIVE.md)
+
+---
+
+### MRP - Material Requirements Planning (物料需求計劃)
+**Definition**: System that calculates material requirements based on sales orders and production schedules.
+
+**Process**:
+1. **Demand**: Sales orders create demand for finished goods
+2. **BOM Explosion**: System explodes BOM to calculate component requirements
+3. **Netting**: Compare requirements against current inventory
+4. **Generation**: Create purchase requisitions for shortages
+
+**OFBiz Service**: `executeMrp`
+
+**Example**:
+```
+Order: 100 pants
+BOM says: 1.8m fabric × 1.15 scrap per pant
+MRP calculates: 100 × 1.8 × 1.15 = 207 meters needed
+Current stock: 50 meters
+Shortage: 157 meters → Create purchase requisition
+```
+
+**OFBiz Entity**: `MrpEvent`
+
+---
+
+### Work-In-Progress (WIP) (在製品)
+**Definition**: Partially completed goods that are in the manufacturing process.
+
+**Characteristics**:
+- Not yet finished goods
+- Not raw materials
+- In various stages of production
+- Tracked in inventory
+
+**Lifecycle**:
+```
+Raw Materials → Issue to Production → WIP → Complete Production → Finished Goods
+```
+
+**OFBiz**: Represented by `InventoryItem` with special status during production run
+
+---
+
+### Production Run (生產運行)
+**Definition**: A scheduled manufacturing job to produce specific quantity of product.
+
+**OFBiz Entity**: `WorkEffort` with type `PROD_ORDER_HEADER`
+
+**Key Fields**:
+- **productId**: What to produce
+- **quantityToProduce**: Target quantity
+- **quantityProduced**: Actual quantity
+- **quantityRejected**: Scrapped quantity
+- **currentStatusId**: PRUN_CREATED, PRUN_RUNNING, PRUN_COMPLETED
+
+**Status Flow**:
+```
+PRUN_CREATED → PRUN_SCHEDULED → PRUN_DOC_PRINTED →
+PRUN_RUNNING → PRUN_COMPLETED
+```
+
+---
+
+### Routing (工藝路線)
+**Definition**: Sequence of manufacturing operations required to produce a product.
+
+**OFBiz Entity**: `WorkEffort` with type `ROUTING`
+
+**Components**:
+- **Tasks**: Individual operations (cutting, sewing, QC)
+- **Sequence**: Order of operations
+- **Time estimates**: Duration for each task
+- **Resources**: Machines/equipment needed
+
+**Example Pant Routing**:
+```
+1. Cutting (3 hours per 100 units)
+2. Sewing (5 hours per 100 units)
+3. Finishing - rivets, bartack (2 hours)
+4. Quality Control (1 hour)
+5. Pressing & Packing (1.5 hours)
+```
+
+---
+
+### Scrap Factor (損耗係數)
+**Definition**: Multiplier representing expected waste in manufacturing, expressed as decimal > 1.0.
+
+**Formula**:
+```
+Scrap Factor = 1 + (Waste Percentage ÷ 100)
+
+Examples:
+15% waste → 1.15
+20% waste → 1.20
+5% waste → 1.05
+```
+
+**Usage**:
+```
+Actual Material Needed = Base Quantity × Scrap Factor
+
+Example:
+1.8m fabric × 1.15 scrap factor = 2.07m actual needed
+```
+
+**Why Critical**: Without scrap factors, material shortages stop production
+
+**OFBiz Field**: `scrapFactor` in `ProductAssoc` entity
+
+---
+
+### Requirement (需求)
+**Definition**: System-generated or manual request for materials or production.
+
+**Types**:
+- **PRODUCT_REQUIREMENT**: Need for finished goods
+- **INTERNAL_REQUIREMENT**: Internal use
+- **MATERIAL_REQUIREMENT**: Raw materials needed (from MRP)
+- **WORK_REQUIREMENT**: Labor/service needs
+
+**OFBiz Entity**: `Requirement`
+
+**Lifecycle**:
+```
+Created → Approved → Ordered → Received → Fulfilled
+```
+
+---
+
+### Facility (設施/工廠)
+**Definition**: Physical location for manufacturing, warehousing, or distribution.
+
+**Types in Garment Manufacturing**:
+- **PLANT**: Manufacturing facility
+- **WAREHOUSE**: Storage facility
+- **RETAIL_STORE**: Retail location
+
+**OFBiz Entity**: `Facility`
+
+**Key Attributes**:
+- **Locations**: Specific storage locations within facility
+- **Inventory**: Stock at this facility
+- **Production**: Work performed here
+
+**Example**:
+```xml
+<Facility facilityId="FTM-FAC-MAIN" facilityTypeId="PLANT">
+    <facilityName>FTM Main Manufacturing Plant</facilityName>
+</Facility>
+
+<FacilityLocation facilityId="FTM-FAC-MAIN" locationSeqId="RAW-001">
+    <areaId>RAW-MATERIALS</areaId>
+</FacilityLocation>
+```
+
+---
+
+### Inventory Item (庫存項目)
+**Definition**: Physical stock of product at specific location.
+
+**Types**:
+- **SERIALIZED_INV_ITEM**: Tracked by serial number
+- **NON_SERIAL_INV_ITEM**: Bulk quantity tracking
+
+**Key Fields**:
+- **quantityOnHandTotal**: Physical quantity
+- **availableToPromiseTotal**: Available for sale/use
+- **unitCost**: Cost per unit
+
+**Inventory States**:
+```
+ATP (Available to Promise) = On Hand - Reserved - Allocated
+```
+
+---
+
+### Lead Time (前置時間)
+**Definition**: Time between initiating and completing a process.
+
+**Types**:
+- **Supplier Lead Time**: Order placement to delivery
+- **Manufacturing Lead Time**: Start to finish production
+- **Total Lead Time**: Order to customer delivery
+
+**Example in Garments**:
+```
+Supplier Lead Time: 7 days (fabric order to receipt)
+Manufacturing Lead Time: 20 days (start to finished goods)
+Shipping Lead Time: 5 days
+Total Lead Time: 32 days
+```
+
+**OFBiz Field**: `leadTimeDays` in `SupplierProduct`
+
+---
+
 ### Debtor (債務人)
 **Definition**: Party that owes money.
 
