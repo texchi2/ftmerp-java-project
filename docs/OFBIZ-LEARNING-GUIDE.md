@@ -1256,6 +1256,9 @@ Changes: Added scrap factor calculation
 1. **Official OFBiz Documentation**
    - https://ofbiz.apache.org/documentation.html
    - https://cwiki.apache.org/confluence/display/OFBIZ
+   - manufacturing glossary:
+https://cwiki.apache.org/confluence/display/OFBENDUSER/Manufacturing+Glossary+and+Its+Representation+in+Apache+OFBiz
+   - BOM steps: https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=347933410
 
 2. **FTM Internal Documentation**
    - `/docs/FTM-SETUP-GUIDE.adoc` - Complete setup
