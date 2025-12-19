@@ -1256,6 +1256,9 @@ Changes: Added scrap factor calculation
 1. **Official OFBiz Documentation**
    - https://ofbiz.apache.org/documentation.html
    - https://cwiki.apache.org/confluence/display/OFBIZ
+   - manufacturing glossary:
+https://cwiki.apache.org/confluence/display/OFBENDUSER/Manufacturing+Glossary+and+Its+Representation+in+Apache+OFBiz
+   - BOM steps: https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=347933410
 
 2. **FTM Internal Documentation**
    - `/docs/FTM-SETUP-GUIDE.adoc` - Complete setup
@@ -1265,6 +1268,8 @@ Changes: Added scrap factor calculation
 3. **Community**
    - OFBiz User Mailing List: user@ofbiz.apache.org
    - OFBiz Wiki: https://cwiki.apache.org/confluence/display/OFBIZ
+   - OFBiz MRP: https://docs.huihoo.com/apache/ofbiz/Getting-Started-With-Apache-OFBiz-Manufacturing-MRP-In-5-Easy-Steps-v3.pdf
+
 
 4. **Code Analysis**
    - Use vim/tmux with LLM assistance (see LLM setup guide)
