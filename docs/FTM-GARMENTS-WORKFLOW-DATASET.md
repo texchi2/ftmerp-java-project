@@ -19,9 +19,9 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 
 **Company**: FTM Garments Manufacturing
 **Customer**: ABC Retail Store
-**Order**: 500 units of Men's Blue Casual Shirt (Size M)
+**Order**: 300 units of Men's Casual Pant (32W x 32L, Navy Blue)
 **Delivery Date**: 2025-02-28
-**Order Value**: $15,000 USD
+**Order Value**: $21,000 USD (300 units × $70 retail price)
 
 ---
 
@@ -32,70 +32,126 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 #### **Finished Goods**
 
 ```xml
-<!-- Men's Casual Shirt - Blue, Size M -->
-<Product productId="FTM-SHIRT-BLUE-M" productTypeId="FINISHED_GOOD">
-    <internalName>Men's Casual Shirt Blue Medium</internalName>
-    <primaryProductCategoryId>CASUAL_SHIRTS</primaryProductCategoryId>
+<!-- Men's Casual Pant - Navy Blue, 32W x 32L -->
+<Product productId="FTM-PANT-CASUAL-32X32-NAVY" productTypeId="FINISHED_GOOD">
+    <internalName>Men's Casual Pant 32W x 32L Navy Blue</internalName>
+    <primaryProductCategoryId>CASUAL_PANTS</primaryProductCategoryId>
     <quantityUomId>ea</quantityUomId> <!-- each -->
-    <defaultPrice>30.00</defaultPrice>
+    <defaultPrice>70.00</defaultPrice>
     <currencyUomId>USD</currencyUomId>
-    <weight>0.25</weight>
+    <weight>0.45</weight>
     <weightUomId>kg</weightUomId>
 </Product>
 
 <!-- Product Features -->
-<ProductFeature productFeatureId="COLOR_BLUE" productFeatureTypeId="COLOR">
-    <description>Blue</description>
+<ProductFeature productFeatureId="COLOR_NAVY" productFeatureTypeId="COLOR">
+    <description>Navy Blue</description>
 </ProductFeature>
 
-<ProductFeature productFeatureId="SIZE_M" productFeatureTypeId="SIZE">
-    <description>Medium</description>
+<ProductFeature productFeatureId="SIZE_32W32L" productFeatureTypeId="SIZE">
+    <description>32W x 32L</description>
 </ProductFeature>
 
-<ProductFeatureAppl productId="FTM-SHIRT-BLUE-M" productFeatureId="COLOR_BLUE" fromDate="2025-01-01"/>
-<ProductFeatureAppl productId="FTM-SHIRT-BLUE-M" productFeatureId="SIZE_M" fromDate="2025-01-01"/>
+<ProductFeatureAppl productId="FTM-PANT-CASUAL-32X32-NAVY" productFeatureId="COLOR_NAVY" fromDate="2025-01-01"/>
+<ProductFeatureAppl productId="FTM-PANT-CASUAL-32X32-NAVY" productFeatureId="SIZE_32W32L" fromDate="2025-01-01"/>
 ```
 
 #### **Raw Materials**
 
 ```xml
-<!-- Cotton Fabric - Blue, 45" width -->
-<Product productId="FTM-FABRIC-COTTON-BLUE-45" productTypeId="RAW_MATERIAL">
-    <internalName>Cotton Fabric Blue 45 inch</internalName>
+<!-- Main Fabric - Cotton Twill Navy, 60" width -->
+<Product productId="FTM-FABRIC-COTTON-TWILL-NAVY-60" productTypeId="RAW_MATERIAL">
+    <internalName>Cotton Twill Fabric Navy 60 inch</internalName>
     <quantityUomId>m</quantityUomId> <!-- meter -->
-    <defaultPrice>5.50</defaultPrice>
+    <defaultPrice>8.00</defaultPrice>
     <currencyUomId>USD</currencyUomId>
 </Product>
 
-<!-- White Plastic Buttons 20mm -->
-<Product productId="FTM-BTN-WHITE-20MM" productTypeId="RAW_MATERIAL">
-    <internalName>White Plastic Button 20mm</internalName>
-    <quantityUomId>ea</quantityUomId>
-    <defaultPrice>0.05</defaultPrice>
+<!-- Pocket Lining Fabric - Polyester White -->
+<Product productId="FTM-FABRIC-POLYESTER-POCKET-WHITE" productTypeId="RAW_MATERIAL">
+    <internalName>Polyester Pocket Lining White</internalName>
+    <quantityUomId>m</quantityUomId>
+    <defaultPrice>3.00</defaultPrice>
     <currencyUomId>USD</currencyUomId>
 </Product>
 
-<!-- Metal Zipper 50cm -->
-<Product productId="FTM-ZIP-METAL-50CM" productTypeId="RAW_MATERIAL">
-    <internalName>Metal Zipper 50cm</internalName>
+<!-- Metal Zipper 7 inch Brass -->
+<Product productId="FTM-ZIP-METAL-BRASS-7INCH" productTypeId="RAW_MATERIAL">
+    <internalName>Metal Zipper Brass 7 inch</internalName>
     <quantityUomId>ea</quantityUomId>
     <defaultPrice>0.80</defaultPrice>
     <currencyUomId>USD</currencyUomId>
 </Product>
 
-<!-- Care Label -->
-<Product productId="FTM-LABEL-CARE-EN" productTypeId="RAW_MATERIAL">
-    <internalName>Care Label English</internalName>
+<!-- Metal Button 20mm Brass -->
+<Product productId="FTM-BTN-METAL-BRASS-20MM" productTypeId="RAW_MATERIAL">
+    <internalName>Metal Button Brass 20mm</internalName>
     <quantityUomId>ea</quantityUomId>
-    <defaultPrice>0.02</defaultPrice>
+    <defaultPrice>0.15</defaultPrice>
     <currencyUomId>USD</currencyUomId>
 </Product>
 
-<!-- Thread -->
-<Product productId="FTM-THREAD-BLUE" productTypeId="RAW_MATERIAL">
-    <internalName>Sewing Thread Blue</internalName>
+<!-- Copper Rivets 10mm -->
+<Product productId="FTM-RIVET-COPPER-10MM" productTypeId="RAW_MATERIAL">
+    <internalName>Copper Rivet 10mm</internalName>
+    <quantityUomId>ea</quantityUomId>
+    <defaultPrice>0.05</defaultPrice>
+    <currencyUomId>USD</currencyUomId>
+</Product>
+
+<!-- Sewing Thread - Navy Polyester -->
+<Product productId="FTM-THREAD-POLY-NAVY-CONE" productTypeId="RAW_MATERIAL">
+    <internalName>Polyester Sewing Thread Navy Cone</internalName>
     <quantityUomId>m</quantityUomId>
     <defaultPrice>0.01</defaultPrice>
+    <currencyUomId>USD</currencyUomId>
+</Product>
+
+<!-- Brand Label - Woven -->
+<Product productId="FTM-LABEL-BRAND-WOVEN" productTypeId="RAW_MATERIAL">
+    <internalName>Brand Label Woven</internalName>
+    <quantityUomId>ea</quantityUomId>
+    <defaultPrice>0.20</defaultPrice>
+    <currencyUomId>USD</currencyUomId>
+</Product>
+
+<!-- Care Label English -->
+<Product productId="FTM-LABEL-CARE-EN-WASH" productTypeId="RAW_MATERIAL">
+    <internalName>Care Label English Wash Instructions</internalName>
+    <quantityUomId>ea</quantityUomId>
+    <defaultPrice>0.10</defaultPrice>
+    <currencyUomId>USD</currencyUomId>
+</Product>
+
+<!-- Size Label 32x32 -->
+<Product productId="FTM-LABEL-SIZE-32X32" productTypeId="RAW_MATERIAL">
+    <internalName>Size Label 32W x 32L</internalName>
+    <quantityUomId>ea</quantityUomId>
+    <defaultPrice>0.05</defaultPrice>
+    <currencyUomId>USD</currencyUomId>
+</Product>
+
+<!-- Elastic Waistband 40mm -->
+<Product productId="FTM-ELASTIC-WAIST-40MM-WHITE" productTypeId="RAW_MATERIAL">
+    <internalName>Elastic Waistband 40mm White</internalName>
+    <quantityUomId>m</quantityUomId>
+    <defaultPrice>0.50</defaultPrice>
+    <currencyUomId>USD</currencyUomId>
+</Product>
+
+<!-- Fusible Interfacing -->
+<Product productId="FTM-INTERFACING-FUSIBLE-WHITE" productTypeId="RAW_MATERIAL">
+    <internalName>Fusible Interfacing White</internalName>
+    <quantityUomId>m</quantityUomId>
+    <defaultPrice>1.50</defaultPrice>
+    <currencyUomId>USD</currencyUomId>
+</Product>
+
+<!-- Poly Bag 12x16 -->
+<Product productId="FTM-POLYBAG-12X16-CLEAR" productTypeId="RAW_MATERIAL">
+    <internalName>Poly Bag 12x16 inch Clear</internalName>
+    <quantityUomId>ea</quantityUomId>
+    <defaultPrice>0.08</defaultPrice>
     <currencyUomId>USD</currencyUomId>
 </Product>
 ```
@@ -103,146 +159,263 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 ### 2. Bill of Materials (BOM)
 
 ```xml
-<!-- BOM for FTM-SHIRT-BLUE-M -->
+<!-- BOM for FTM-PANT-CASUAL-32X32-NAVY -->
 
-<!-- Fabric component -->
+<!-- Main Fabric -->
 <ProductAssoc
-    productId="FTM-SHIRT-BLUE-M"
-    productIdTo="FTM-FABRIC-COTTON-BLUE-45"
+    productId="FTM-PANT-CASUAL-32X32-NAVY"
+    productIdTo="FTM-FABRIC-COTTON-TWILL-NAVY-60"
     productAssocTypeId="MANUF_COMPONENT"
-    fromDate="2025-01-01"
-    quantity="1.5"
+    fromDate="2025-01-01 00:00:00"
+    quantity="1.8"
     quantityUomId="m"
-    scrapFactor="1.20"
+    scrapFactor="1.15"
     sequenceNum="10"
-    instruction="Cut according to pattern">
+    instruction="Cut according to pant pattern - front, back, pockets, waistband">
 </ProductAssoc>
 
-<!-- Buttons -->
+<!-- Pocket Lining -->
 <ProductAssoc
-    productId="FTM-SHIRT-BLUE-M"
-    productIdTo="FTM-BTN-WHITE-20MM"
+    productId="FTM-PANT-CASUAL-32X32-NAVY"
+    productIdTo="FTM-FABRIC-POLYESTER-POCKET-WHITE"
     productAssocTypeId="MANUF_COMPONENT"
-    fromDate="2025-01-01"
-    quantity="6"
-    quantityUomId="ea"
+    fromDate="2025-01-01 00:00:00"
+    quantity="0.3"
+    quantityUomId="m"
+    scrapFactor="1.10"
     sequenceNum="20"
-    instruction="Attach to front placket">
+    instruction="Cut pocket lining - 4 pieces per pant">
 </ProductAssoc>
 
 <!-- Zipper -->
 <ProductAssoc
-    productId="FTM-SHIRT-BLUE-M"
-    productIdTo="FTM-ZIP-METAL-50CM"
+    productId="FTM-PANT-CASUAL-32X32-NAVY"
+    productIdTo="FTM-ZIP-METAL-BRASS-7INCH"
     productAssocTypeId="MANUF_COMPONENT"
-    fromDate="2025-01-01"
+    fromDate="2025-01-01 00:00:00"
     quantity="1"
     quantityUomId="ea"
+    scrapFactor="1.02"
     sequenceNum="30"
-    instruction="Install at front opening">
+    instruction="Install at front fly opening">
+</ProductAssoc>
+
+<!-- Button -->
+<ProductAssoc
+    productId="FTM-PANT-CASUAL-32X32-NAVY"
+    productIdTo="FTM-BTN-METAL-BRASS-20MM"
+    productAssocTypeId="MANUF_COMPONENT"
+    fromDate="2025-01-01 00:00:00"
+    quantity="1"
+    quantityUomId="ea"
+    scrapFactor="1.05"
+    sequenceNum="40"
+    instruction="Attach at waistband closure">
+</ProductAssoc>
+
+<!-- Rivets -->
+<ProductAssoc
+    productId="FTM-PANT-CASUAL-32X32-NAVY"
+    productIdTo="FTM-RIVET-COPPER-10MM"
+    productAssocTypeId="MANUF_COMPONENT"
+    fromDate="2025-01-01 00:00:00"
+    quantity="4"
+    quantityUomId="ea"
+    scrapFactor="1.10"
+    sequenceNum="50"
+    instruction="Install at pocket corners for reinforcement">
+</ProductAssoc>
+
+<!-- Main Sewing Thread -->
+<ProductAssoc
+    productId="FTM-PANT-CASUAL-32X32-NAVY"
+    productIdTo="FTM-THREAD-POLY-NAVY-CONE"
+    productAssocTypeId="MANUF_COMPONENT"
+    fromDate="2025-01-01 00:00:00"
+    quantity="150"
+    quantityUomId="m"
+    scrapFactor="1.20"
+    sequenceNum="60"
+    instruction="Use for all main seams">
+</ProductAssoc>
+
+<!-- Brand Label -->
+<ProductAssoc
+    productId="FTM-PANT-CASUAL-32X32-NAVY"
+    productIdTo="FTM-LABEL-BRAND-WOVEN"
+    productAssocTypeId="MANUF_COMPONENT"
+    fromDate="2025-01-01 00:00:00"
+    quantity="1"
+    quantityUomId="ea"
+    scrapFactor="1.05"
+    sequenceNum="70"
+    instruction="Sew inside waistband at center back">
 </ProductAssoc>
 
 <!-- Care Label -->
 <ProductAssoc
-    productId="FTM-SHIRT-BLUE-M"
-    productIdTo="FTM-LABEL-CARE-EN"
+    productId="FTM-PANT-CASUAL-32X32-NAVY"
+    productIdTo="FTM-LABEL-CARE-EN-WASH"
     productAssocTypeId="MANUF_COMPONENT"
-    fromDate="2025-01-01"
+    fromDate="2025-01-01 00:00:00"
     quantity="1"
     quantityUomId="ea"
-    sequenceNum="40"
-    instruction="Sew at inside collar">
+    scrapFactor="1.03"
+    sequenceNum="80"
+    instruction="Sew inside waistband, left side seam">
 </ProductAssoc>
 
-<!-- Thread -->
+<!-- Size Label -->
 <ProductAssoc
-    productId="FTM-SHIRT-BLUE-M"
-    productIdTo="FTM-THREAD-BLUE"
+    productId="FTM-PANT-CASUAL-32X32-NAVY"
+    productIdTo="FTM-LABEL-SIZE-32X32"
     productAssocTypeId="MANUF_COMPONENT"
-    fromDate="2025-01-01"
-    quantity="50"
+    fromDate="2025-01-01 00:00:00"
+    quantity="1"
+    quantityUomId="ea"
+    scrapFactor="1.03"
+    sequenceNum="90"
+    instruction="Sew inside waistband, right side seam">
+</ProductAssoc>
+
+<!-- Elastic Waistband -->
+<ProductAssoc
+    productId="FTM-PANT-CASUAL-32X32-NAVY"
+    productIdTo="FTM-ELASTIC-WAIST-40MM-WHITE"
+    productAssocTypeId="MANUF_COMPONENT"
+    fromDate="2025-01-01 00:00:00"
+    quantity="0.9"
+    quantityUomId="m"
+    scrapFactor="1.05"
+    sequenceNum="100"
+    instruction="Insert inside waistband for support">
+</ProductAssoc>
+
+<!-- Interfacing -->
+<ProductAssoc
+    productId="FTM-PANT-CASUAL-32X32-NAVY"
+    productIdTo="FTM-INTERFACING-FUSIBLE-WHITE"
+    productAssocTypeId="MANUF_COMPONENT"
+    fromDate="2025-01-01 00:00:00"
+    quantity="0.4"
     quantityUomId="m"
     scrapFactor="1.10"
-    sequenceNum="50">
+    sequenceNum="110"
+    instruction="Iron-on to waistband for structure">
+</ProductAssoc>
+
+<!-- Poly Bag -->
+<ProductAssoc
+    productId="FTM-PANT-CASUAL-32X32-NAVY"
+    productIdTo="FTM-POLYBAG-12X16-CLEAR"
+    productAssocTypeId="MANUF_COMPONENT"
+    fromDate="2025-01-01 00:00:00"
+    quantity="1"
+    quantityUomId="ea"
+    scrapFactor="1.02"
+    sequenceNum="120"
+    instruction="Fold pant and insert in poly bag">
 </ProductAssoc>
 ```
 
 **BOM Summary (per unit):**
-- 1.5m Cotton Fabric (with 20% scrap = 1.8m required)
-- 6 Buttons
-- 1 Zipper
-- 1 Care Label
-- 50m Thread (with 10% scrap = 55m required)
+- 1.8m Main Fabric (with 15% scrap = 2.07m required)
+- 0.3m Pocket Lining (with 10% scrap = 0.33m required)
+- 1 Zipper (with 2% scrap = 1.02 required)
+- 1 Button (with 5% scrap = 1.05 required)
+- 4 Rivets (with 10% scrap = 4.4 required)
+- 150m Thread (with 20% scrap = 180m required)
+- 3 Labels (brand, care, size)
+- 0.9m Elastic (with 5% scrap = 0.95m required)
+- 0.4m Interfacing (with 10% scrap = 0.44m required)
+- 1 Poly Bag (with 2% scrap = 1.02 required)
+- **Total Material Cost**: ~$25.52 per pant (see [BOM-DEEP-DIVE.md](BOM-DEEP-DIVE.md) for detailed cost breakdown)
 
 ### 3. Manufacturing Routing
 
 ```xml
-<!-- Routing for Shirt Manufacturing -->
-<WorkEffort workEffortId="ROUTE-SHIRT-STD" workEffortTypeId="ROUTING">
-    <workEffortName>Standard Shirt Manufacturing Route</workEffortName>
-    <description>Standard routing for casual shirts</description>
+<!-- Routing for Pant Manufacturing -->
+<WorkEffort workEffortId="ROUTE-PANT-STD" workEffortTypeId="ROUTING">
+    <workEffortName>Standard Pant Manufacturing Route</workEffortName>
+    <description>Standard routing for casual pants</description>
 </WorkEffort>
 
 <!-- Task 1: Cutting -->
-<WorkEffort workEffortId="TASK-CUT" workEffortTypeId="ROU_TASK">
+<WorkEffort workEffortId="TASK-CUT-PANT" workEffortTypeId="ROU_TASK">
     <workEffortName>Fabric Cutting</workEffortName>
-    <description>Cut fabric according to pattern</description>
-    <estimatedMilliSeconds>7200000</estimatedMilliSeconds> <!-- 2 hours per 100 units -->
+    <description>Cut fabric according to pant pattern - front, back, pockets, waistband</description>
+    <estimatedMilliSeconds>10800000</estimatedMilliSeconds> <!-- 3 hours per 100 units -->
     <fixedAssetId>MACHINE-CUTTING-AUTO</fixedAssetId>
     <locationDesc>Cutting Section</locationDesc>
 </WorkEffort>
 
 <WorkEffortAssoc
-    workEffortIdFrom="ROUTE-SHIRT-STD"
-    workEffortIdTo="TASK-CUT"
+    workEffortIdFrom="ROUTE-PANT-STD"
+    workEffortIdTo="TASK-CUT-PANT"
     workEffortAssocTypeId="ROUTING_COMPONENT"
     sequenceNum="10">
 </WorkEffortAssoc>
 
 <!-- Task 2: Sewing -->
-<WorkEffort workEffortId="TASK-SEW" workEffortTypeId="ROU_TASK">
-    <workEffortName>Shirt Sewing</workEffortName>
-    <description>Sew all components together</description>
-    <estimatedMilliSeconds>14400000</estimatedMilliSeconds> <!-- 4 hours per 100 units -->
+<WorkEffort workEffortId="TASK-SEW-PANT" workEffortTypeId="ROU_TASK">
+    <workEffortName>Pant Sewing</workEffortName>
+    <description>Sew all components - inseams, outseams, pockets, zipper, waistband</description>
+    <estimatedMilliSeconds>18000000</estimatedMilliSeconds> <!-- 5 hours per 100 units -->
     <fixedAssetId>MACHINE-SEWING-INDUSTRIAL</fixedAssetId>
-    <locationDesc>Sewing Line 1</locationDesc>
+    <locationDesc>Sewing Line 2</locationDesc>
 </WorkEffort>
 
 <WorkEffortAssoc
-    workEffortIdFrom="ROUTE-SHIRT-STD"
-    workEffortIdTo="TASK-SEW"
+    workEffortIdFrom="ROUTE-PANT-STD"
+    workEffortIdTo="TASK-SEW-PANT"
     workEffortAssocTypeId="ROUTING_COMPONENT"
     sequenceNum="20">
 </WorkEffortAssoc>
 
-<!-- Task 3: Quality Control -->
-<WorkEffort workEffortId="TASK-QC" workEffortTypeId="ROU_TASK">
+<!-- Task 3: Finishing (Bartack, Rivets, Hemming) -->
+<WorkEffort workEffortId="TASK-FINISH-PANT" workEffortTypeId="ROU_TASK">
+    <workEffortName>Finishing Operations</workEffortName>
+    <description>Install rivets, bartack stress points, hem legs</description>
+    <estimatedMilliSeconds>7200000</estimatedMilliSeconds> <!-- 2 hours per 100 units -->
+    <fixedAssetId>MACHINE-BARTACK</fixedAssetId>
+    <locationDesc>Finishing Station</locationDesc>
+</WorkEffort>
+
+<WorkEffortAssoc
+    workEffortIdFrom="ROUTE-PANT-STD"
+    workEffortIdTo="TASK-FINISH-PANT"
+    workEffortAssocTypeId="ROUTING_COMPONENT"
+    sequenceNum="30">
+</WorkEffortAssoc>
+
+<!-- Task 4: Quality Control -->
+<WorkEffort workEffortId="TASK-QC-PANT" workEffortTypeId="ROU_TASK">
     <workEffortName>Quality Inspection</workEffortName>
-    <description>Check stitching, buttons, measurements</description>
+    <description>Check stitching, measurements, zipper, rivets, overall quality</description>
     <estimatedMilliSeconds>3600000</estimatedMilliSeconds> <!-- 1 hour per 100 units -->
     <locationDesc>QC Station</locationDesc>
 </WorkEffort>
 
 <WorkEffortAssoc
-    workEffortIdFrom="ROUTE-SHIRT-STD"
-    workEffortIdTo="TASK-QC"
+    workEffortIdFrom="ROUTE-PANT-STD"
+    workEffortIdTo="TASK-QC-PANT"
     workEffortAssocTypeId="ROUTING_COMPONENT"
-    sequenceNum="30">
+    sequenceNum="40">
 </WorkEffortAssoc>
 
-<!-- Task 4: Finishing & Packing -->
-<WorkEffort workEffortId="TASK-PACK" workEffortTypeId="ROU_TASK">
-    <workEffortName>Finishing and Packaging</workEffortName>
-    <description>Iron, fold, package</description>
-    <estimatedMilliSeconds>3600000</estimatedMilliSeconds> <!-- 1 hour per 100 units -->
+<!-- Task 5: Pressing & Packing -->
+<WorkEffort workEffortId="TASK-PACK-PANT" workEffortTypeId="ROU_TASK">
+    <workEffortName>Pressing and Packaging</workEffortName>
+    <description>Press, fold, insert cardboard, poly bag, label</description>
+    <estimatedMilliSeconds>5400000</estimatedMilliSeconds> <!-- 1.5 hours per 100 units -->
     <locationDesc>Packing Area</locationDesc>
 </WorkEffort>
 
 <WorkEffortAssoc
-    workEffortIdFrom="ROUTE-SHIRT-STD"
-    workEffortIdTo="TASK-PACK"
+    workEffortIdFrom="ROUTE-PANT-STD"
+    workEffortIdTo="TASK-PACK-PANT"
     workEffortAssocTypeId="ROUTING_COMPONENT"
-    sequenceNum="40">
+    sequenceNum="50">
 </WorkEffortAssoc>
 ```
 
@@ -352,63 +525,126 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 ### 7. Initial Inventory
 
 ```xml
-<!-- Fabric Inventory -->
+<!-- Main Fabric Inventory -->
 <InventoryItem
     inventoryItemId="INV-FABRIC-001"
-    productId="FTM-FABRIC-COTTON-BLUE-45"
+    productId="FTM-FABRIC-COTTON-TWILL-NAVY-60"
     facilityId="FTM-FAC-MAIN"
     locationSeqId="RAW-001"
     inventoryItemTypeId="NON_SERIAL_INV_ITEM"
     datetimeReceived="2025-01-05"
-    quantityOnHandTotal="1000"
-    availableToPromiseTotal="1000"
-    unitCost="5.50"
+    quantityOnHandTotal="800"
+    availableToPromiseTotal="800"
+    unitCost="8.00"
     currencyUomId="USD">
 </InventoryItem>
 
-<!-- Buttons Inventory -->
+<!-- Pocket Lining Inventory -->
 <InventoryItem
-    inventoryItemId="INV-BTN-001"
-    productId="FTM-BTN-WHITE-20MM"
+    inventoryItemId="INV-POCKET-LINING-001"
+    productId="FTM-FABRIC-POLYESTER-POCKET-WHITE"
     facilityId="FTM-FAC-MAIN"
     locationSeqId="RAW-001"
     datetimeReceived="2025-01-05"
-    quantityOnHandTotal="10000"
-    availableToPromiseTotal="10000"
-    unitCost="0.05">
+    quantityOnHandTotal="150"
+    availableToPromiseTotal="150"
+    unitCost="3.00">
 </InventoryItem>
 
 <!-- Zippers Inventory -->
 <InventoryItem
     inventoryItemId="INV-ZIP-001"
-    productId="FTM-ZIP-METAL-50CM"
+    productId="FTM-ZIP-METAL-BRASS-7INCH"
     facilityId="FTM-FAC-MAIN"
     locationSeqId="RAW-001"
-    quantityOnHandTotal="5000"
-    availableToPromiseTotal="5000"
+    datetimeReceived="2025-01-05"
+    quantityOnHandTotal="500"
+    availableToPromiseTotal="500"
     unitCost="0.80">
 </InventoryItem>
 
-<!-- Labels Inventory -->
+<!-- Buttons Inventory -->
 <InventoryItem
-    inventoryItemId="INV-LABEL-001"
-    productId="FTM-LABEL-CARE-EN"
+    inventoryItemId="INV-BTN-001"
+    productId="FTM-BTN-METAL-BRASS-20MM"
     facilityId="FTM-FAC-MAIN"
     locationSeqId="RAW-001"
-    quantityOnHandTotal="20000"
-    availableToPromiseTotal="20000"
-    unitCost="0.02">
+    datetimeReceived="2025-01-05"
+    quantityOnHandTotal="1000"
+    availableToPromiseTotal="1000"
+    unitCost="0.15">
+</InventoryItem>
+
+<!-- Rivets Inventory -->
+<InventoryItem
+    inventoryItemId="INV-RIVET-001"
+    productId="FTM-RIVET-COPPER-10MM"
+    facilityId="FTM-FAC-MAIN"
+    locationSeqId="RAW-001"
+    datetimeReceived="2025-01-05"
+    quantityOnHandTotal="5000"
+    availableToPromiseTotal="5000"
+    unitCost="0.05">
 </InventoryItem>
 
 <!-- Thread Inventory -->
 <InventoryItem
     inventoryItemId="INV-THREAD-001"
-    productId="FTM-THREAD-BLUE"
+    productId="FTM-THREAD-POLY-NAVY-CONE"
     facilityId="FTM-FAC-MAIN"
     locationSeqId="RAW-001"
-    quantityOnHandTotal="50000"
-    availableToPromiseTotal="50000"
+    datetimeReceived="2025-01-05"
+    quantityOnHandTotal="100000"
+    availableToPromiseTotal="100000"
     unitCost="0.01">
+</InventoryItem>
+
+<!-- Labels Inventory -->
+<InventoryItem
+    inventoryItemId="INV-LABEL-001"
+    productId="FTM-LABEL-BRAND-WOVEN"
+    facilityId="FTM-FAC-MAIN"
+    locationSeqId="RAW-001"
+    datetimeReceived="2025-01-05"
+    quantityOnHandTotal="2000"
+    availableToPromiseTotal="2000"
+    unitCost="0.20">
+</InventoryItem>
+
+<!-- Elastic Inventory -->
+<InventoryItem
+    inventoryItemId="INV-ELASTIC-001"
+    productId="FTM-ELASTIC-WAIST-40MM-WHITE"
+    facilityId="FTM-FAC-MAIN"
+    locationSeqId="RAW-001"
+    datetimeReceived="2025-01-05"
+    quantityOnHandTotal="500"
+    availableToPromiseTotal="500"
+    unitCost="0.50">
+</InventoryItem>
+
+<!-- Interfacing Inventory -->
+<InventoryItem
+    inventoryItemId="INV-INTERFACING-001"
+    productId="FTM-INTERFACING-FUSIBLE-WHITE"
+    facilityId="FTM-FAC-MAIN"
+    locationSeqId="RAW-001"
+    datetimeReceived="2025-01-05"
+    quantityOnHandTotal="200"
+    availableToPromiseTotal="200"
+    unitCost="1.50">
+</InventoryItem>
+
+<!-- Poly Bags Inventory -->
+<InventoryItem
+    inventoryItemId="INV-POLYBAG-001"
+    productId="FTM-POLYBAG-12X16-CLEAR"
+    facilityId="FTM-FAC-MAIN"
+    locationSeqId="RAW-001"
+    datetimeReceived="2025-01-05"
+    quantityOnHandTotal="5000"
+    availableToPromiseTotal="5000"
+    unitCost="0.08">
 </InventoryItem>
 ```
 
@@ -423,13 +659,13 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 
 ```xml
 <OrderHeader orderId="SO-2025-001" orderTypeId="SALES_ORDER">
-    <orderName>ABC Retail - Blue Shirts Order</orderName>
+    <orderName>ABC Retail - Navy Pants Order</orderName>
     <orderDate>2025-01-15 10:00:00</orderDate>
     <entryDate>2025-01-15 10:00:00</entryDate>
     <statusId>ORDER_CREATED</statusId>
     <currencyUom>USD</currencyUom>
     <billingAccountId></billingAccountId>
-    <grandTotal>15000.00</grandTotal>
+    <grandTotal>21000.00</grandTotal>
     <billingPartyId>CUSTOMER-ABC-RETAIL</billingPartyId>
     <partyId>CUSTOMER-ABC-RETAIL</partyId>
     <productStoreId>FTM_STORE</productStoreId>
@@ -437,13 +673,13 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 
 <OrderItem orderId="SO-2025-001" orderItemSeqId="00001">
     <orderItemTypeId>PRODUCT_ORDER_ITEM</orderItemTypeId>
-    <productId>FTM-SHIRT-BLUE-M</productId>
+    <productId>FTM-PANT-CASUAL-32X32-NAVY</productId>
     <prodCatalogId>FTM_CATALOG</prodCatalogId>
-    <quantity>500</quantity>
+    <quantity>300</quantity>
     <selectedAmount>0</selectedAmount>
-    <unitPrice>30.00</unitPrice>
-    <unitListPrice>35.00</unitListPrice>
-    <itemDescription>Men's Casual Shirt Blue Medium</itemDescription>
+    <unitPrice>70.00</unitPrice>
+    <unitListPrice>80.00</unitListPrice>
+    <itemDescription>Men's Casual Pant 32W x 32L Navy Blue</itemDescription>
     <statusId>ITEM_CREATED</statusId>
     <estimatedDeliveryDate>2025-02-28</estimatedDeliveryDate>
 </OrderItem>
@@ -481,60 +717,84 @@ result:
 
 **Material Requirements Calculation**:
 
-For 500 units of FTM-SHIRT-BLUE-M:
-- Fabric: 500 × 1.5m × 1.20 (scrap) = **900 meters**
-- Buttons: 500 × 6 = **3,000 units**
-- Zippers: 500 × 1 = **500 units**
-- Labels: 500 × 1 = **500 units**
-- Thread: 500 × 50m × 1.10 (scrap) = **27,500 meters**
+For 300 units of FTM-PANT-CASUAL-32X32-NAVY:
+- Main Fabric: 300 × 1.8m × 1.15 (scrap) = **621 meters**
+- Pocket Lining: 300 × 0.3m × 1.10 (scrap) = **99 meters**
+- Zippers: 300 × 1 × 1.02 (scrap) = **306 units**
+- Buttons: 300 × 1 × 1.05 (scrap) = **315 units**
+- Rivets: 300 × 4 × 1.10 (scrap) = **1,320 units**
+- Thread: 300 × 150m × 1.20 (scrap) = **54,000 meters**
+- Labels (all types): 300 × 3 × 1.03 (avg scrap) = **927 units**
+- Elastic: 300 × 0.9m × 1.05 (scrap) = **283.5 meters**
+- Interfacing: 300 × 0.4m × 1.10 (scrap) = **132 meters**
+- Poly Bags: 300 × 1 × 1.02 (scrap) = **306 units**
 
 **Current Inventory vs Requirements**:
 
 | Material | Required | Available | Shortage |
 |----------|----------|-----------|----------|
-| Fabric | 900m | 1,000m | 0 ✓ |
-| Buttons | 3,000 | 10,000 | 0 ✓ |
-| Zippers | 500 | 5,000 | 0 ✓ |
-| Labels | 500 | 20,000 | 0 ✓ |
-| Thread | 27,500m | 50,000m | 0 ✓ |
+| Main Fabric | 621m | 800m | 0 ✓ |
+| Pocket Lining | 99m | 150m | 0 ✓ |
+| Zippers | 306 | 500 | 0 ✓ |
+| Buttons | 315 | 1,000 | 0 ✓ |
+| Rivets | 1,320 | 5,000 | 0 ✓ |
+| Thread | 54,000m | 100,000m | 0 ✓ |
+| Labels | 927 | 2,000 | 0 ✓ |
+| Elastic | 283.5m | 500m | 0 ✓ |
+| Interfacing | 132m | 200m | 0 ✓ |
+| Poly Bags | 306 | 5,000 | 0 ✓ |
 
 **MRP Events Created**:
 
 ```xml
 <!-- Demand Event -->
-<MrpEvent mrpId="MRP-001" productId="FTM-SHIRT-BLUE-M">
+<MrpEvent mrpId="MRP-001" productId="FTM-PANT-CASUAL-32X32-NAVY">
     <mrpEventTypeId>DEMAND</mrpEventTypeId>
     <eventDate>2025-02-28</eventDate>
-    <quantity>500</quantity>
+    <quantity>300</quantity>
     <facilityId>FTM-FAC-MAIN</facilityId>
     <eventName>Sales Order SO-2025-001</eventName>
 </MrpEvent>
 
 <!-- Component Demand Events -->
-<MrpEvent mrpId="MRP-002" productId="FTM-FABRIC-COTTON-BLUE-45">
+<MrpEvent mrpId="MRP-002" productId="FTM-FABRIC-COTTON-TWILL-NAVY-60">
     <mrpEventTypeId>DEMAND</mrpEventTypeId>
     <eventDate>2025-02-01</eventDate>
-    <quantity>900</quantity>
+    <quantity>621</quantity>
     <facilityId>FTM-FAC-MAIN</facilityId>
 </MrpEvent>
 
-<MrpEvent mrpId="MRP-003" productId="FTM-BTN-WHITE-20MM">
+<MrpEvent mrpId="MRP-003" productId="FTM-THREAD-POLY-NAVY-CONE">
     <mrpEventTypeId>DEMAND</mrpEventTypeId>
     <eventDate>2025-02-01</eventDate>
-    <quantity>3000</quantity>
+    <quantity>54000</quantity>
+    <facilityId>FTM-FAC-MAIN</facilityId>
+</MrpEvent>
+
+<MrpEvent mrpId="MRP-004" productId="FTM-RIVET-COPPER-10MM">
+    <mrpEventTypeId>DEMAND</mrpEventTypeId>
+    <eventDate>2025-02-01</eventDate>
+    <quantity>1320</quantity>
     <facilityId>FTM-FAC-MAIN</facilityId>
 </MrpEvent>
 
 <!-- Supply Events (from existing inventory) -->
-<MrpEvent mrpId="MRP-101" productId="FTM-FABRIC-COTTON-BLUE-45">
+<MrpEvent mrpId="MRP-101" productId="FTM-FABRIC-COTTON-TWILL-NAVY-60">
     <mrpEventTypeId>SUPPLY</mrpEventTypeId>
     <eventDate>2025-01-05</eventDate>
-    <quantity>1000</quantity>
+    <quantity>800</quantity>
+    <facilityId>FTM-FAC-MAIN</facilityId>
+</MrpEvent>
+
+<MrpEvent mrpId="MRP-102" productId="FTM-THREAD-POLY-NAVY-CONE">
+    <mrpEventTypeId>SUPPLY</mrpEventTypeId>
+    <eventDate>2025-01-05</eventDate>
+    <quantity>100000</quantity>
     <facilityId>FTM-FAC-MAIN</facilityId>
 </MrpEvent>
 ```
 
-**Result**: All materials available in stock. No purchase orders needed.
+**Result**: All materials available in stock. No purchase orders needed for this production run.
 
 ### Step 3: Production Run Creation
 
@@ -1042,6 +1302,401 @@ This workflow utilizes entities and services from:
 
 ---
 
+## Importing Data into OFBiz
+
+This section explains how to import the workflow dataset XML into your running OFBiz instance.
+
+### Prerequisites
+
+1. **OFBiz Installed**: OFBiz framework properly installed at `~/development/ofbiz-framework`
+2. **Database Configured**: PostgreSQL database configured and accessible
+3. **System Running**: OFBiz loaded with seed data (`./gradlew loadAll`)
+4. **Data File Ready**: XML file prepared with entity data
+
+### Method 1: Command Line Import (Recommended)
+
+This is the most reliable method for importing large datasets.
+
+#### Step 1: Prepare Your Data File
+
+Create an XML file with proper structure:
+
+```bash
+# Create data directory in your plugin
+mkdir -p ~/development/ofbiz-plugins/ftm-garments/data
+
+# Create the data file
+nano ~/development/ofbiz-plugins/ftm-garments/data/FtmWorkflowData.xml
+```
+
+**File Structure**:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-engine-xml>
+    <!-- Product Catalog -->
+    <Product productId="FTM-PANT-CASUAL-32X32-NAVY" productTypeId="FINISHED_GOOD">
+        <internalName>Men's Casual Pant 32W x 32L Navy Blue</internalName>
+        <primaryProductCategoryId>CASUAL_PANTS</primaryProductCategoryId>
+        <quantityUomId>ea</quantityUomId>
+        <defaultPrice>70.00</defaultPrice>
+        <currencyUomId>USD</currencyUomId>
+    </Product>
+
+    <!-- BOM -->
+    <ProductAssoc
+        productId="FTM-PANT-CASUAL-32X32-NAVY"
+        productIdTo="FTM-FABRIC-COTTON-TWILL-NAVY-60"
+        productAssocTypeId="MANUF_COMPONENT"
+        fromDate="2025-01-01 00:00:00"
+        quantity="1.8"
+        scrapFactor="1.15"
+        sequenceNum="10"/>
+
+    <!-- Add all other entities here -->
+</entity-engine-xml>
+```
+
+#### Step 2: Import Using Gradle
+
+```bash
+# Navigate to OFBiz framework directory
+cd ~/development/ofbiz-framework
+
+# Import the data file
+./gradlew "ofbiz --load-data file=plugins/ftm-garments/data/FtmWorkflowData.xml"
+
+# Alternative: Load specific readers
+./gradlew "ofbiz --load-data file=plugins/ftm-garments/data/FtmWorkflowData.xml readers=ext"
+```
+
+**Expected Output**:
+
+```
+> Task :ofbiz
+...
+2025-01-15 10:00:00,123 |main |GenericDelegator |I| [File Import] : Beginning import from file ...
+2025-01-15 10:00:00,456 |main |GenericDelegator |I| [File Import] : Finished importing 150 entities
+```
+
+### Method 2: WebTools Import (Web UI)
+
+For smaller datasets or quick testing.
+
+#### Steps:
+
+1. **Start OFBiz**:
+   ```bash
+   cd ~/development/ofbiz-framework
+   ./gradlew ofbiz
+   ```
+
+2. **Access WebTools**:
+   - Open browser: https://localhost:8443/webtools
+   - Login: admin / ofbiz
+
+3. **Navigate to Import**:
+   - Click: **Entity Engine Tools**
+   - Click: **Entity XML Import**
+
+4. **Upload or Paste XML**:
+   - **Option A** - Upload File:
+     - Click "Browse" and select your XML file
+     - Click "Import Text"
+
+   - **Option B** - Paste XML:
+     - Copy your XML content
+     - Paste into the text area
+     - Click "Import Text"
+
+5. **Verify Import**:
+   - Check the log output for errors
+   - Use Entity Data Maintenance to verify records
+
+### Method 3: Include in Plugin Data Load
+
+For data that should always be loaded with your plugin.
+
+#### Step 1: Configure Plugin Component
+
+Edit `~/development/ofbiz-plugins/ftm-garments/ofbiz-component.xml`:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<ofbiz-component name="ftm-garments">
+    <!-- ... existing configuration ... -->
+
+    <!-- Data Readers -->
+    <entity-resource type="data" reader-name="seed" loader="main" location="data/FtmSeedData.xml"/>
+    <entity-resource type="data" reader-name="demo" loader="main" location="data/FtmDemoData.xml"/>
+    <entity-resource type="data" reader-name="ext" loader="main" location="data/FtmWorkflowData.xml"/>
+</ofbiz-component>
+```
+
+#### Step 2: Load Plugin Data
+
+```bash
+cd ~/development/ofbiz-framework
+
+# Load all data including plugin data
+./gradlew loadAll
+
+# Or load specific readers
+./gradlew "ofbiz --load-data readers=seed,demo,ext"
+
+# Or load specific plugin only
+./gradlew "ofbiz --load-data component=ftm-garments"
+```
+
+### Data Import Best Practices
+
+#### 1. **Use Proper Data Readers**
+
+| Reader | Purpose | When to Use |
+|--------|---------|-------------|
+| `seed` | Essential system data | Required entities, enumerations |
+| `seed-initial` | Initial setup data | Users, security, configurations |
+| `demo` | Demonstration data | Sample products, orders |
+| `ext` | External/custom data | Your business data |
+
+#### 2. **Order of Data Import**
+
+**Critical**: Import entities in dependency order:
+
+```
+1. Product Catalog (products must exist before BOM)
+2. Facilities (facilities before inventory)
+3. Parties (customers, suppliers)
+4. BOM (requires products)
+5. Inventory (requires products and facilities)
+6. Orders (requires products and parties)
+7. Production Runs (requires BOM and facilities)
+```
+
+**Example Correct Order**:
+
+```xml
+<entity-engine-xml>
+    <!-- 1. Products First -->
+    <Product productId="FTM-PANT-001" .../>
+    <Product productId="FTM-FABRIC-001" .../>
+
+    <!-- 2. Then BOM (references products) -->
+    <ProductAssoc productId="FTM-PANT-001" productIdTo="FTM-FABRIC-001" .../>
+
+    <!-- 3. Then Inventory (references products) -->
+    <InventoryItem productId="FTM-FABRIC-001" .../>
+</entity-engine-xml>
+```
+
+#### 3. **Handle Dates Properly**
+
+```xml
+<!-- ISO 8601 format: YYYY-MM-DD HH:MM:SS -->
+<ProductAssoc fromDate="2025-01-01 00:00:00"/>
+
+<!-- For date fields without time -->
+<OrderHeader orderDate="2025-01-15 10:00:00"/>
+```
+
+#### 4. **Use Transactions**
+
+Large imports are automatically wrapped in transactions. If one entity fails, entire file rolls back.
+
+#### 5. **Validate Before Import**
+
+```bash
+# Check XML syntax
+xmllint --noout data/FtmWorkflowData.xml
+
+# If valid, no output. If errors, you'll see them.
+```
+
+### Troubleshooting
+
+#### Error: "Entity not found"
+
+**Cause**: Trying to import entity that doesn't exist in data model
+
+**Solution**: Check entity name spelling in `entitymodel.xml` files
+
+```bash
+# Search for entity definition
+grep -r "entity-name=\"ProductAssoc\"" applications/datamodel/entitydef/
+```
+
+#### Error: "Foreign key constraint violation"
+
+**Cause**: Referencing an ID that doesn't exist (e.g., productId that hasn't been created yet)
+
+**Solution**: Import dependencies first
+
+```xml
+<!-- Wrong Order -->
+<ProductAssoc productIdTo="FTM-FABRIC-001" .../> <!-- Fails: fabric doesn't exist -->
+<Product productId="FTM-FABRIC-001" .../>
+
+<!-- Correct Order -->
+<Product productId="FTM-FABRIC-001" .../> <!-- Create product first -->
+<ProductAssoc productIdTo="FTM-FABRIC-001" .../> <!-- Then reference it -->
+```
+
+#### Error: "Duplicate key"
+
+**Cause**: Trying to import record with same primary key that already exists
+
+**Solution Option 1** - Skip existing:
+```bash
+./gradlew "ofbiz --load-data file=data.xml readers=ext"
+# Add continue-on-error flag in XML:
+```
+
+```xml
+<entity-engine-xml continue-on-error="true">
+    <!-- data here -->
+</entity-engine-xml>
+```
+
+**Solution Option 2** - Clear existing data first:
+```sql
+-- Careful! This deletes data
+DELETE FROM product WHERE product_id LIKE 'FTM-%';
+```
+
+#### Error: "Parse error"
+
+**Cause**: Invalid XML syntax
+
+**Solution**: Validate XML structure
+```bash
+# Check for common issues:
+# - Unclosed tags
+# - Missing quotes around attributes
+# - Invalid characters (< > & must be escaped)
+# - Wrong encoding
+
+xmllint --noout data/FtmWorkflowData.xml
+```
+
+#### Viewing Import Logs
+
+```bash
+# Real-time log viewing
+tail -f ~/development/ofbiz-framework/runtime/logs/ofbiz.log
+
+# Search for import errors
+grep "ERROR" runtime/logs/ofbiz.log | grep -i "import"
+
+# See import statistics
+grep "Finished importing" runtime/logs/ofbiz.log
+```
+
+### Verifying Successful Import
+
+#### Method 1: WebTools Entity Data Maintenance
+
+1. Open: https://localhost:8443/webtools/control/EntityDataMaintenance
+2. Select entity: e.g., "Product"
+3. Click "Find"
+4. Verify your data appears
+
+#### Method 2: Database Query
+
+```sql
+-- Connect to database
+psql -U ftmuser -d ftmerp
+
+-- Check products
+SELECT product_id, internal_name FROM product WHERE product_id LIKE 'FTM-%';
+
+-- Check BOM
+SELECT product_id, product_id_to, quantity, scrap_factor
+FROM product_assoc
+WHERE product_id = 'FTM-PANT-CASUAL-32X32-NAVY';
+
+-- Count imported records
+SELECT COUNT(*) FROM product WHERE product_id LIKE 'FTM-%';
+```
+
+#### Method 3: Check Logs
+
+```bash
+grep "FTM-PANT-CASUAL-32X32-NAVY" runtime/logs/ofbiz.log
+```
+
+### Exporting Existing Data
+
+To export current data for backup or migration:
+
+#### Using WebTools:
+
+1. Navigate to: Entity Engine Tools → Entity XML Data Export
+2. Select entities to export
+3. Click "Export"
+
+#### Using Command Line:
+
+```bash
+# Export all data from specific entities
+./gradlew "ofbiz --export entityIds=Product,ProductAssoc,InventoryItem file=export.xml"
+
+# Export with date filter
+./gradlew "ofbiz --export entityIds=OrderHeader fromDate=2025-01-01 file=orders-export.xml"
+```
+
+### Quick Reference: Import Commands
+
+```bash
+# Import single file
+./gradlew "ofbiz --load-data file=plugins/ftm-garments/data/FtmWorkflowData.xml"
+
+# Import with specific reader
+./gradlew "ofbiz --load-data file=data.xml readers=ext"
+
+# Import multiple files
+./gradlew "ofbiz --load-data dir=plugins/ftm-garments/data"
+
+# Import and continue on errors
+./gradlew "ofbiz --load-data file=data.xml timeout=7200"
+
+# Reload ALL data (clears database!)
+./gradlew loadAll
+```
+
+### Complete Import Workflow Example
+
+```bash
+# 1. Prepare data
+cd ~/development/ofbiz-plugins/ftm-garments
+mkdir -p data
+nano data/FtmWorkflowData.xml
+# (paste your XML data)
+
+# 2. Validate XML
+xmllint --noout data/FtmWorkflowData.xml
+
+# 3. Start OFBiz (if not running)
+cd ~/development/ofbiz-framework
+./gradlew ofbiz &
+
+# 4. Wait for startup (check log)
+tail -f runtime/logs/ofbiz.log
+# Wait for: "Started org.apache.ofbiz.catalina.container.CatalinaContainer"
+# Ctrl+C to exit tail
+
+# 5. Import data
+./gradlew "ofbiz --load-data file=plugins/ftm-garments/data/FtmWorkflowData.xml"
+
+# 6. Verify import
+psql -U ftmuser -d ftmerp -c "SELECT COUNT(*) FROM product WHERE product_id LIKE 'FTM-%';"
+
+# 7. Check in browser
+# Open: https://localhost:8443/catalog/control/EditProduct?productId=FTM-PANT-CASUAL-32X32-NAVY
+```
+
+---
+
 **Document Version**: 1.0
-**Last Updated**: 2025-12-18
+**Last Updated**: 2025-12-19
 **Author**: FTM ERP Development Team
+**Related Documents**: [BOM-DEEP-DIVE.md](BOM-DEEP-DIVE.md), [OFBIZ-LEARNING-GUIDE.md](OFBIZ-LEARNING-GUIDE.md)
