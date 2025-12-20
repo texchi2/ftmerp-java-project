@@ -72,6 +72,13 @@ cd ~/development/ofbiz-framework
 
 # Start OFBiz
 ./gradlew ofbiz
+
+# Stop OFBiz (in another terminal)
+./gradlew "ofbiz --shutdown"
+# Or force stop if shutdown doesn't work
+./gradlew "ofbiz --stop"
+# Or kill process directly
+pkill -f ofbiz
 ```
 
 Access at: https://localhost:8443/accounting
@@ -276,6 +283,40 @@ tail -f runtime/logs/ofbiz.log
 ./gradlew build
 ```
 
+### Catalina Container Error: "Cannot load CatalinaContainer; no engines defined"
+
+This error occurs when `framework/catalina/ofbiz-component.xml` is malformed or corrupted.
+
+**Solution**: Restore the clean configuration file from the official Apache OFBiz repository:
+
+```bash
+cd ~/development/ofbiz-framework
+
+# Backup the broken file
+cp framework/catalina/ofbiz-component.xml framework/catalina/ofbiz-component.xml.backup
+
+# Check your OFBiz version
+cat gradle.properties | grep ofbiz.version
+
+# Download clean version for your release (replace with your version)
+curl -o framework/catalina/ofbiz-component.xml \
+  https://raw.githubusercontent.com/apache/ofbiz-framework/release24.09.04/framework/catalina/ofbiz-component.xml
+
+# Or restore from git if it's in your repository
+git checkout framework/catalina/ofbiz-component.xml
+
+# Verify the file is valid XML
+xmllint --noout framework/catalina/ofbiz-component.xml
+
+# Rebuild
+./gradlew clean loadAll
+```
+
+**Common Issues**:
+- Manual edits broke XML structure
+- Container properties in wrong location (should be in component file for OFBiz 24.09+)
+- Missing engine or connector definitions
+
 ### Database Connection Issues
 
 ```bash
@@ -285,9 +326,31 @@ psql -U ftmuser -d ftmerp -h localhost
 # Check PostgreSQL status
 sudo systemctl status postgresql
 
+# Restart PostgreSQL if needed
+sudo systemctl restart postgresql
+
 # Check credentials
 cat ~/.ftmerp_db_credentials
 ```
+
+### Database "ofbizolap" or "ofbiztenant" Does Not Exist
+
+OFBiz requires three PostgreSQL databases:
+
+```bash
+# Create missing databases
+sudo -u postgres psql -c "CREATE DATABASE ofbizolap OWNER ftmuser;"
+sudo -u postgres psql -c "CREATE DATABASE ofbiztenant OWNER ftmuser;"
+
+# Grant privileges
+sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE ofbizolap TO ftmuser;"
+sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE ofbiztenant TO ftmuser;"
+
+# Verify all three databases exist
+sudo -u postgres psql -c "\l" | grep -E "ftmerp|ofbizolap|ofbiztenant"
+```
+
+See [PostgreSQL Setup Guide](./POSTGRESQL-SETUP.md) for complete database configuration.
 
 ### Symlink Issues
 
@@ -316,6 +379,29 @@ ollama serve &
 # Test API
 curl http://localhost:11434/api/tags
 ```
+
+### Git Push Triggers Unwanted Rebuild
+
+If `git push` automatically triggers a rebuild, there may be git hooks installed:
+
+```bash
+cd ~/development/ofbiz-framework
+
+# Check for git hooks
+ls -la .git/hooks/
+
+# View hooks that might trigger builds
+cat .git/hooks/pre-push 2>/dev/null
+cat .git/hooks/post-commit 2>/dev/null
+
+# Disable by renaming (can re-enable later)
+mv .git/hooks/pre-push .git/hooks/pre-push.disabled
+mv .git/hooks/post-commit .git/hooks/post-commit.disabled
+
+# Or remove gradle commands from the hook files if you want to keep other functionality
+```
+
+**Note**: Some CI/CD systems install hooks automatically. Check your build automation configuration.
 
 ## 📚 Resources
 
