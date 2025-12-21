@@ -81,8 +81,13 @@ cd ~/development/ofbiz-framework
 pkill -f ofbiz
 ```
 
-Access at: https://localhost:8443/accounting
+Access at:
+- **HTTP (Development)**: http://192.168.2.110:8080/webtools
+- **HTTPS (Production)**: https://192.168.2.110:8443/accounting
+
 Default credentials: `admin` / `ofbiz`
+
+**Note**: For development, HTTP-only mode is recommended (simpler, no certificate warnings). See "Disable HTTPS for Development" below.
 
 ## 🛠️ Development Environment
 
@@ -402,6 +407,40 @@ mv .git/hooks/post-commit .git/hooks/post-commit.disabled
 ```
 
 **Note**: Some CI/CD systems install hooks automatically. Check your build automation configuration.
+
+### Disable HTTPS for Development
+
+For development environments, use HTTP-only mode to avoid SSL certificate issues:
+
+```bash
+cd ~/development/ofbiz-framework
+
+# 1. Comment out HTTPS connector in ofbiz-component.xml
+nano framework/catalina/ofbiz-component.xml
+# Find and comment out the entire <property name="https-connector"> block
+
+# 2. Disable HTTPS redirection
+nano framework/webapp/config/url.properties
+# Add these lines:
+# no.http=N
+# port.https.enabled=N
+# force.https.host=
+
+# 3. Restart OFBiz
+sudo systemctl restart ofbiz.service
+
+# 4. Access via HTTP (no HTTPS)
+# http://192.168.2.110:8080/webtools
+# Login: admin / ofbiz
+```
+
+**Benefits**:
+- ✅ No SSL certificate warnings
+- ✅ Faster startup
+- ✅ Simpler configuration
+- ✅ Easier HTTP traffic debugging
+
+See [HTTPS Setup Guide](./HTTPS-SSL-SETUP.md) for detailed HTTPS configuration when needed for production.
 
 ## 📚 Resources
 
