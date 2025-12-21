@@ -6,6 +6,57 @@ This guide explains how to configure HTTPS with self-signed certificates for Apa
 
 OFBiz uses Apache Tomcat's Catalina container for serving web applications. Modern versions (OFBiz 24.09+) use Tomcat 8+ style connector definitions.
 
+## Disable HTTPS for Development (HTTP Only Mode)
+
+For development environments, you can disable HTTPS completely and use HTTP only:
+
+### Step 1: Disable HTTPS Connector
+
+Edit `framework/catalina/ofbiz-component.xml` and comment out the entire `https-connector` section:
+
+```xml
+<!-- HTTPS DISABLED FOR DEVELOPMENT
+<property name="https-connector" value="connector">
+    ... (entire https-connector configuration) ...
+</property>
+-->
+```
+
+### Step 2: Disable HTTP→HTTPS Auto-Redirect
+
+Edit `framework/webapp/config/url.properties`:
+
+```properties
+# Disable HTTPS redirection for development
+no.http=N
+port.https.enabled=N
+force.https.host=
+```
+
+### Step 3: Restart OFBiz
+
+```bash
+cd ~/development/ofbiz-framework
+sudo systemctl restart ofbiz.service
+# Or if running manually:
+# ./gradlew "ofbiz --shutdown" && ./gradlew ofbiz
+```
+
+### Step 4: Access via HTTP
+
+After restart, access OFBiz via HTTP only:
+- **WebTools**: http://192.168.2.110:8080/webtools
+- **Accounting**: http://192.168.2.110:8080/accounting
+- **Login**: admin / ofbiz
+
+**Benefits of HTTP-only development mode:**
+- ✅ Simpler setup (no certificate management)
+- ✅ Faster startup (no SSL initialization)
+- ✅ No browser certificate warnings
+- ✅ Easier debugging with HTTP traffic inspection
+
+**Note**: Only use HTTP mode in secure development environments. For production, always use HTTPS with proper certificates.
+
 ## Quick Setup
 
 ### 1. Generate Self-Signed Certificate
