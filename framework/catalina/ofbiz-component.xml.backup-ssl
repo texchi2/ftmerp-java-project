@@ -144,36 +144,24 @@ under the License.
             -->
         </property>
 
-        <!-- disabled HTTPS Connector - Tomcat 10.1+ Format 
-        <property name="https-connector" value="connector">
-              <property name="address" value="0.0.0.0"/>
-                  <property name="port" value="8443"/>
-                      <property name="protocol" value="org.apache.coyote.http11.Http11NioProtocol"/>
-                          <property name="maxThreads" value="150"/>
-                              <property name="connectionTimeout" value="20000"/>
-                                  <property name="acceptCount" value="100"/>
-                                      <property name="URIEncoding" value="UTF-8"/>
-                                          <property name="scheme" value="https"/>
-                                              <property name="secure" value="true"/>
-                                                  <property name="SSLEnabled" value="true"/>
-                                                      
-                                                      <property name="sslImplementationName" value="org.apache.tomcat.util.net.openssl.OpenSSLImplementation"/>
-                                                          
-                                                          <property name="SSLHostConfig" value="sslhostconfig">
-                                                                    <property name="certificateVerification" value="none"/>
-                                                                            <property name="protocols" value="TLSv1.2,TLSv1.3"/>
-                                                                                    <property name="ciphers" value="TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"/>
-                                                                                            
-                                                                                            <property name="Certificate" value="certificate">
-                                                                                                          <property name="certificateKeystoreFile" value="framework/catalina/config/ofbiz-keystore"/>
-                                                                                                                      <property name="certificateKeystorePassword" value="ofbizssl"/>
-                                                                                                                                  <property name="certificateKeystoreType" value="JKS"/>
-                                                                                                                                              <property name="certificateKeyAlias" value="ofbizssl"/>
-                                                                                                                                                          <property name="type" value="RSA"/>
-                                                                                                                                                                  </property>
-                                                                                                                                                                      </property>
-                                                                                                                                                                    </property>
-                                                                                                                                                                    -->
+      	<!-- https connector Modern Tomcat 8+ -->
+      	<property name="https-connector" value="connector">
+            <property name="address" value="0.0.0.0"/>
+            <property name="port" value="8443"/>
+	          <property name="protocol" value="org.apache.coyote.http11.Http11NioProtocol"/>
+ 	          <property name="maxThreads" value="150"/>
+  	        <property name="SSLEnabled" value="true"/>
+	          <property name="scheme" value="https"/>
+       	    <property name="secure" value="true"/>
+       	    <property name="clientAuth" value="false"/>
+      	    <property name="sslProtocol" value="TLS"/>
+      	    <property name="keystoreFile" value="framework/catalina/config/ofbiz-keystore"/>
+      	    <property name="keystorePass" value="ofbizssl"/>
+      	    <property name="keystoreType" value="JKS"/>
+      	    <property name="keyAlias" value="ofbizssl"/>
+      	    <property name="sslEnabledProtocols" value="TLSv1.2,TLSv1.3"/>
+      	    <property name="ciphers" value="TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256"/>
+    	  </property>
 
     </container>
     <container name="catalina-container-test" loaders="test" class="org.apache.ofbiz.catalina.container.CatalinaContainer">
