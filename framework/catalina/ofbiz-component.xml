@@ -143,38 +143,25 @@ under the License.
             <property name="threadPriority" value="5"/>
             -->
         </property>
-        <property name="https-connector" value="connector">
-            <!-- see https://tomcat.apache.org/tomcat-9.0-doc/config/http.html for reference -->
-            <!--<property name="address" value=""/>-->
-            <property name="port" value="8443"/>
-            <property name="protocol" value="HTTP/1.1"/>
-            <property name="upgradeProtocol" value="true"/>
-            <property name="scheme" value="https"/>
-            <property name="secure" value="true"/>
-            <property name="SSLEnabled" value="true"/>
-            <property name="URIEncoding" value="UTF-8"/>
-            <property name="xpoweredBy" value="false"/>
-            <property name="compression" value="on"/>
-            <property name="compressibleMimeType" value="text/html,text/xml,text/plain,text/css,text/javascript,application/json"/>
-            <!-- SSL connector attributes -->
-            <property name="sslImplementationName" value="org.apache.tomcat.util.net.jsse.JSSEImplementation"/>
-            <property name="default" value="sslHostConfig">
-                <property name="keyManagerAlgorithm" value="SunX509"/>
-                <!-- the certificateVerification to "want" in order to receive certs from the client;
-                    note that this isn't set this way by default because with certain browsers
-                    (like Safari) it breaks access via HTTPS, so until that problem is fixed
-                    the default will be false
-                <property name="certificateVerification" value="false"/>
-                -->
-                <property name="default" value="certificate">
-                    <property name="certificateType" value="RSA"/>
-                    <property name="certificateKeystoreFile" value="framework/base/config/ofbizssl.jks"/>
-                    <property name="certificateKeystoreType" value="JKS"/>
-                    <property name="certificateKeyAlias" value="ofbiz"/>
-                    <property name="certificateKeyPassword" value="changeit"/>
-                </property>
-            </property>
-        </property>
+
+      	<!-- https connector Modern Tomcat 8+ -->
+      	<property name="https-connector" value="connector">
+	          <property name="port" value="8443"/>
+	          <property name="protocol" value="org.apache.coyote.http11.Http11NioProtocol"/>
+ 	          <property name="maxThreads" value="150"/>
+  	        <property name="SSLEnabled" value="true"/>
+	          <property name="scheme" value="https"/>
+       	    <property name="secure" value="true"/>
+       	    <property name="clientAuth" value="false"/>
+      	    <property name="sslProtocol" value="TLS"/>
+      	    <property name="keystoreFile" value="framework/catalina/config/ofbiz-keystore"/>
+      	    <property name="keystorePass" value="changeit"/>
+      	    <property name="keystoreType" value="JKS"/>
+      	    <property name="keyAlias" value="ofbizssl"/>
+      	    <property name="sslEnabledProtocols" value="TLSv1.2,TLSv1.3"/>
+      	    <property name="ciphers" value="TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256"/>
+    	  </property>
+
     </container>
     <container name="catalina-container-test" loaders="test" class="org.apache.ofbiz.catalina.container.CatalinaContainer">
         <!-- static configuration for tomcat -->

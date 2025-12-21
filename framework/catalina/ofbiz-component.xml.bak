@@ -251,23 +251,4 @@ under the License.
                 mount-point="/"
                 app-bar-display="false"/>
     -->
-    <!-- Add this inside the <ofbiz-component> tag -->
-    <webapp name="ROOT"
-        title="Root"
-        server="default-server"
-        location="webapp/ROOT"
-        mount-point="/"
-        app-bar-display="false"/>
-
-    <!-- HTTPS Connector -->
-    <container name="catalina-container" loaders="main,rmi">
-      <property name="port" value="8443"/>
-      <property name="protocol" value="org.apache.coyote.http11.Http11NioProtocol"/>
-      <property name="secure" value="true"/>
-      <property name="SSLEnabled" value="true"/>
-      <property name="keystoreFile" value="framework/base/config/ofbizssl.jks"/>
-      <property name="keystorePass" value="changeit"/>
-      <property name="keyAlias" value="ofbizssl"/>
-    </container>
-
 </ofbiz-component>
