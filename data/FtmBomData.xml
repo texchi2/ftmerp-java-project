@@ -31,7 +31,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
     <!-- FINISHED PRODUCT: Men's Casual Pant -->
     <!-- ========================================= -->
 
-    <Product productId="FTM-PANT-CASUAL-32X32-NAVY"
+    <Product productId="FTM-PNT-32-NVY"
              productTypeId="FINISHED_GOOD"
              internalName="Men's Casual Pant 32x32 Navy"
              isVirtual="N"
@@ -41,7 +41,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
              taxable="Y"
              description="Men's casual cotton twill pants, navy blue, size 32x32"/>
 
-    <ProductPrice productId="FTM-PANT-CASUAL-32X32-NAVY"
+    <ProductPrice productId="FTM-PNT-32-NVY"
                   productPricePurposeId="PURCHASE"
                   productPriceTypeId="DEFAULT_PRICE"
                   productStoreGroupId="_NA_"
@@ -54,7 +54,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
     <!-- ========================================= -->
 
     <!-- Main Fabric: Cotton Twill Navy -->
-    <Product productId="FTM-FABRIC-COTTON-TWILL-NAVY-60"
+    <Product productId="FTM-FAB-CTN-NVY"
              productTypeId="RAW_MATERIAL"
              internalName="Cotton Twill Fabric - Navy - 60 inch width"
              isVirtual="N"
@@ -62,7 +62,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
              requireInventory="Y"
              description="100% cotton twill fabric, navy blue, 60 inch width, medium weight"/>
 
-    <ProductPrice productId="FTM-FABRIC-COTTON-TWILL-NAVY-60"
+    <ProductPrice productId="FTM-FAB-CTN-NVY"
                   productPricePurposeId="PURCHASE"
                   productStoreGroupId="_NA_"
                   productPriceTypeId="DEFAULT_PRICE"
@@ -71,8 +71,8 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
                   fromDate="2025-01-01 00:00:00"/>
 
     <!-- BOM Association: Main Fabric -->
-    <ProductAssoc productId="FTM-PANT-CASUAL-32X32-NAVY"
-                  productIdTo="FTM-FABRIC-COTTON-TWILL-NAVY-60"
+    <ProductAssoc productId="FTM-PNT-32-NVY"
+                  productIdTo="FTM-FAB-CTN-NVY"
                   productAssocTypeId="MANUF_COMPONENT"
                   fromDate="2025-01-01 00:00:00"
                   quantity="1.8"
@@ -83,7 +83,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
                   reason="Main fabric for pant body, includes 15% scrap"/>
 
     <!-- Pocket Lining Fabric -->
-    <Product productId="FTM-FABRIC-POLYESTER-POCKET-WHITE"
+    <Product productId="FTM-FAB-PLY-PKT"
              productTypeId="RAW_MATERIAL"
              internalName="Polyester Pocket Lining - White"
              isVirtual="N"
@@ -91,7 +91,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
              requireInventory="Y"
              description="100% polyester pocket lining fabric, white"/>
 
-    <ProductPrice productId="FTM-FABRIC-POLYESTER-POCKET-WHITE"
+    <ProductPrice productId="FTM-FAB-PLY-PKT"
                   productPricePurposeId="PURCHASE"
                   productStoreGroupId="_NA_"
                   productPriceTypeId="DEFAULT_PRICE"
@@ -100,8 +100,8 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
                   fromDate="2025-01-01 00:00:00"/>
 
     <!-- BOM Association: Pocket Lining -->
-    <ProductAssoc productId="FTM-PANT-CASUAL-32X32-NAVY"
-                  productIdTo="FTM-FABRIC-POLYESTER-POCKET-WHITE"
+    <ProductAssoc productId="FTM-PNT-32-NVY"
+                  productIdTo="FTM-FAB-PLY-PKT"
                   productAssocTypeId="MANUF_COMPONENT"
                   fromDate="2025-01-01 00:00:00"
                   quantity="0.3"
@@ -116,7 +116,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
     <!-- ========================================= -->
 
     <!-- Zipper: Metal Brass 7 inch -->
-    <Product productId="FTM-ZIP-METAL-BRASS-7INCH"
+    <Product productId="FTM-ZIP-7IN"
              productTypeId="RAW_MATERIAL"
              internalName="Metal Zipper Brass 7 inch"
              isVirtual="N"
@@ -124,7 +124,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
              requireInventory="Y"
              description="Metal zipper with brass teeth, 7 inch length, YKK or equivalent"/>
 
-    <ProductPrice productId="FTM-ZIP-METAL-BRASS-7INCH"
+    <ProductPrice productId="FTM-ZIP-7IN"
                   productPricePurposeId="PURCHASE"
                   productStoreGroupId="_NA_"
                   productPriceTypeId="DEFAULT_PRICE"
@@ -133,8 +133,8 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
                   fromDate="2025-01-01 00:00:00"/>
 
     <!-- BOM Association: Zipper -->
-    <ProductAssoc productId="FTM-PANT-CASUAL-32X32-NAVY"
-                  productIdTo="FTM-ZIP-METAL-BRASS-7INCH"
+    <ProductAssoc productId="FTM-PNT-32-NVY"
+                  productIdTo="FTM-ZIP-7IN"
                   productAssocTypeId="MANUF_COMPONENT"
                   fromDate="2025-01-01 00:00:00"
                   quantity="1"
@@ -145,7 +145,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
                   reason="Front fly zipper, includes 2% scrap/defect allowance"/>
 
     <!-- Button: Metal Brass 20mm -->
-    <Product productId="FTM-BTN-METAL-BRASS-20MM"
+    <Product productId="FTM-BTN-BRS-20MM"
              productTypeId="RAW_MATERIAL"
              internalName="Metal Button Brass 20mm"
              isVirtual="N"
@@ -153,7 +153,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
              requireInventory="Y"
              description="Metal button with brass finish, 20mm diameter"/>
 
-    <ProductPrice productId="FTM-BTN-METAL-BRASS-20MM"
+    <ProductPrice productId="FTM-BTN-BRS-20MM"
                   productPricePurposeId="PURCHASE"
                   productStoreGroupId="_NA_"
                   productPriceTypeId="DEFAULT_PRICE"
@@ -162,8 +162,8 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
                   fromDate="2025-01-01 00:00:00"/>
 
     <!-- BOM Association: Button -->
-    <ProductAssoc productId="FTM-PANT-CASUAL-32X32-NAVY"
-                  productIdTo="FTM-BTN-METAL-BRASS-20MM"
+    <ProductAssoc productId="FTM-PNT-32-NVY"
+                  productIdTo="FTM-BTN-BRS-20MM"
                   productAssocTypeId="MANUF_COMPONENT"
                   fromDate="2025-01-01 00:00:00"
                   quantity="1"
@@ -174,7 +174,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
                   reason="Waistband button, includes 5% scrap/defect allowance"/>
 
     <!-- Rivets: Copper 10mm -->
-    <Product productId="FTM-RIVET-COPPER-10MM"
+    <Product productId="FTM-RVT-10MM"
              productTypeId="RAW_MATERIAL"
              internalName="Copper Rivet 10mm"
              isVirtual="N"
@@ -182,7 +182,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
              requireInventory="Y"
              description="Copper rivets, 10mm diameter, for pocket reinforcement"/>
 
-    <ProductPrice productId="FTM-RIVET-COPPER-10MM"
+    <ProductPrice productId="FTM-RVT-10MM"
                   productPricePurposeId="PURCHASE"
                   productStoreGroupId="_NA_"
                   productPriceTypeId="DEFAULT_PRICE"
@@ -191,8 +191,8 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
                   fromDate="2025-01-01 00:00:00"/>
 
     <!-- BOM Association: Rivets -->
-    <ProductAssoc productId="FTM-PANT-CASUAL-32X32-NAVY"
-                  productIdTo="FTM-RIVET-COPPER-10MM"
+    <ProductAssoc productId="FTM-PNT-32-NVY"
+                  productIdTo="FTM-RVT-10MM"
                   productAssocTypeId="MANUF_COMPONENT"
                   fromDate="2025-01-01 00:00:00"
                   quantity="4"
@@ -207,7 +207,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
     <!-- ========================================= -->
 
     <!-- Main Thread: Polyester Navy -->
-    <Product productId="FTM-THREAD-POLY-NAVY-CONE"
+    <Product productId="FTM-THD-NVY-CN"
              productTypeId="RAW_MATERIAL"
              internalName="Polyester Thread Navy Cone"
              isVirtual="N"
@@ -215,7 +215,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
              requireInventory="Y"
              description="100% polyester sewing thread, navy blue, industrial cone (5000m)"/>
 
-    <ProductPrice productId="FTM-THREAD-POLY-NAVY-CONE"
+    <ProductPrice productId="FTM-THD-NVY-CN"
                   productPricePurposeId="PURCHASE"
                   productStoreGroupId="_NA_"
                   productPriceTypeId="DEFAULT_PRICE"
@@ -224,8 +224,8 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
                   fromDate="2025-01-01 00:00:00"/>
 
     <!-- BOM Association: Main Thread -->
-    <ProductAssoc productId="FTM-PANT-CASUAL-32X32-NAVY"
-                  productIdTo="FTM-THREAD-POLY-NAVY-CONE"
+    <ProductAssoc productId="FTM-PNT-32-NVY"
+                  productIdTo="FTM-THD-NVY-CN"
                   productAssocTypeId="MANUF_COMPONENT"
                   fromDate="2025-01-01 00:00:00"
                   quantity="150"
@@ -236,7 +236,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
                   reason="Main sewing thread, includes 20% waste/scrap"/>
 
     <!-- Reinforcement Thread: Heavy Duty -->
-    <Product productId="FTM-THREAD-POLY-NAVY-HEAVY"
+    <Product productId="FTM-THD-NVY-HV"
              productTypeId="RAW_MATERIAL"
              internalName="Polyester Thread Navy Heavy Duty"
              isVirtual="N"
@@ -244,7 +244,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
              requireInventory="Y"
              description="100% polyester heavy duty thread, navy blue, for stress points"/>
 
-    <ProductPrice productId="FTM-THREAD-POLY-NAVY-HEAVY"
+    <ProductPrice productId="FTM-THD-NVY-HV"
                   productPricePurposeId="PURCHASE"
                   productStoreGroupId="_NA_"
                   productPriceTypeId="DEFAULT_PRICE"
@@ -253,8 +253,8 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
                   fromDate="2025-01-01 00:00:00"/>
 
     <!-- BOM Association: Reinforcement Thread -->
-    <ProductAssoc productId="FTM-PANT-CASUAL-32X32-NAVY"
-                  productIdTo="FTM-THREAD-POLY-NAVY-HEAVY"
+    <ProductAssoc productId="FTM-PNT-32-NVY"
+                  productIdTo="FTM-THD-NVY-HV"
                   productAssocTypeId="MANUF_COMPONENT"
                   fromDate="2025-01-01 00:00:00"
                   quantity="5"
@@ -269,7 +269,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
     <!-- ========================================= -->
 
     <!-- Brand Label -->
-    <Product productId="FTM-LABEL-BRAND-WOVEN"
+    <Product productId="FTM-LBL-BRD"
              productTypeId="RAW_MATERIAL"
              internalName="FTM Brand Label Woven"
              isVirtual="N"
@@ -277,7 +277,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
              requireInventory="Y"
              description="FTM Garments woven brand label"/>
 
-    <ProductPrice productId="FTM-LABEL-BRAND-WOVEN"
+    <ProductPrice productId="FTM-LBL-BRD"
                   productPricePurposeId="PURCHASE"
                   productStoreGroupId="_NA_"
                   productPriceTypeId="DEFAULT_PRICE"
@@ -286,8 +286,8 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
                   fromDate="2025-01-01 00:00:00"/>
 
     <!-- BOM Association: Brand Label -->
-    <ProductAssoc productId="FTM-PANT-CASUAL-32X32-NAVY"
-                  productIdTo="FTM-LABEL-BRAND-WOVEN"
+    <ProductAssoc productId="FTM-PNT-32-NVY"
+                  productIdTo="FTM-LBL-BRD"
                   productAssocTypeId="MANUF_COMPONENT"
                   fromDate="2025-01-01 00:00:00"
                   quantity="1"
@@ -298,7 +298,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
                   reason="Brand label at waistband, includes 5% scrap"/>
 
     <!-- Care Label -->
-    <Product productId="FTM-LABEL-CARE-EN-WASH"
+    <Product productId="FTM-LBL-CAR"
              productTypeId="RAW_MATERIAL"
              internalName="Care Label English Wash Instructions"
              isVirtual="N"
@@ -306,7 +306,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
              requireInventory="Y"
              description="Care instructions label, English, washing symbols"/>
 
-    <ProductPrice productId="FTM-LABEL-CARE-EN-WASH"
+    <ProductPrice productId="FTM-LBL-CAR"
                   productPricePurposeId="PURCHASE"
                   productStoreGroupId="_NA_"
                   productPriceTypeId="DEFAULT_PRICE"
@@ -315,8 +315,8 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
                   fromDate="2025-01-01 00:00:00"/>
 
     <!-- BOM Association: Care Label -->
-    <ProductAssoc productId="FTM-PANT-CASUAL-32X32-NAVY"
-                  productIdTo="FTM-LABEL-CARE-EN-WASH"
+    <ProductAssoc productId="FTM-PNT-32-NVY"
+                  productIdTo="FTM-LBL-CAR"
                   productAssocTypeId="MANUF_COMPONENT"
                   fromDate="2025-01-01 00:00:00"
                   quantity="1"
@@ -344,7 +344,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
                   fromDate="2025-01-01 00:00:00"/>
 
     <!-- BOM Association: Size Label -->
-    <ProductAssoc productId="FTM-PANT-CASUAL-32X32-NAVY"
+    <ProductAssoc productId="FTM-PNT-32-NVY"
                   productIdTo="FTM-LABEL-SIZE-32X32"
                   productAssocTypeId="MANUF_COMPONENT"
                   fromDate="2025-01-01 00:00:00"
@@ -373,7 +373,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
                   fromDate="2025-01-01 00:00:00"/>
 
     <!-- BOM Association: Hangtag -->
-    <ProductAssoc productId="FTM-PANT-CASUAL-32X32-NAVY"
+    <ProductAssoc productId="FTM-PNT-32-NVY"
                   productIdTo="FTM-HANGTAG-RETAIL"
                   productAssocTypeId="MANUF_COMPONENT"
                   fromDate="2025-01-01 00:00:00"
@@ -389,7 +389,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
     <!-- ========================================= -->
 
     <!-- Elastic -->
-    <Product productId="FTM-ELASTIC-WAIST-40MM-WHITE"
+    <Product productId="FTM-ELS-40-WHT"
              productTypeId="RAW_MATERIAL"
              internalName="Waist Elastic 40mm White"
              isVirtual="N"
@@ -397,7 +397,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
              requireInventory="Y"
              description="Woven elastic band, 40mm width, white, for waistband"/>
 
-    <ProductPrice productId="FTM-ELASTIC-WAIST-40MM-WHITE"
+    <ProductPrice productId="FTM-ELS-40-WHT"
                   productPricePurposeId="PURCHASE"
                   productStoreGroupId="_NA_"
                   productPriceTypeId="DEFAULT_PRICE"
@@ -406,8 +406,8 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
                   fromDate="2025-01-01 00:00:00"/>
 
     <!-- BOM Association: Elastic -->
-    <ProductAssoc productId="FTM-PANT-CASUAL-32X32-NAVY"
-                  productIdTo="FTM-ELASTIC-WAIST-40MM-WHITE"
+    <ProductAssoc productId="FTM-PNT-32-NVY"
+                  productIdTo="FTM-ELS-40-WHT"
                   productAssocTypeId="MANUF_COMPONENT"
                   fromDate="2025-01-01 00:00:00"
                   quantity="0.9"
@@ -418,7 +418,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
                   reason="Waistband elastic, includes 5% scrap"/>
 
     <!-- Interfacing -->
-    <Product productId="FTM-INTERFACING-FUSIBLE-WHITE"
+    <Product productId="FTM-INT-FUS"
              productTypeId="RAW_MATERIAL"
              internalName="Fusible Interfacing White"
              isVirtual="N"
@@ -426,7 +426,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
              requireInventory="Y"
              description="Fusible interfacing fabric, white, for waistband stiffening"/>
 
-    <ProductPrice productId="FTM-INTERFACING-FUSIBLE-WHITE"
+    <ProductPrice productId="FTM-INT-FUS"
                   productPricePurposeId="PURCHASE"
                   productStoreGroupId="_NA_"
                   productPriceTypeId="DEFAULT_PRICE"
@@ -435,8 +435,8 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
                   fromDate="2025-01-01 00:00:00"/>
 
     <!-- BOM Association: Interfacing -->
-    <ProductAssoc productId="FTM-PANT-CASUAL-32X32-NAVY"
-                  productIdTo="FTM-INTERFACING-FUSIBLE-WHITE"
+    <ProductAssoc productId="FTM-PNT-32-NVY"
+                  productIdTo="FTM-INT-FUS"
                   productAssocTypeId="MANUF_COMPONENT"
                   fromDate="2025-01-01 00:00:00"
                   quantity="0.4"
@@ -451,7 +451,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
     <!-- ========================================= -->
 
     <!-- Poly Bag -->
-    <Product productId="FTM-POLYBAG-12X16-CLEAR"
+    <Product productId="FTM-BAG-12X16"
              productTypeId="RAW_MATERIAL"
              internalName="Poly Bag 12x16 Clear"
              isVirtual="N"
@@ -459,7 +459,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
              requireInventory="Y"
              description="Clear plastic poly bag, 12x16 inches, for individual pant packaging"/>
 
-    <ProductPrice productId="FTM-POLYBAG-12X16-CLEAR"
+    <ProductPrice productId="FTM-BAG-12X16"
                   productPricePurposeId="PURCHASE"
                   productStoreGroupId="_NA_"
                   productPriceTypeId="DEFAULT_PRICE"
@@ -468,8 +468,8 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
                   fromDate="2025-01-01 00:00:00"/>
 
     <!-- BOM Association: Poly Bag -->
-    <ProductAssoc productId="FTM-PANT-CASUAL-32X32-NAVY"
-                  productIdTo="FTM-POLYBAG-12X16-CLEAR"
+    <ProductAssoc productId="FTM-PNT-32-NVY"
+                  productIdTo="FTM-BAG-12X16"
                   productAssocTypeId="MANUF_COMPONENT"
                   fromDate="2025-01-01 00:00:00"
                   quantity="1"
@@ -480,7 +480,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
                   reason="Individual packaging poly bag, includes 2% scrap"/>
 
     <!-- Cardboard Insert -->
-    <Product productId="FTM-CARDBOARD-INSERT-PANT"
+    <Product productId="FTM-CRD-PNT"
              productTypeId="RAW_MATERIAL"
              internalName="Cardboard Insert for Pant"
              isVirtual="N"
@@ -488,7 +488,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
              requireInventory="Y"
              description="Cardboard insert for pant folding and display"/>
 
-    <ProductPrice productId="FTM-CARDBOARD-INSERT-PANT"
+    <ProductPrice productId="FTM-CRD-PNT"
                   productPricePurposeId="PURCHASE"
                   productStoreGroupId="_NA_"
                   productPriceTypeId="DEFAULT_PRICE"
@@ -497,8 +497,8 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
                   fromDate="2025-01-01 00:00:00"/>
 
     <!-- BOM Association: Cardboard Insert -->
-    <ProductAssoc productId="FTM-PANT-CASUAL-32X32-NAVY"
-                  productIdTo="FTM-CARDBOARD-INSERT-PANT"
+    <ProductAssoc productId="FTM-PNT-32-NVY"
+                  productIdTo="FTM-CRD-PNT"
                   productAssocTypeId="MANUF_COMPONENT"
                   fromDate="2025-01-01 00:00:00"
                   quantity="1"
@@ -526,7 +526,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
                   fromDate="2025-01-01 00:00:00"/>
 
     <!-- BOM Association: Barcode Sticker -->
-    <ProductAssoc productId="FTM-PANT-CASUAL-32X32-NAVY"
+    <ProductAssoc productId="FTM-PNT-32-NVY"
                   productIdTo="FTM-BARCODE-STICKER"
                   productAssocTypeId="MANUF_COMPONENT"
                   fromDate="2025-01-01 00:00:00"
@@ -547,7 +547,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
                      description="FTM Garments pants category"/>
 
     <ProductCategoryMember productCategoryId="FTM-PANTS"
-                          productId="FTM-PANT-CASUAL-32X32-NAVY"
+                          productId="FTM-PNT-32-NVY"
                           fromDate="2025-01-01 00:00:00"/>
 
     <ProductCategory productCategoryId="FTM-RAW-MATERIALS"
@@ -572,7 +572,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
     <!-- Inventory for main fabric -->
     <InventoryItem inventoryItemId="FTM-INV-FABRIC-001"
                    inventoryItemTypeId="NON_SERIAL_INV_ITEM"
-                   productId="FTM-FABRIC-COTTON-TWILL-NAVY-60"
+                   productId="FTM-FAB-CTN-NVY"
                    facilityId="FTM-FAC-MAIN"
                    quantityOnHandTotal="500"
                    availableToPromiseTotal="500"
@@ -582,7 +582,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
     <!-- Inventory for zippers -->
     <InventoryItem inventoryItemId="FTM-INV-ZIP-001"
                    inventoryItemTypeId="NON_SERIAL_INV_ITEM"
-                   productId="FTM-ZIP-METAL-BRASS-7INCH"
+                   productId="FTM-ZIP-7IN"
                    facilityId="FTM-FAC-MAIN"
                    quantityOnHandTotal="500"
                    availableToPromiseTotal="500"
@@ -592,7 +592,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
     <!-- Inventory for buttons -->
     <InventoryItem inventoryItemId="FTM-INV-BTN-001"
                    inventoryItemTypeId="NON_SERIAL_INV_ITEM"
-                   productId="FTM-BTN-METAL-BRASS-20MM"
+                   productId="FTM-BTN-BRS-20MM"
                    facilityId="FTM-FAC-MAIN"
                    quantityOnHandTotal="2000"
                    availableToPromiseTotal="2000"
