@@ -44,6 +44,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
     <ProductPrice productId="FTM-PANT-CASUAL-32X32-NAVY"
                   productPricePurposeId="PURCHASE"
                   productPriceTypeId="DEFAULT_PRICE"
+                  productStoreGroupId="_NA_"
                   currencyUomId="USD"
                   price="37.02"
                   fromDate="2025-01-01 00:00:00"/>
@@ -81,6 +82,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
 
     <ProductPrice productId="FTM-FABRIC-COTTON-TWILL-NAVY-60"
                   productPricePurposeId="PURCHASE"
+                  productStoreGroupId="_NA_"
                   productPriceTypeId="DEFAULT_PRICE"
                   currencyUomId="USD"
                   price="8.00"
@@ -109,6 +111,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
 
     <ProductPrice productId="FTM-FABRIC-POLYESTER-POCKET-WHITE"
                   productPricePurposeId="PURCHASE"
+                  productStoreGroupId="_NA_"
                   productPriceTypeId="DEFAULT_PRICE"
                   currencyUomId="USD"
                   price="3.00"
@@ -141,6 +144,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
 
     <ProductPrice productId="FTM-ZIP-METAL-BRASS-7INCH"
                   productPricePurposeId="PURCHASE"
+                  productStoreGroupId="_NA_"
                   productPriceTypeId="DEFAULT_PRICE"
                   currencyUomId="USD"
                   price="0.80"
@@ -169,6 +173,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
 
     <ProductPrice productId="FTM-BTN-METAL-BRASS-20MM"
                   productPricePurposeId="PURCHASE"
+                  productStoreGroupId="_NA_"
                   productPriceTypeId="DEFAULT_PRICE"
                   currencyUomId="USD"
                   price="0.15"
@@ -197,6 +202,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
 
     <ProductPrice productId="FTM-RIVET-COPPER-10MM"
                   productPricePurposeId="PURCHASE"
+                  productStoreGroupId="_NA_"
                   productPriceTypeId="DEFAULT_PRICE"
                   currencyUomId="USD"
                   price="0.05"
@@ -229,6 +235,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
 
     <ProductPrice productId="FTM-THREAD-POLY-NAVY-CONE"
                   productPricePurposeId="PURCHASE"
+                  productStoreGroupId="_NA_"
                   productPriceTypeId="DEFAULT_PRICE"
                   currencyUomId="USD"
                   price="0.01"
@@ -257,6 +264,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
 
     <ProductPrice productId="FTM-THREAD-POLY-NAVY-HEAVY"
                   productPricePurposeId="PURCHASE"
+                  productStoreGroupId="_NA_"
                   productPriceTypeId="DEFAULT_PRICE"
                   currencyUomId="USD"
                   price="0.02"
@@ -289,6 +297,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
 
     <ProductPrice productId="FTM-LABEL-BRAND-WOVEN"
                   productPricePurposeId="PURCHASE"
+                  productStoreGroupId="_NA_"
                   productPriceTypeId="DEFAULT_PRICE"
                   currencyUomId="USD"
                   price="0.20"
@@ -317,6 +326,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
 
     <ProductPrice productId="FTM-LABEL-CARE-EN-WASH"
                   productPricePurposeId="PURCHASE"
+                  productStoreGroupId="_NA_"
                   productPriceTypeId="DEFAULT_PRICE"
                   currencyUomId="USD"
                   price="0.10"
@@ -345,6 +355,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
 
     <ProductPrice productId="FTM-LABEL-SIZE-32X32"
                   productPricePurposeId="PURCHASE"
+                  productStoreGroupId="_NA_"
                   productPriceTypeId="DEFAULT_PRICE"
                   currencyUomId="USD"
                   price="0.05"
@@ -373,6 +384,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
 
     <ProductPrice productId="FTM-HANGTAG-RETAIL"
                   productPricePurposeId="PURCHASE"
+                  productStoreGroupId="_NA_"
                   productPriceTypeId="DEFAULT_PRICE"
                   currencyUomId="USD"
                   price="0.30"
@@ -405,6 +417,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
 
     <ProductPrice productId="FTM-ELASTIC-WAIST-40MM-WHITE"
                   productPricePurposeId="PURCHASE"
+                  productStoreGroupId="_NA_"
                   productPriceTypeId="DEFAULT_PRICE"
                   currencyUomId="USD"
                   price="0.50"
@@ -433,6 +446,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
 
     <ProductPrice productId="FTM-INTERFACING-FUSIBLE-WHITE"
                   productPricePurposeId="PURCHASE"
+                  productStoreGroupId="_NA_"
                   productPriceTypeId="DEFAULT_PRICE"
                   currencyUomId="USD"
                   price="1.50"
@@ -465,6 +479,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
 
     <ProductPrice productId="FTM-POLYBAG-12X16-CLEAR"
                   productPricePurposeId="PURCHASE"
+                  productStoreGroupId="_NA_"
                   productPriceTypeId="DEFAULT_PRICE"
                   currencyUomId="USD"
                   price="0.08"
@@ -493,6 +508,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
 
     <ProductPrice productId="FTM-CARDBOARD-INSERT-PANT"
                   productPricePurposeId="PURCHASE"
+                  productStoreGroupId="_NA_"
                   productPriceTypeId="DEFAULT_PRICE"
                   currencyUomId="USD"
                   price="0.15"
@@ -521,6 +537,7 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
 
     <ProductPrice productId="FTM-BARCODE-STICKER"
                   productPricePurposeId="PURCHASE"
+                  productStoreGroupId="_NA_"
                   productPriceTypeId="DEFAULT_PRICE"
                   currencyUomId="USD"
                   price="0.02"
