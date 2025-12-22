@@ -22,7 +22,10 @@ under the License.
 FTM Garments Bill of Materials (BOM) Data
 Complete BOM for Men's Casual Pant based on BOM-DEEP-DIVE.md
 
-Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomData.xml"
+Product IDs shortened to ≤20 characters to meet OFBiz VARCHAR(20) limit.
+Full descriptive names are in the internalName field.
+
+Load with: ./gradlew ofbiz --args="--load-data file=plugins/ftm-garments/data/FtmBomData.xml"
 -->
 
 <entity-engine-xml>

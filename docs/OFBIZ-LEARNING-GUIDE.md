@@ -462,7 +462,7 @@ dispatcher.runSync("createBOMAssoc", bomEntry)
 
 Load with:
 ```bash
-./gradlew "ofbiz --load-data file=plugins/ftm-garments/data/FtmBomData.xml"
+./gradlew ofbiz --args="--load-data file=plugins/ftm-garments/data/FtmBomData.xml"
 ```
 
 #### How BOM Drives the Entire Manufacturing Process
