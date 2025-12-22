@@ -49,24 +49,6 @@ Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomDa
                   price="37.02"
                   fromDate="2025-01-01 00:00:00"/>
 
-    <ProductCost productId="FTM-PANT-CASUAL-32X32-NAVY"
-                 costComponentTypeId="ACTUAL_MAT_COST"
-                 cost="25.52"
-                 costUomId="USD"
-                 fromDate="2025-01-01 00:00:00"/>
-
-    <ProductCost productId="FTM-PANT-CASUAL-32X32-NAVY"
-                 costComponentTypeId="ACTUAL_LABOR_COST"
-                 cost="8.00"
-                 costUomId="USD"
-                 fromDate="2025-01-01 00:00:00"/>
-
-    <ProductCost productId="FTM-PANT-CASUAL-32X32-NAVY"
-                 costComponentTypeId="ACTUAL_OVERHEAD_COST"
-                 cost="3.50"
-                 costUomId="USD"
-                 fromDate="2025-01-01 00:00:00"/>
-
     <!-- ========================================= -->
     <!-- FABRIC COMPONENTS -->
     <!-- ========================================= -->
