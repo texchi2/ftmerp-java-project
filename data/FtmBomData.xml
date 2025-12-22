@@ -1,0 +1,603 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<!--
+FTM Garments Bill of Materials (BOM) Data
+Complete BOM for Men's Casual Pant based on BOM-DEEP-DIVE.md
+
+Load with: ./gradlew "ofbiz -\-load-data file=plugins/ftm-garments/data/FtmBomData.xml"
+-->
+
+<entity-engine-xml>
+
+    <!-- ========================================= -->
+    <!-- FINISHED PRODUCT: Men's Casual Pant -->
+    <!-- ========================================= -->
+
+    <Product productId="FTM-PANT-CASUAL-32X32-NAVY"
+             productTypeId="FINISHED_GOOD"
+             internalName="Men's Casual Pant 32x32 Navy"
+             isVirtual="N"
+             isVariant="N"
+             billOfMaterialLevel="0"
+             requireInventory="Y"
+             taxable="Y"
+             description="Men's casual cotton twill pants, navy blue, size 32x32"/>
+
+    <ProductPrice productId="FTM-PANT-CASUAL-32X32-NAVY"
+                  productPricePurposeId="PURCHASE"
+                  productPriceTypeId="DEFAULT_PRICE"
+                  currencyUomId="USD"
+                  price="37.02"
+                  fromDate="2025-01-01 00:00:00"/>
+
+    <ProductCost productId="FTM-PANT-CASUAL-32X32-NAVY"
+                 costComponentTypeId="ACTUAL_MAT_COST"
+                 cost="25.52"
+                 costUomId="USD"
+                 fromDate="2025-01-01 00:00:00"/>
+
+    <ProductCost productId="FTM-PANT-CASUAL-32X32-NAVY"
+                 costComponentTypeId="ACTUAL_LABOR_COST"
+                 cost="8.00"
+                 costUomId="USD"
+                 fromDate="2025-01-01 00:00:00"/>
+
+    <ProductCost productId="FTM-PANT-CASUAL-32X32-NAVY"
+                 costComponentTypeId="ACTUAL_OVERHEAD_COST"
+                 cost="3.50"
+                 costUomId="USD"
+                 fromDate="2025-01-01 00:00:00"/>
+
+    <!-- ========================================= -->
+    <!-- FABRIC COMPONENTS -->
+    <!-- ========================================= -->
+
+    <!-- Main Fabric: Cotton Twill Navy -->
+    <Product productId="FTM-FABRIC-COTTON-TWILL-NAVY-60"
+             productTypeId="RAW_MATERIAL"
+             internalName="Cotton Twill Fabric - Navy - 60 inch width"
+             isVirtual="N"
+             quantityUomId="LEN_m"
+             requireInventory="Y"
+             description="100% cotton twill fabric, navy blue, 60 inch width, medium weight"/>
+
+    <ProductPrice productId="FTM-FABRIC-COTTON-TWILL-NAVY-60"
+                  productPricePurposeId="PURCHASE"
+                  productPriceTypeId="DEFAULT_PRICE"
+                  currencyUomId="USD"
+                  price="8.00"
+                  fromDate="2025-01-01 00:00:00"/>
+
+    <!-- BOM Association: Main Fabric -->
+    <ProductAssoc productId="FTM-PANT-CASUAL-32X32-NAVY"
+                  productIdTo="FTM-FABRIC-COTTON-TWILL-NAVY-60"
+                  productAssocTypeId="MANUF_COMPONENT"
+                  fromDate="2025-01-01 00:00:00"
+                  quantity="1.8"
+                  quantityUomId="LEN_m"
+                  scrapFactor="0.15"
+                  sequenceNum="10"
+                  estimatedQuantity="2.07"
+                  reason="Main fabric for pant body, includes 15% scrap"/>
+
+    <!-- Pocket Lining Fabric -->
+    <Product productId="FTM-FABRIC-POLYESTER-POCKET-WHITE"
+             productTypeId="RAW_MATERIAL"
+             internalName="Polyester Pocket Lining - White"
+             isVirtual="N"
+             quantityUomId="LEN_m"
+             requireInventory="Y"
+             description="100% polyester pocket lining fabric, white"/>
+
+    <ProductPrice productId="FTM-FABRIC-POLYESTER-POCKET-WHITE"
+                  productPricePurposeId="PURCHASE"
+                  productPriceTypeId="DEFAULT_PRICE"
+                  currencyUomId="USD"
+                  price="3.00"
+                  fromDate="2025-01-01 00:00:00"/>
+
+    <!-- BOM Association: Pocket Lining -->
+    <ProductAssoc productId="FTM-PANT-CASUAL-32X32-NAVY"
+                  productIdTo="FTM-FABRIC-POLYESTER-POCKET-WHITE"
+                  productAssocTypeId="MANUF_COMPONENT"
+                  fromDate="2025-01-01 00:00:00"
+                  quantity="0.3"
+                  quantityUomId="LEN_m"
+                  scrapFactor="0.10"
+                  sequenceNum="11"
+                  estimatedQuantity="0.33"
+                  reason="Pocket lining fabric, includes 10% scrap"/>
+
+    <!-- ========================================= -->
+    <!-- FASTENERS -->
+    <!-- ========================================= -->
+
+    <!-- Zipper: Metal Brass 7 inch -->
+    <Product productId="FTM-ZIP-METAL-BRASS-7INCH"
+             productTypeId="RAW_MATERIAL"
+             internalName="Metal Zipper Brass 7 inch"
+             isVirtual="N"
+             quantityUomId="WT_g"
+             requireInventory="Y"
+             description="Metal zipper with brass teeth, 7 inch length, YKK or equivalent"/>
+
+    <ProductPrice productId="FTM-ZIP-METAL-BRASS-7INCH"
+                  productPricePurposeId="PURCHASE"
+                  productPriceTypeId="DEFAULT_PRICE"
+                  currencyUomId="USD"
+                  price="0.80"
+                  fromDate="2025-01-01 00:00:00"/>
+
+    <!-- BOM Association: Zipper -->
+    <ProductAssoc productId="FTM-PANT-CASUAL-32X32-NAVY"
+                  productIdTo="FTM-ZIP-METAL-BRASS-7INCH"
+                  productAssocTypeId="MANUF_COMPONENT"
+                  fromDate="2025-01-01 00:00:00"
+                  quantity="1"
+                  quantityUomId="WT_g"
+                  scrapFactor="0.02"
+                  sequenceNum="20"
+                  estimatedQuantity="1.02"
+                  reason="Front fly zipper, includes 2% scrap/defect allowance"/>
+
+    <!-- Button: Metal Brass 20mm -->
+    <Product productId="FTM-BTN-METAL-BRASS-20MM"
+             productTypeId="RAW_MATERIAL"
+             internalName="Metal Button Brass 20mm"
+             isVirtual="N"
+             quantityUomId="WT_g"
+             requireInventory="Y"
+             description="Metal button with brass finish, 20mm diameter"/>
+
+    <ProductPrice productId="FTM-BTN-METAL-BRASS-20MM"
+                  productPricePurposeId="PURCHASE"
+                  productPriceTypeId="DEFAULT_PRICE"
+                  currencyUomId="USD"
+                  price="0.15"
+                  fromDate="2025-01-01 00:00:00"/>
+
+    <!-- BOM Association: Button -->
+    <ProductAssoc productId="FTM-PANT-CASUAL-32X32-NAVY"
+                  productIdTo="FTM-BTN-METAL-BRASS-20MM"
+                  productAssocTypeId="MANUF_COMPONENT"
+                  fromDate="2025-01-01 00:00:00"
+                  quantity="1"
+                  quantityUomId="WT_g"
+                  scrapFactor="0.05"
+                  sequenceNum="21"
+                  estimatedQuantity="1.05"
+                  reason="Waistband button, includes 5% scrap/defect allowance"/>
+
+    <!-- Rivets: Copper 10mm -->
+    <Product productId="FTM-RIVET-COPPER-10MM"
+             productTypeId="RAW_MATERIAL"
+             internalName="Copper Rivet 10mm"
+             isVirtual="N"
+             quantityUomId="WT_g"
+             requireInventory="Y"
+             description="Copper rivets, 10mm diameter, for pocket reinforcement"/>
+
+    <ProductPrice productId="FTM-RIVET-COPPER-10MM"
+                  productPricePurposeId="PURCHASE"
+                  productPriceTypeId="DEFAULT_PRICE"
+                  currencyUomId="USD"
+                  price="0.05"
+                  fromDate="2025-01-01 00:00:00"/>
+
+    <!-- BOM Association: Rivets -->
+    <ProductAssoc productId="FTM-PANT-CASUAL-32X32-NAVY"
+                  productIdTo="FTM-RIVET-COPPER-10MM"
+                  productAssocTypeId="MANUF_COMPONENT"
+                  fromDate="2025-01-01 00:00:00"
+                  quantity="4"
+                  quantityUomId="WT_g"
+                  scrapFactor="0.10"
+                  sequenceNum="22"
+                  estimatedQuantity="4.4"
+                  reason="Pocket corner rivets (4 per pant), includes 10% scrap"/>
+
+    <!-- ========================================= -->
+    <!-- THREAD -->
+    <!-- ========================================= -->
+
+    <!-- Main Thread: Polyester Navy -->
+    <Product productId="FTM-THREAD-POLY-NAVY-CONE"
+             productTypeId="RAW_MATERIAL"
+             internalName="Polyester Thread Navy Cone"
+             isVirtual="N"
+             quantityUomId="LEN_m"
+             requireInventory="Y"
+             description="100% polyester sewing thread, navy blue, industrial cone (5000m)"/>
+
+    <ProductPrice productId="FTM-THREAD-POLY-NAVY-CONE"
+                  productPricePurposeId="PURCHASE"
+                  productPriceTypeId="DEFAULT_PRICE"
+                  currencyUomId="USD"
+                  price="0.01"
+                  fromDate="2025-01-01 00:00:00"/>
+
+    <!-- BOM Association: Main Thread -->
+    <ProductAssoc productId="FTM-PANT-CASUAL-32X32-NAVY"
+                  productIdTo="FTM-THREAD-POLY-NAVY-CONE"
+                  productAssocTypeId="MANUF_COMPONENT"
+                  fromDate="2025-01-01 00:00:00"
+                  quantity="150"
+                  quantityUomId="LEN_m"
+                  scrapFactor="0.20"
+                  sequenceNum="30"
+                  estimatedQuantity="180"
+                  reason="Main sewing thread, includes 20% waste/scrap"/>
+
+    <!-- Reinforcement Thread: Heavy Duty -->
+    <Product productId="FTM-THREAD-POLY-NAVY-HEAVY"
+             productTypeId="RAW_MATERIAL"
+             internalName="Polyester Thread Navy Heavy Duty"
+             isVirtual="N"
+             quantityUomId="LEN_m"
+             requireInventory="Y"
+             description="100% polyester heavy duty thread, navy blue, for stress points"/>
+
+    <ProductPrice productId="FTM-THREAD-POLY-NAVY-HEAVY"
+                  productPricePurposeId="PURCHASE"
+                  productPriceTypeId="DEFAULT_PRICE"
+                  currencyUomId="USD"
+                  price="0.02"
+                  fromDate="2025-01-01 00:00:00"/>
+
+    <!-- BOM Association: Reinforcement Thread -->
+    <ProductAssoc productId="FTM-PANT-CASUAL-32X32-NAVY"
+                  productIdTo="FTM-THREAD-POLY-NAVY-HEAVY"
+                  productAssocTypeId="MANUF_COMPONENT"
+                  fromDate="2025-01-01 00:00:00"
+                  quantity="5"
+                  quantityUomId="LEN_m"
+                  scrapFactor="0.10"
+                  sequenceNum="31"
+                  estimatedQuantity="5.5"
+                  reason="Reinforcement thread for stress points, includes 10% scrap"/>
+
+    <!-- ========================================= -->
+    <!-- LABELS -->
+    <!-- ========================================= -->
+
+    <!-- Brand Label -->
+    <Product productId="FTM-LABEL-BRAND-WOVEN"
+             productTypeId="RAW_MATERIAL"
+             internalName="FTM Brand Label Woven"
+             isVirtual="N"
+             quantityUomId="WT_g"
+             requireInventory="Y"
+             description="FTM Garments woven brand label"/>
+
+    <ProductPrice productId="FTM-LABEL-BRAND-WOVEN"
+                  productPricePurposeId="PURCHASE"
+                  productPriceTypeId="DEFAULT_PRICE"
+                  currencyUomId="USD"
+                  price="0.20"
+                  fromDate="2025-01-01 00:00:00"/>
+
+    <!-- BOM Association: Brand Label -->
+    <ProductAssoc productId="FTM-PANT-CASUAL-32X32-NAVY"
+                  productIdTo="FTM-LABEL-BRAND-WOVEN"
+                  productAssocTypeId="MANUF_COMPONENT"
+                  fromDate="2025-01-01 00:00:00"
+                  quantity="1"
+                  quantityUomId="WT_g"
+                  scrapFactor="0.05"
+                  sequenceNum="40"
+                  estimatedQuantity="1.05"
+                  reason="Brand label at waistband, includes 5% scrap"/>
+
+    <!-- Care Label -->
+    <Product productId="FTM-LABEL-CARE-EN-WASH"
+             productTypeId="RAW_MATERIAL"
+             internalName="Care Label English Wash Instructions"
+             isVirtual="N"
+             quantityUomId="WT_g"
+             requireInventory="Y"
+             description="Care instructions label, English, washing symbols"/>
+
+    <ProductPrice productId="FTM-LABEL-CARE-EN-WASH"
+                  productPricePurposeId="PURCHASE"
+                  productPriceTypeId="DEFAULT_PRICE"
+                  currencyUomId="USD"
+                  price="0.10"
+                  fromDate="2025-01-01 00:00:00"/>
+
+    <!-- BOM Association: Care Label -->
+    <ProductAssoc productId="FTM-PANT-CASUAL-32X32-NAVY"
+                  productIdTo="FTM-LABEL-CARE-EN-WASH"
+                  productAssocTypeId="MANUF_COMPONENT"
+                  fromDate="2025-01-01 00:00:00"
+                  quantity="1"
+                  quantityUomId="WT_g"
+                  scrapFactor="0.03"
+                  sequenceNum="41"
+                  estimatedQuantity="1.03"
+                  reason="Care instruction label, includes 3% scrap"/>
+
+    <!-- Size Label -->
+    <Product productId="FTM-LABEL-SIZE-32X32"
+             productTypeId="RAW_MATERIAL"
+             internalName="Size Label 32x32"
+             isVirtual="N"
+             quantityUomId="WT_g"
+             requireInventory="Y"
+             description="Size label showing 32x32 (waist x length)"/>
+
+    <ProductPrice productId="FTM-LABEL-SIZE-32X32"
+                  productPricePurposeId="PURCHASE"
+                  productPriceTypeId="DEFAULT_PRICE"
+                  currencyUomId="USD"
+                  price="0.05"
+                  fromDate="2025-01-01 00:00:00"/>
+
+    <!-- BOM Association: Size Label -->
+    <ProductAssoc productId="FTM-PANT-CASUAL-32X32-NAVY"
+                  productIdTo="FTM-LABEL-SIZE-32X32"
+                  productAssocTypeId="MANUF_COMPONENT"
+                  fromDate="2025-01-01 00:00:00"
+                  quantity="1"
+                  quantityUomId="WT_g"
+                  scrapFactor="0.03"
+                  sequenceNum="42"
+                  estimatedQuantity="1.03"
+                  reason="Size label, includes 3% scrap"/>
+
+    <!-- Hangtag -->
+    <Product productId="FTM-HANGTAG-RETAIL"
+             productTypeId="RAW_MATERIAL"
+             internalName="Retail Hangtag"
+             isVirtual="N"
+             quantityUomId="WT_g"
+             requireInventory="Y"
+             description="Retail hangtag with product information and barcode"/>
+
+    <ProductPrice productId="FTM-HANGTAG-RETAIL"
+                  productPricePurposeId="PURCHASE"
+                  productPriceTypeId="DEFAULT_PRICE"
+                  currencyUomId="USD"
+                  price="0.30"
+                  fromDate="2025-01-01 00:00:00"/>
+
+    <!-- BOM Association: Hangtag -->
+    <ProductAssoc productId="FTM-PANT-CASUAL-32X32-NAVY"
+                  productIdTo="FTM-HANGTAG-RETAIL"
+                  productAssocTypeId="MANUF_COMPONENT"
+                  fromDate="2025-01-01 00:00:00"
+                  quantity="1"
+                  quantityUomId="WT_g"
+                  scrapFactor="0.02"
+                  sequenceNum="43"
+                  estimatedQuantity="1.02"
+                  reason="Retail hangtag, includes 2% scrap"/>
+
+    <!-- ========================================= -->
+    <!-- TRIMS -->
+    <!-- ========================================= -->
+
+    <!-- Elastic -->
+    <Product productId="FTM-ELASTIC-WAIST-40MM-WHITE"
+             productTypeId="RAW_MATERIAL"
+             internalName="Waist Elastic 40mm White"
+             isVirtual="N"
+             quantityUomId="LEN_m"
+             requireInventory="Y"
+             description="Woven elastic band, 40mm width, white, for waistband"/>
+
+    <ProductPrice productId="FTM-ELASTIC-WAIST-40MM-WHITE"
+                  productPricePurposeId="PURCHASE"
+                  productPriceTypeId="DEFAULT_PRICE"
+                  currencyUomId="USD"
+                  price="0.50"
+                  fromDate="2025-01-01 00:00:00"/>
+
+    <!-- BOM Association: Elastic -->
+    <ProductAssoc productId="FTM-PANT-CASUAL-32X32-NAVY"
+                  productIdTo="FTM-ELASTIC-WAIST-40MM-WHITE"
+                  productAssocTypeId="MANUF_COMPONENT"
+                  fromDate="2025-01-01 00:00:00"
+                  quantity="0.9"
+                  quantityUomId="LEN_m"
+                  scrapFactor="0.05"
+                  sequenceNum="50"
+                  estimatedQuantity="0.95"
+                  reason="Waistband elastic, includes 5% scrap"/>
+
+    <!-- Interfacing -->
+    <Product productId="FTM-INTERFACING-FUSIBLE-WHITE"
+             productTypeId="RAW_MATERIAL"
+             internalName="Fusible Interfacing White"
+             isVirtual="N"
+             quantityUomId="LEN_m"
+             requireInventory="Y"
+             description="Fusible interfacing fabric, white, for waistband stiffening"/>
+
+    <ProductPrice productId="FTM-INTERFACING-FUSIBLE-WHITE"
+                  productPricePurposeId="PURCHASE"
+                  productPriceTypeId="DEFAULT_PRICE"
+                  currencyUomId="USD"
+                  price="1.50"
+                  fromDate="2025-01-01 00:00:00"/>
+
+    <!-- BOM Association: Interfacing -->
+    <ProductAssoc productId="FTM-PANT-CASUAL-32X32-NAVY"
+                  productIdTo="FTM-INTERFACING-FUSIBLE-WHITE"
+                  productAssocTypeId="MANUF_COMPONENT"
+                  fromDate="2025-01-01 00:00:00"
+                  quantity="0.4"
+                  quantityUomId="LEN_m"
+                  scrapFactor="0.10"
+                  sequenceNum="51"
+                  estimatedQuantity="0.44"
+                  reason="Waistband interfacing, includes 10% scrap"/>
+
+    <!-- ========================================= -->
+    <!-- PACKAGING -->
+    <!-- ========================================= -->
+
+    <!-- Poly Bag -->
+    <Product productId="FTM-POLYBAG-12X16-CLEAR"
+             productTypeId="RAW_MATERIAL"
+             internalName="Poly Bag 12x16 Clear"
+             isVirtual="N"
+             quantityUomId="WT_g"
+             requireInventory="Y"
+             description="Clear plastic poly bag, 12x16 inches, for individual pant packaging"/>
+
+    <ProductPrice productId="FTM-POLYBAG-12X16-CLEAR"
+                  productPricePurposeId="PURCHASE"
+                  productPriceTypeId="DEFAULT_PRICE"
+                  currencyUomId="USD"
+                  price="0.08"
+                  fromDate="2025-01-01 00:00:00"/>
+
+    <!-- BOM Association: Poly Bag -->
+    <ProductAssoc productId="FTM-PANT-CASUAL-32X32-NAVY"
+                  productIdTo="FTM-POLYBAG-12X16-CLEAR"
+                  productAssocTypeId="MANUF_COMPONENT"
+                  fromDate="2025-01-01 00:00:00"
+                  quantity="1"
+                  quantityUomId="WT_g"
+                  scrapFactor="0.02"
+                  sequenceNum="60"
+                  estimatedQuantity="1.02"
+                  reason="Individual packaging poly bag, includes 2% scrap"/>
+
+    <!-- Cardboard Insert -->
+    <Product productId="FTM-CARDBOARD-INSERT-PANT"
+             productTypeId="RAW_MATERIAL"
+             internalName="Cardboard Insert for Pant"
+             isVirtual="N"
+             quantityUomId="WT_g"
+             requireInventory="Y"
+             description="Cardboard insert for pant folding and display"/>
+
+    <ProductPrice productId="FTM-CARDBOARD-INSERT-PANT"
+                  productPricePurposeId="PURCHASE"
+                  productPriceTypeId="DEFAULT_PRICE"
+                  currencyUomId="USD"
+                  price="0.15"
+                  fromDate="2025-01-01 00:00:00"/>
+
+    <!-- BOM Association: Cardboard Insert -->
+    <ProductAssoc productId="FTM-PANT-CASUAL-32X32-NAVY"
+                  productIdTo="FTM-CARDBOARD-INSERT-PANT"
+                  productAssocTypeId="MANUF_COMPONENT"
+                  fromDate="2025-01-01 00:00:00"
+                  quantity="1"
+                  quantityUomId="WT_g"
+                  scrapFactor="0.01"
+                  sequenceNum="61"
+                  estimatedQuantity="1.01"
+                  reason="Cardboard folding insert, includes 1% scrap"/>
+
+    <!-- Barcode Sticker -->
+    <Product productId="FTM-BARCODE-STICKER"
+             productTypeId="RAW_MATERIAL"
+             internalName="Barcode Sticker"
+             isVirtual="N"
+             quantityUomId="WT_g"
+             requireInventory="Y"
+             description="Barcode sticker for inventory tracking"/>
+
+    <ProductPrice productId="FTM-BARCODE-STICKER"
+                  productPricePurposeId="PURCHASE"
+                  productPriceTypeId="DEFAULT_PRICE"
+                  currencyUomId="USD"
+                  price="0.02"
+                  fromDate="2025-01-01 00:00:00"/>
+
+    <!-- BOM Association: Barcode Sticker -->
+    <ProductAssoc productId="FTM-PANT-CASUAL-32X32-NAVY"
+                  productIdTo="FTM-BARCODE-STICKER"
+                  productAssocTypeId="MANUF_COMPONENT"
+                  fromDate="2025-01-01 00:00:00"
+                  quantity="1"
+                  quantityUomId="WT_g"
+                  scrapFactor="0.01"
+                  sequenceNum="62"
+                  estimatedQuantity="1.01"
+                  reason="Barcode sticker, includes 1% scrap"/>
+
+    <!-- ========================================= -->
+    <!-- PRODUCT CATEGORIES -->
+    <!-- ========================================= -->
+
+    <ProductCategory productCategoryId="FTM-PANTS"
+                     productCategoryTypeId="CATALOG_CATEGORY"
+                     categoryName="FTM Pants"
+                     description="FTM Garments pants category"/>
+
+    <ProductCategoryMember productCategoryId="FTM-PANTS"
+                          productId="FTM-PANT-CASUAL-32X32-NAVY"
+                          fromDate="2025-01-01 00:00:00"/>
+
+    <ProductCategory productCategoryId="FTM-RAW-MATERIALS"
+                     productCategoryTypeId="CATALOG_CATEGORY"
+                     categoryName="FTM Raw Materials"
+                     description="Raw materials and components for garment manufacturing"/>
+
+    <!-- ========================================= -->
+    <!-- FACILITY: FTM Main Factory -->
+    <!-- ========================================= -->
+
+    <Facility facilityId="FTM-FAC-MAIN"
+              facilityTypeId="PLANT"
+              facilityName="FTM Garments Main Factory"
+              description="FTM Garments main manufacturing facility - Mbabane, Swaziland"
+              ownerPartyId="Company"/>
+
+    <!-- ========================================= -->
+    <!-- SAMPLE INVENTORY (Optional - for testing) -->
+    <!-- ========================================= -->
+
+    <!-- Inventory for main fabric -->
+    <InventoryItem inventoryItemId="FTM-INV-FABRIC-001"
+                   inventoryItemTypeId="NON_SERIAL_INV_ITEM"
+                   productId="FTM-FABRIC-COTTON-TWILL-NAVY-60"
+                   facilityId="FTM-FAC-MAIN"
+                   quantityOnHandTotal="500"
+                   availableToPromiseTotal="500"
+                   quantityUomId="LEN_m"
+                   datetimeReceived="2025-01-15 10:00:00"/>
+
+    <!-- Inventory for zippers -->
+    <InventoryItem inventoryItemId="FTM-INV-ZIP-001"
+                   inventoryItemTypeId="NON_SERIAL_INV_ITEM"
+                   productId="FTM-ZIP-METAL-BRASS-7INCH"
+                   facilityId="FTM-FAC-MAIN"
+                   quantityOnHandTotal="500"
+                   availableToPromiseTotal="500"
+                   quantityUomId="WT_g"
+                   datetimeReceived="2025-01-15 10:00:00"/>
+
+    <!-- Inventory for buttons -->
+    <InventoryItem inventoryItemId="FTM-INV-BTN-001"
+                   inventoryItemTypeId="NON_SERIAL_INV_ITEM"
+                   productId="FTM-BTN-METAL-BRASS-20MM"
+                   facilityId="FTM-FAC-MAIN"
+                   quantityOnHandTotal="2000"
+                   availableToPromiseTotal="2000"
+                   quantityUomId="WT_g"
+                   datetimeReceived="2025-01-15 10:00:00"/>
+
+</entity-engine-xml>
