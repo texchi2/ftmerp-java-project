@@ -824,4 +824,34 @@ access. For a detailed description see the core/docs/entityconfig.html file.
             pool-maxsize="250"
             time-between-eviction-runs-millis="600000"/>
     </datasource>
+
+    <!-- FTM WiFi Enrollment — Phase 7 -->
+    <delegator name="ftmEnrollment"
+        entity-model-reader="main"
+        entity-group-reader="main"
+        entity-eca-reader="main">
+        <group-map group-name="ftmEnrollment" datasource-name="ftmEnrollmentDataSource"/>
+    </delegator>
+
+    <!-- FTM WiFi Enrollment datasource — ftm_enrollment PostgreSQL on Ubuntu host -->
+    <datasource name="ftmEnrollmentDataSource"
+        helper-class="org.apache.ofbiz.entity.datasource.GenericHelperDAO"
+        field-type-name="postgres"
+        check-on-start="false"
+        add-missing-on-start="false"
+        use-foreign-keys="false"
+        use-pk-constraint-names="false"
+        join-style="ansi"
+        alias-view-columns="false">
+        <inline-jdbc
+            jdbc-driver="org.postgresql.Driver"
+            jdbc-uri="jdbc:postgresql://192.168.30.3:5432/ftm_enrollment"
+            jdbc-username="enrolladmin"
+            jdbc-password="ENROLLADMIN_PASS"
+            isolation-level="ReadCommitted"
+            pool-minsize="2"
+            pool-maxsize="10"
+            time-between-eviction-runs-millis="600000"/>
+    </datasource>
+
 </entity-config>
