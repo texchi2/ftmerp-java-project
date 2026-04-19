@@ -55,12 +55,21 @@ export OFBIZ_PLUGINS_PATH="/home/kona/development/ofbiz-plugins"
 export OFBIZ_FRAMEWORK_PATH="/home/kona/development/ofbiz-framework"
 
 
-~/.pgpass Setup (passwords stored HERE ONLY)
+~/.pgpass Setup (NEVER store passwords HERE)
+
+#create `~/.pgpass` on each developer machine with this format:
 
 # hostname:port:database:username:password
-192.168.30.3:5432:ofbiz:mcp_readonly:Ftm@MCP2026!
-192.168.30.3:5432:ofbiz:ofbiz:ofbiz
-192.168.30.3:5432:ftm_enrollment:enrolladmin:Ftm@Enr0ll2026!
+192.168.30.3:5432:ofbiz:ofbiz:YOUR_OFBIZ_PASSWORD
+192.168.30.3:5432:ofbiz:mcp_readonly:YOUR_MCP_READONLY_PASSWORD
+192.168.30.3:5432:ftm_enrollment:enrolladmin:YOUR_ENROLLADMIN_PASSWORD
+192.168.30.3:5432:ftm_ofbiz:ofbizadmin:YOUR_OFBIZADMIN_PASSWORD
+192.168.30.3:5432:ftmerp:ftmuser:YOUR_FTMUSER_PASSWORD
+
+
+# => Ask Dr. Tex for actual passwords via secure channel (Signal/WhatsApp).
+chmod 600 ~/.pgpass
+
 
 
 chmod 600 ~/.pgpass
