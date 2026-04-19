@@ -1,10 +1,15 @@
+
 # PostgreSQL Database Setup for FTM ERP
 
 This document describes the PostgreSQL database configuration for the FTM ERP OFBiz system.
 
+**⚠️ Security Note:** This document contains NO actual passwords.
+Passwords are stored ONLY in `~/.pgpass` on each developer machine (chmod 600).
+Ask Dr. Tex for actual credentials via secure channel (Signal/WhatsApp).
+
 ## Database Configuration
 
-The FTM ERP system uses PostgreSQL with three separate databases for different purposes:
+The FTM ERP system uses PostgreSQL with three separate databases:
 
 ### Database Overview
 
@@ -17,8 +22,8 @@ The FTM ERP system uses PostgreSQL with three separate databases for different p
 ### Database User
 
 - **Username:** `ftmuser`
-- **Password:** `YOUR_FTMUSER_PASSWORD`
 - **Privileges:** CREATEDB, full access to all three databases
+- **Password:** stored in `~/.pgpass` only — never in any committed file
 
 ## Initial Setup
 
@@ -26,52 +31,59 @@ The FTM ERP system uses PostgreSQL with three separate databases for different p
 
 ```bash
 sudo -u postgres psql -c "CREATE USER ftmuser WITH PASSWORD 'YOUR_FTMUSER_PASSWORD' CREATEDB;"
-```
 
-### 2. Create Databases
 
-```bash
-# Main database
+2. Create Databases
+
 sudo -u postgres psql -c "CREATE DATABASE ftmerp OWNER ftmuser;"
-
-# OLAP database for analytics
 sudo -u postgres psql -c "CREATE DATABASE ofbizolap OWNER ftmuser;"
-
-# Tenant database for multi-tenancy
 sudo -u postgres psql -c "CREATE DATABASE ofbiztenant OWNER ftmuser;"
-```
 
-### 3. Grant Privileges
 
-```bash
+3. Grant Privileges
+
 sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE ftmerp TO ftmuser;"
 sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE ofbizolap TO ftmuser;"
 sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE ofbiztenant TO ftmuser;"
-```
 
-### 4. Verify Setup
 
-```bash
+4. Add pg_hba.conf Entries
+
+sudo bash -c 'cat >> /etc/postgresql/16/main/pg_hba.conf << EOF
+
+# FTM OFBiz databases
+host  ftmerp      ftmuser  192.168.30.0/24  md5
+host  ftmerp      ftmuser  127.0.0.1/32     md5
+host  ofbizolap   ftmuser  192.168.30.0/24  md5
+host  ofbizolap   ftmuser  127.0.0.1/32     md5
+host  ofbiztenant ftmuser  192.168.30.0/24  md5
+host  ofbiztenant ftmuser  127.0.0.1/32     md5
+EOF'
+sudo systemctl reload postgresql
+
+
+5. Verify Setup
+
 # Check databases exist
 sudo -u postgres psql -c "\l" | grep -E "ftmerp|ofbizolap|ofbiztenant"
 
 # Check user exists
 sudo -u postgres psql -c "\du ftmuser"
 
-# Test connection
-PGPASSWORD='YOUR_FTMUSER_PASSWORD' psql -U ftmuser -d ftmerp -h 127.0.0.1 -c "SELECT version();"
-```
+# Test connection (password from ~/.pgpass)
+psql -U ftmuser -d ftmerp -h 127.0.0.1 -c "SELECT version();"
 
-## OFBiz Configuration
 
+OFBiz Configuration
 The database configuration is defined in:
-```
+
 ofbiz-framework/framework/entity/config/entityengine.xml
-```
 
-### Main Datasource (localpostgres)
 
-```xml
+⚠️ entityengine.xml contains jdbc-password — this file is NOT committed to git
+as-is. The password field uses an environment variable or is set per deployment.
+Main Datasource (localpostgres)
+
 <datasource name="localpostgres"
     helper-class="org.apache.ofbiz.entity.datasource.GenericHelperDAO"
     field-type-name="postgres"
@@ -83,7 +95,7 @@ ofbiz-framework/framework/entity/config/entityengine.xml
     <read-data reader-name="ext"/>
     <inline-jdbc
         jdbc-driver="org.postgresql.Driver"
-        jdbc-uri="jdbc:postgresql://127.0.0.1/ftmerp"
+        jdbc-uri="jdbc:postgresql://192.168.30.3/ftmerp"
         jdbc-username="ftmuser"
         jdbc-password="YOUR_FTMUSER_PASSWORD"
         isolation-level="ReadCommitted"
@@ -91,11 +103,10 @@ ofbiz-framework/framework/entity/config/entityengine.xml
         pool-maxsize="250"
         time-between-eviction-runs-millis="600000"/>
 </datasource>
-```
 
-### OLAP Datasource (localpostgresolap)
 
-```xml
+OLAP Datasource (localpostgresolap)
+
 <datasource name="localpostgresolap"
     helper-class="org.apache.ofbiz.entity.datasource.GenericHelperDAO"
     field-type-name="postgres"
@@ -103,7 +114,7 @@ ofbiz-framework/framework/entity/config/entityengine.xml
     add-missing-on-start="true">
     <inline-jdbc
         jdbc-driver="org.postgresql.Driver"
-        jdbc-uri="jdbc:postgresql://127.0.0.1/ofbizolap"
+        jdbc-uri="jdbc:postgresql://192.168.30.3/ofbizolap"
         jdbc-username="ftmuser"
         jdbc-password="YOUR_FTMUSER_PASSWORD"
         isolation-level="ReadCommitted"
@@ -111,11 +122,10 @@ ofbiz-framework/framework/entity/config/entityengine.xml
         pool-maxsize="250"
         time-between-eviction-runs-millis="600000"/>
 </datasource>
-```
 
-### Tenant Datasource (localpostgrestenant)
 
-```xml
+Tenant Datasource (localpostgrestenant)
+
 <datasource name="localpostgrestenant"
     helper-class="org.apache.ofbiz.entity.datasource.GenericHelperDAO"
     field-type-name="postgres"
@@ -123,7 +133,7 @@ ofbiz-framework/framework/entity/config/entityengine.xml
     add-missing-on-start="true">
     <inline-jdbc
         jdbc-driver="org.postgresql.Driver"
-        jdbc-uri="jdbc:postgresql://127.0.0.1/ofbiztenant"
+        jdbc-uri="jdbc:postgresql://192.168.30.3/ofbiztenant"
         jdbc-username="ftmuser"
         jdbc-password="YOUR_FTMUSER_PASSWORD"
         isolation-level="ReadCommitted"
@@ -131,116 +141,101 @@ ofbiz-framework/framework/entity/config/entityengine.xml
         pool-maxsize="250"
         time-between-eviction-runs-millis="600000"/>
 </datasource>
-```
 
-### Default Delegator Configuration
 
-```xml
+Default Delegator Configuration
+
 <delegator name="default" entity-model-reader="main" entity-group-reader="main"
            entity-eca-reader="main" distributed-cache-clear-enabled="false">
-    <group-map group-name="org.apache.ofbiz" datasource-name="localpostgres"/>
-    <group-map group-name="org.apache.ofbiz.olap" datasource-name="localpostgresolap"/>
+    <group-map group-name="org.apache.ofbiz"        datasource-name="localpostgres"/>
+    <group-map group-name="org.apache.ofbiz.olap"   datasource-name="localpostgresolap"/>
     <group-map group-name="org.apache.ofbiz.tenant" datasource-name="localpostgrestenant"/>
 </delegator>
-```
 
-## Troubleshooting
 
-### Connection Refused
+Troubleshooting
+Connection Refused
 
-If you see "Connection refused" errors:
-
-```bash
-# Check if PostgreSQL is running
+# Check PostgreSQL is running and listening on correct interfaces
 sudo systemctl status postgresql
+sudo ss -tlnp | grep 5432
+# Expected: both 127.0.0.1:5432 AND 192.168.30.3:5432
 
-# Start PostgreSQL if needed
-sudo systemctl start postgresql
+# If only 127.0.0.1 appears — fix listen_addresses (recurring issue after reboot):
+sudo sed -i "s/^listen_addresses = .*/listen_addresses = '127.0.0.1,192.168.30.3'/" \
+  /etc/postgresql/16/main/postgresql.conf
+sudo systemctl restart postgresql
 
-# Enable PostgreSQL to start on boot
-sudo systemctl enable postgresql
-```
 
-### Authentication Failed
+Authentication Failed
 
-If you see "password authentication failed":
+# Verify connection using ~/.pgpass (no password in command)
+psql -U ftmuser -d ftmerp -h 127.0.0.1 -c "SELECT 1;"
 
-1. Verify the password is correct:
-```bash
-PGPASSWORD='YOUR_FTMUSER_PASSWORD' psql -U ftmuser -d ftmerp -h 127.0.0.1 -c "SELECT 1;"
-```
-
-2. Reset the password if needed:
-```bash
+# Reset password if needed (get correct password from Dr. Tex)
 sudo -u postgres psql -c "ALTER USER ftmuser WITH PASSWORD 'YOUR_FTMUSER_PASSWORD';"
-```
 
-3. Check all datasources in `entityengine.xml` use the same credentials
 
-### Database Does Not Exist
+Database Does Not Exist
 
-If you see "database does not exist":
-
-```bash
-# List all databases
 sudo -u postgres psql -c "\l"
-
-# Create missing database
 sudo -u postgres psql -c "CREATE DATABASE <dbname> OWNER ftmuser;"
-```
 
-## Security Notes
 
-**⚠️ Important for Production:**
+~/.pgpass Format Reference
+Passwords are stored ONLY here — never in any committed file.
 
-1. **Change the default password** - `YOUR_FTMUSER_PASSWORD` should only be used for development
-2. **Use strong passwords** - Minimum 16 characters with mixed case, numbers, and symbols
-3. **Configure PostgreSQL authentication** - Edit `/etc/postgresql/*/main/pg_hba.conf` for proper access control
-4. **Enable SSL/TLS** - Configure PostgreSQL to use encrypted connections
-5. **Regular backups** - Set up automated database backups
-6. **Network security** - Limit PostgreSQL access to trusted networks only
+# hostname:port:database:username:password
+192.168.30.3:5432:ftmerp:ftmuser:YOUR_FTMUSER_PASSWORD
+192.168.30.3:5432:ofbizolap:ftmuser:YOUR_FTMUSER_PASSWORD
+192.168.30.3:5432:ofbiztenant:ftmuser:YOUR_FTMUSER_PASSWORD
+192.168.30.3:5432:ofbiz:mcp_readonly:YOUR_MCP_READONLY_PASSWORD
+192.168.30.3:5432:ftm_enrollment:enrolladmin:YOUR_ENROLLADMIN_PASSWORD
 
-### Production Password Change
 
-```bash
-# Generate a strong password
+chmod 600 ~/.pgpass
+
+
+Security Notes
+	1.	Never commit passwords — use ~/.pgpass for all credentials
+	2.	Change default passwords before production deployment on erp2
+	3.	Generate strong passwords for production: openssl rand -base64 24
+	4.	Limit network access — pg_hba.conf restricts to 192.168.30.0/24 only
+	5.	Enable SSL/TLS for Phase 9E production deployment on erp2
+Production Password Rotation
+
+# Generate strong password
 openssl rand -base64 24
 
 # Update PostgreSQL user
 sudo -u postgres psql -c "ALTER USER ftmuser WITH PASSWORD '<strong-password>';"
 
-# Update entityengine.xml with new password
-# Edit: framework/entity/config/entityengine.xml
-# Update all three datasources: localpostgres, localpostgresolap, localpostgrestenant
-```
+# Update entityengine.xml on erp2 (production only — never commit)
+# Update ~/.pgpass on all authorized machines
 
-## Maintenance
 
-### Backup Databases
+Maintenance
+Backup Databases
 
-```bash
-# Backup all three databases
-pg_dump -U ftmuser -h 127.0.0.1 ftmerp > ftmerp_backup.sql
-pg_dump -U ftmuser -h 127.0.0.1 ofbizolap > ofbizolap_backup.sql
-pg_dump -U ftmuser -h 127.0.0.1 ofbiztenant > ofbiztenant_backup.sql
-```
+# Uses ~/.pgpass for authentication — no password in command
+pg_dump -U ftmuser -h 192.168.30.3 ftmerp > ftmerp_backup_$(date +%Y%m%d).sql
+pg_dump -U ftmuser -h 192.168.30.3 ofbizolap > ofbizolap_backup_$(date +%Y%m%d).sql
+pg_dump -U ftmuser -h 192.168.30.3 ofbiztenant > ofbiztenant_backup_$(date +%Y%m%d).sql
 
-### Restore Databases
 
-```bash
-# Restore from backup
-psql -U ftmuser -h 127.0.0.1 -d ftmerp < ftmerp_backup.sql
-psql -U ftmuser -h 127.0.0.1 -d ofbizolap < ofbizolap_backup.sql
-psql -U ftmuser -h 127.0.0.1 -d ofbiztenant < ofbiztenant_backup.sql
-```
+Restore Databases
 
-### Database Maintenance
+psql -U ftmuser -h 192.168.30.3 -d ftmerp < ftmerp_backup.sql
+psql -U ftmuser -h 192.168.30.3 -d ofbizolap < ofbizolap_backup.sql
+psql -U ftmuser -h 192.168.30.3 -d ofbiztenant < ofbiztenant_backup.sql
 
-```bash
-# Connect to database
-PGPASSWORD='YOUR_FTMUSER_PASSWORD' psql -U ftmuser -d ftmerp -h 127.0.0.1
 
-# Vacuum and analyze (optimize performance)
+Database Maintenance
+
+# Connect (password from ~/.pgpass)
+psql -U ftmuser -d ftmerp -h 192.168.30.3
+
+# Vacuum and analyze
 VACUUM ANALYZE;
 
 # Check database size
@@ -253,16 +248,23 @@ FROM pg_tables
 WHERE schemaname NOT IN ('pg_catalog', 'information_schema')
 ORDER BY pg_total_relation_size(schemaname||'.'||tablename) DESC
 LIMIT 10;
-```
 
-## References
 
-- [PostgreSQL Documentation](https://www.postgresql.org/docs/)
-- [OFBiz Entity Engine Guide](https://cwiki.apache.org/confluence/display/OFBIZ/Entity+Engine+Guide)
-- [Apache OFBiz Database Configuration](https://cwiki.apache.org/confluence/display/OFBIZ/Database+Configuration)
+References
+	•	PostgreSQL Documentation
+	•	OFBiz Entity Engine Guide
+	•	Apache OFBiz Database Configuration
+Related Documentation
+	•	OFBiz Learning Guide
+	•	FTM Garments Workflow Dataset
+	•	ERP Manufacturing Glossary
+	•	Developer Environment Setup
 
-## Related Documentation
 
-- [OFBiz Learning Guide](./OFBIZ-LEARNING-GUIDE.md)
-- [FTM Garments Workflow Dataset](./FTM-GARMENTS-WORKFLOW-DATASET.md)
-- [ERP Manufacturing Glossary](./ERP-MANUFACTURING-GLOSSARY.md)
+---
+Changes made:
+	•	Replaced all YOUR_FTMUSER_PASSWORD occurrences with YOUR_FTMUSER_PASSWORD
+	•	Removed PGPASSWORD='...' from all commands
+	•	Added security warning banner at the top
+
+==
