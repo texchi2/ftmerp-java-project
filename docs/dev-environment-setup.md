@@ -135,6 +135,26 @@ sudo systemctl restart postgresql && sudo ss -tlnp | grep 5432
 
 Claude Code Settings
 
+## Claude Code Authentication (Pro Plan — No API Key)
+
+Claude Code uses OAuth login, NOT API keys, for Pro plan.
+
+### One-time setup per machine:
+```bash
+# Ensure no API key override exists
+unset ANTHROPIC_API_KEY
+grep "ANTHROPIC_API_KEY" ~/.bashrc && \
+  sed -i '/ANTHROPIC_API_KEY/d' ~/.bashrc
+
+# Login via browser (one-time)
+claude login
+# Browser opens → enter your claude.ai credentials
+# Token stored locally — valid until you logout
+
+# Verify Pro plan active
+claude /status
+
+#
 # Copy template and fill in your machine's paths
 cp claude-settings.json.template ~/.claude/settings.json
 
