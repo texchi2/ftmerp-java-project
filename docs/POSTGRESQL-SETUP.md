@@ -263,7 +263,7 @@ Related Documentation
 
 ---
 Changes made:
-	•	Replaced all YOUR_FTMUSER_PASSWORD occurrences with YOUR_FTMUSER_PASSWORD
+	•	Replaced all "real passwords" occurrences with YOUR_FTMUSER_PASSWORD
 	•	Removed PGPASSWORD='...' from all commands
 	•	Added security warning banner at the top
 
