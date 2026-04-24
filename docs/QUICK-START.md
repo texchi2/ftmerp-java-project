@@ -2,22 +2,33 @@
 
 Quick reference for getting started with FTM Garments ERP development.
 
-## 🚀 Initial Setup (On rpitex Raspberry Pi 5)
+## 🚀 Initial Setup (New Development Machine)
 
-### 1. Set up Version Control for Plugins
+### 1. Clone and Set Up Repositories
 
 ```bash
-cd ~/development/ofbiz-framework/docs/scripts
-./setup-plugins-repo.sh
+# Clone framework repository
+git clone git@github.com:texchi2/ftmerp-java-project.git ofbiz-framework
+
+# Run one-command setup script
+bash ofbiz-framework/docs/scripts/clone-ftm-erp.sh
 ```
 
 This will:
-- Initialize git in `~/development/ofbiz-plugins`
-- Create initial commit
-- Push to GitHub at `texchi2/ftmerp-java-plugins`
-- Update framework repository symlink tracking
+- Clone framework repository (ftmerp-java-project)
+- Clone plugins repository (ftmerp-java-plugins) on branch `feature/ftm-garments`
+- Create symlink: `plugins -> ../ofbiz-plugins`
+- Configure git to ignore local database configuration changes
+- Verify Java installation
+- Display next steps
 
-### 2. Set up PostgreSQL Database
+**Branch Selection:**
+```bash
+# Use specific plugins branch
+bash ofbiz-framework/docs/scripts/clone-ftm-erp.sh --branch main
+```
+
+### 2. Set up PostgreSQL Databases
 
 ```bash
 cd ~/development/ofbiz-framework/docs/scripts
@@ -26,38 +37,58 @@ cd ~/development/ofbiz-framework/docs/scripts
 
 This will:
 - Install PostgreSQL (if needed)
-- Create `ftmerp` database
-- Create `ftmuser` database user
-- Save credentials to `~/.ftmerp_db_credentials`
+- Create three databases: `ftmerp`, `ftm_enrollment`, `ftm_ofbiz`
+- Create four users: `ftmuser`, `enrolladmin`, `ofbizadmin`, `mcp_readonly`
+- Prompt for passwords (NEVER stores real passwords in scripts)
+- Provide instructions for password configuration
 
-### 3. Configure OFBiz Database Connection
+### 3. Configure Database Passwords
 
-Edit `framework/entity/config/entityengine.xml`:
+Create `gradle.properties.local` (gitignored, safe for real passwords):
+
+```bash
+cd ~/development/ofbiz-framework
+cat > gradle.properties.local << 'EOF'
+# Database passwords (gitignored - safe to store real passwords)
+dbPassword.ftmuser=YOUR_FTMUSER_PASSWORD
+dbPassword.enrolladmin=YOUR_ENROLLADMIN_PASSWORD
+dbPassword.ftmofbiz=YOUR_FTMOFBIZ_PASSWORD
+dbPassword.mcp_readonly=YOUR_MCP_READONLY_PASSWORD
+EOF
+```
+
+Create `~/.pgpass` for command-line PostgreSQL access:
+
+```bash
+cat > ~/.pgpass << 'EOF'
+localhost:5432:ftmerp:ftmuser:YOUR_FTMUSER_PASSWORD
+localhost:5432:ftm_enrollment:enrolladmin:YOUR_ENROLLADMIN_PASSWORD
+localhost:5432:ftm_ofbiz:ofbizadmin:YOUR_FTMOFBIZ_PASSWORD
+localhost:5432:*:mcp_readonly:YOUR_MCP_READONLY_PASSWORD
+EOF
+
+chmod 600 ~/.pgpass
+```
+
+**IMPORTANT**: Replace `YOUR_*` placeholders with the actual passwords you entered during `setup-database.sh`
+
+### 4. Verify Database Configuration
+
+OFBiz reads database configuration from `framework/entity/config/entityengine.xml`.
+Passwords are loaded from `gradle.properties.local` via Gradle properties.
+
+The configuration should look like:
 
 ```xml
-<datasource name="localpostgres"
-        helper-class="org.apache.ofbiz.entity.datasource.GenericHelperDAO"
-        field-type-name="postgres"
-        check-on-start="true"
-        add-missing-on-start="true">
+<datasource name="localpostgres">
     <inline-jdbc
-            jdbc-driver="org.postgresql.Driver"
-            jdbc-uri="jdbc:postgresql://127.0.0.1/ftmerp"
-            jdbc-username="ftmuser"
-            jdbc-password="YOUR_PASSWORD"
-            isolation-level="ReadCommitted"
-            pool-minsize="2"
-            pool-maxsize="250"/>
+        jdbc-uri="jdbc:postgresql://127.0.0.1/ftmerp"
+        jdbc-username="ftmuser"
+        jdbc-password="${dbPassword.ftmuser}"/>
 </datasource>
 ```
 
-Add to `build.gradle`:
-
-```gradle
-dependencies {
-    implementation 'org.postgresql:postgresql:42.7.1'
-}
-```
+Note: `git update-index --assume-unchanged` prevents local password changes from being committed.
 
 ### 4. Build and Run
 
