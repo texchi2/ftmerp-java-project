@@ -4,6 +4,10 @@ Comprehensive guide to understanding and implementing BOM in Apache OFBiz for FT
 
 ---
 
+> **Note on Product IDs**: All product IDs in this document have been shortened to meet OFBiz's 20-character limit for the `Product.productId` field (VARCHAR(20)). Abbreviated codes are used (e.g., `FTM-PNT-32-NVY` instead of `FTM-PANT-CASUAL-32X32-NAVY`), while full descriptive names are retained in the `internalName` field.
+
+---
+
 ## What is a Bill of Materials (BOM)?
 
 A **Bill of Materials** (BOM) is the complete, structured list of all raw materials, components, sub-assemblies, and quantities required to manufacture a finished product.
@@ -74,7 +78,7 @@ In garment manufacturing, the BOM is the **foundation** of:
 ### Product Overview
 
 **Product**: Men's Casual Pant (32W x 32L, Navy Blue)
-**Product ID**: `FTM-PANT-CASUAL-32X32-NAVY`
+**Product ID**: `FTM-PNT-32-NVY`
 **Finished Product**: 1 pair of pants
 
 ### Complete BOM Breakdown
@@ -84,8 +88,8 @@ In garment manufacturing, the BOM is the **foundation** of:
 ##### Main Fabric (Body)
 ```xml
 <ProductAssoc
-    productId="FTM-PANT-CASUAL-32X32-NAVY"
-    productIdTo="FTM-FABRIC-COTTON-TWILL-NAVY-60"
+    productId="FTM-PNT-32-NVY"
+    productIdTo="FTM-FAB-CTN-NVY"
     productAssocTypeId="MANUF_COMPONENT"
     fromDate="2025-01-01 00:00:00"
     quantity="1.8"
@@ -112,8 +116,8 @@ In garment manufacturing, the BOM is the **foundation** of:
 ##### Pocket Lining Fabric
 ```xml
 <ProductAssoc
-    productId="FTM-PANT-CASUAL-32X32-NAVY"
-    productIdTo="FTM-FABRIC-POLYESTER-POCKET-WHITE"
+    productId="FTM-PNT-32-NVY"
+    productIdTo="FTM-FAB-PLY-PKT"
     productAssocTypeId="MANUF_COMPONENT"
     fromDate="2025-01-01 00:00:00"
     quantity="0.3"
@@ -135,8 +139,8 @@ In garment manufacturing, the BOM is the **foundation** of:
 ##### Zipper
 ```xml
 <ProductAssoc
-    productId="FTM-PANT-CASUAL-32X32-NAVY"
-    productIdTo="FTM-ZIP-METAL-BRASS-7INCH"
+    productId="FTM-PNT-32-NVY"
+    productIdTo="FTM-ZIP-7IN"
     productAssocTypeId="MANUF_COMPONENT"
     fromDate="2025-01-01 00:00:00"
     quantity="1"
@@ -157,8 +161,8 @@ In garment manufacturing, the BOM is the **foundation** of:
 ##### Button
 ```xml
 <ProductAssoc
-    productId="FTM-PANT-CASUAL-32X32-NAVY"
-    productIdTo="FTM-BTN-METAL-BRASS-20MM"
+    productId="FTM-PNT-32-NVY"
+    productIdTo="FTM-BTN-BRS-20MM"
     productAssocTypeId="MANUF_COMPONENT"
     fromDate="2025-01-01 00:00:00"
     quantity="1"
@@ -178,8 +182,8 @@ In garment manufacturing, the BOM is the **foundation** of:
 ##### Rivets (for pockets)
 ```xml
 <ProductAssoc
-    productId="FTM-PANT-CASUAL-32X32-NAVY"
-    productIdTo="FTM-RIVET-COPPER-10MM"
+    productId="FTM-PNT-32-NVY"
+    productIdTo="FTM-RVT-10MM"
     productAssocTypeId="MANUF_COMPONENT"
     fromDate="2025-01-01 00:00:00"
     quantity="4"
@@ -201,8 +205,8 @@ In garment manufacturing, the BOM is the **foundation** of:
 ##### Main Sewing Thread
 ```xml
 <ProductAssoc
-    productId="FTM-PANT-CASUAL-32X32-NAVY"
-    productIdTo="FTM-THREAD-POLY-NAVY-CONE"
+    productId="FTM-PNT-32-NVY"
+    productIdTo="FTM-THD-NVY-CN"
     productAssocTypeId="MANUF_COMPONENT"
     fromDate="2025-01-01 00:00:00"
     quantity="150"
@@ -230,8 +234,8 @@ In garment manufacturing, the BOM is the **foundation** of:
 ##### Bartack/Reinforcement Thread
 ```xml
 <ProductAssoc
-    productId="FTM-PANT-CASUAL-32X32-NAVY"
-    productIdTo="FTM-THREAD-POLY-NAVY-HEAVY"
+    productId="FTM-PNT-32-NVY"
+    productIdTo="FTM-THD-NVY-HV"
     productAssocTypeId="MANUF_COMPONENT"
     fromDate="2025-01-01 00:00:00"
     quantity="5"
@@ -252,8 +256,8 @@ In garment manufacturing, the BOM is the **foundation** of:
 ##### Brand Label (Main)
 ```xml
 <ProductAssoc
-    productId="FTM-PANT-CASUAL-32X32-NAVY"
-    productIdTo="FTM-LABEL-BRAND-WOVEN"
+    productId="FTM-PNT-32-NVY"
+    productIdTo="FTM-LBL-BRD"
     productAssocTypeId="MANUF_COMPONENT"
     fromDate="2025-01-01 00:00:00"
     quantity="1"
@@ -267,8 +271,8 @@ In garment manufacturing, the BOM is the **foundation** of:
 ##### Care Label
 ```xml
 <ProductAssoc
-    productId="FTM-PANT-CASUAL-32X32-NAVY"
-    productIdTo="FTM-LABEL-CARE-EN-WASH"
+    productId="FTM-PNT-32-NVY"
+    productIdTo="FTM-LBL-CAR"
     productAssocTypeId="MANUF_COMPONENT"
     fromDate="2025-01-01 00:00:00"
     quantity="1"
@@ -282,7 +286,7 @@ In garment manufacturing, the BOM is the **foundation** of:
 ##### Size Label
 ```xml
 <ProductAssoc
-    productId="FTM-PANT-CASUAL-32X32-NAVY"
+    productId="FTM-PNT-32-NVY"
     productIdTo="FTM-LABEL-SIZE-32X32"
     productAssocTypeId="MANUF_COMPONENT"
     fromDate="2025-01-01 00:00:00"
@@ -297,7 +301,7 @@ In garment manufacturing, the BOM is the **foundation** of:
 ##### Hangtag
 ```xml
 <ProductAssoc
-    productId="FTM-PANT-CASUAL-32X32-NAVY"
+    productId="FTM-PNT-32-NVY"
     productIdTo="FTM-HANGTAG-RETAIL"
     productAssocTypeId="MANUF_COMPONENT"
     fromDate="2025-01-01 00:00:00"
@@ -314,8 +318,8 @@ In garment manufacturing, the BOM is the **foundation** of:
 ##### Belt Loops
 ```xml
 <ProductAssoc
-    productId="FTM-PANT-CASUAL-32X32-NAVY"
-    productIdTo="FTM-FABRIC-COTTON-TWILL-NAVY-60"
+    productId="FTM-PNT-32-NVY"
+    productIdTo="FTM-FAB-CTN-NVY"
     productAssocTypeId="MANUF_COMPONENT"
     fromDate="2025-01-01 00:00:00"
     quantity="0.3"
@@ -336,8 +340,8 @@ In garment manufacturing, the BOM is the **foundation** of:
 ##### Elastic (waistband inner support)
 ```xml
 <ProductAssoc
-    productId="FTM-PANT-CASUAL-32X32-NAVY"
-    productIdTo="FTM-ELASTIC-WAIST-40MM-WHITE"
+    productId="FTM-PNT-32-NVY"
+    productIdTo="FTM-ELS-40-WHT"
     productAssocTypeId="MANUF_COMPONENT"
     fromDate="2025-01-01 00:00:00"
     quantity="0.9"
@@ -357,8 +361,8 @@ In garment manufacturing, the BOM is the **foundation** of:
 ##### Interfacing (waistband stiffening)
 ```xml
 <ProductAssoc
-    productId="FTM-PANT-CASUAL-32X32-NAVY"
-    productIdTo="FTM-INTERFACING-FUSIBLE-WHITE"
+    productId="FTM-PNT-32-NVY"
+    productIdTo="FTM-INT-FUS"
     productAssocTypeId="MANUF_COMPONENT"
     fromDate="2025-01-01 00:00:00"
     quantity="0.4"
@@ -380,8 +384,8 @@ In garment manufacturing, the BOM is the **foundation** of:
 ##### Poly Bag
 ```xml
 <ProductAssoc
-    productId="FTM-PANT-CASUAL-32X32-NAVY"
-    productIdTo="FTM-POLYBAG-12X16-CLEAR"
+    productId="FTM-PNT-32-NVY"
+    productIdTo="FTM-BAG-12X16"
     productAssocTypeId="MANUF_COMPONENT"
     fromDate="2025-01-01 00:00:00"
     quantity="1"
@@ -395,8 +399,8 @@ In garment manufacturing, the BOM is the **foundation** of:
 ##### Cardboard Insert (for folding)
 ```xml
 <ProductAssoc
-    productId="FTM-PANT-CASUAL-32X32-NAVY"
-    productIdTo="FTM-CARDBOARD-INSERT-PANT"
+    productId="FTM-PNT-32-NVY"
+    productIdTo="FTM-CRD-PNT"
     productAssocTypeId="MANUF_COMPONENT"
     fromDate="2025-01-01 00:00:00"
     quantity="1"
@@ -410,7 +414,7 @@ In garment manufacturing, the BOM is the **foundation** of:
 ##### Barcode Sticker
 ```xml
 <ProductAssoc
-    productId="FTM-PANT-CASUAL-32X32-NAVY"
+    productId="FTM-PNT-32-NVY"
     productIdTo="FTM-BARCODE-STICKER"
     productAssocTypeId="MANUF_COMPONENT"
     fromDate="2025-01-01 00:00:00"
@@ -429,27 +433,27 @@ In garment manufacturing, the BOM is the **foundation** of:
 | Component | Product ID | Quantity | Unit | Scrap | Actual Qty | Unit Cost | Total Cost |
 |-----------|-----------|----------|------|-------|------------|-----------|------------|
 | **Fabric** |
-| Main Fabric | FTM-FABRIC-COTTON-TWILL-NAVY-60 | 1.8 | m | 15% | 2.07 m | $8.00/m | $16.56 |
-| Pocket Lining | FTM-FABRIC-POLYESTER-POCKET-WHITE | 0.3 | m | 10% | 0.33 m | $3.00/m | $0.99 |
+| Main Fabric | FTM-FAB-CTN-NVY | 1.8 | m | 15% | 2.07 m | $8.00/m | $16.56 |
+| Pocket Lining | FTM-FAB-PLY-PKT | 0.3 | m | 10% | 0.33 m | $3.00/m | $0.99 |
 | Belt Loop Fabric | (from main fabric) | 0.3 | m | 15% | 0.35 m | $8.00/m | $2.80 |
 | **Fasteners** |
-| Zipper | FTM-ZIP-METAL-BRASS-7INCH | 1 | ea | 2% | 1.02 | $0.80/ea | $0.82 |
-| Button | FTM-BTN-METAL-BRASS-20MM | 1 | ea | 5% | 1.05 | $0.15/ea | $0.16 |
-| Rivets | FTM-RIVET-COPPER-10MM | 4 | ea | 10% | 4.4 | $0.05/ea | $0.22 |
+| Zipper | FTM-ZIP-7IN | 1 | ea | 2% | 1.02 | $0.80/ea | $0.82 |
+| Button | FTM-BTN-BRS-20MM | 1 | ea | 5% | 1.05 | $0.15/ea | $0.16 |
+| Rivets | FTM-RVT-10MM | 4 | ea | 10% | 4.4 | $0.05/ea | $0.22 |
 | **Thread** |
-| Main Thread | FTM-THREAD-POLY-NAVY-CONE | 150 | m | 20% | 180 m | $0.01/m | $1.80 |
-| Reinforcement Thread | FTM-THREAD-POLY-NAVY-HEAVY | 5 | m | 10% | 5.5 m | $0.02/m | $0.11 |
+| Main Thread | FTM-THD-NVY-CN | 150 | m | 20% | 180 m | $0.01/m | $1.80 |
+| Reinforcement Thread | FTM-THD-NVY-HV | 5 | m | 10% | 5.5 m | $0.02/m | $0.11 |
 | **Labels** |
-| Brand Label | FTM-LABEL-BRAND-WOVEN | 1 | ea | 5% | 1.05 | $0.20/ea | $0.21 |
-| Care Label | FTM-LABEL-CARE-EN-WASH | 1 | ea | 3% | 1.03 | $0.10/ea | $0.10 |
+| Brand Label | FTM-LBL-BRD | 1 | ea | 5% | 1.05 | $0.20/ea | $0.21 |
+| Care Label | FTM-LBL-CAR | 1 | ea | 3% | 1.03 | $0.10/ea | $0.10 |
 | Size Label | FTM-LABEL-SIZE-32X32 | 1 | ea | 3% | 1.03 | $0.05/ea | $0.05 |
 | Hangtag | FTM-HANGTAG-RETAIL | 1 | ea | 2% | 1.02 | $0.30/ea | $0.31 |
 | **Trims** |
-| Elastic | FTM-ELASTIC-WAIST-40MM-WHITE | 0.9 | m | 5% | 0.95 m | $0.50/m | $0.48 |
-| Interfacing | FTM-INTERFACING-FUSIBLE-WHITE | 0.4 | m | 10% | 0.44 m | $1.50/m | $0.66 |
+| Elastic | FTM-ELS-40-WHT | 0.9 | m | 5% | 0.95 m | $0.50/m | $0.48 |
+| Interfacing | FTM-INT-FUS | 0.4 | m | 10% | 0.44 m | $1.50/m | $0.66 |
 | **Packaging** |
-| Poly Bag | FTM-POLYBAG-12X16-CLEAR | 1 | ea | 2% | 1.02 | $0.08/ea | $0.08 |
-| Cardboard Insert | FTM-CARDBOARD-INSERT-PANT | 1 | ea | 1% | 1.01 | $0.15/ea | $0.15 |
+| Poly Bag | FTM-BAG-12X16 | 1 | ea | 2% | 1.02 | $0.08/ea | $0.08 |
+| Cardboard Insert | FTM-CRD-PNT | 1 | ea | 1% | 1.01 | $0.15/ea | $0.15 |
 | Barcode Sticker | FTM-BARCODE-STICKER | 1 | ea | 1% | 1.01 | $0.02/ea | $0.02 |
 | **TOTAL MATERIAL COST** | | | | | | | **$25.52** |
 
@@ -464,7 +468,7 @@ In garment manufacturing, the BOM is the **foundation** of:
 
 ### From Sales Order to Material Requirements
 
-**Scenario**: Customer orders 1,000 pants (FTM-PANT-CASUAL-32X32-NAVY)
+**Scenario**: Customer orders 1,000 pants (FTM-PNT-32-NVY)
 
 **Step 1: BOM Explosion**
 
@@ -490,9 +494,9 @@ INSERT INTO requirement (
     requirement_date,
     facility_id
 ) VALUES
-('REQ-2025-001', 'MATERIAL_REQUIREMENT', 'FTM-FABRIC-COTTON-TWILL-NAVY-60', 1600, '2025-02-01', 'FTM-FAC-MAIN'),
-('REQ-2025-002', 'MATERIAL_REQUIREMENT', 'FTM-FABRIC-POLYESTER-POCKET-WHITE', 250, '2025-02-01', 'FTM-FAC-MAIN'),
-('REQ-2025-003', 'MATERIAL_REQUIREMENT', 'FTM-ZIP-METAL-BRASS-7INCH', 600, '2025-02-01', 'FTM-FAC-MAIN');
+('REQ-2025-001', 'MATERIAL_REQUIREMENT', 'FTM-FAB-CTN-NVY', 1600, '2025-02-01', 'FTM-FAC-MAIN'),
+('REQ-2025-002', 'MATERIAL_REQUIREMENT', 'FTM-FAB-PLY-PKT', 250, '2025-02-01', 'FTM-FAC-MAIN'),
+('REQ-2025-003', 'MATERIAL_REQUIREMENT', 'FTM-ZIP-7IN', 600, '2025-02-01', 'FTM-FAC-MAIN');
 ```
 
 **Step 3: Assign to Suppliers**
@@ -501,7 +505,7 @@ INSERT INTO requirement (
 -- Look up supplier for each material
 SELECT sp.party_id, sp.last_price, sp.minimum_order_quantity, sp.lead_time_days
 FROM supplier_product sp
-WHERE sp.product_id = 'FTM-FABRIC-COTTON-TWILL-NAVY-60'
+WHERE sp.product_id = 'FTM-FAB-CTN-NVY'
 AND sp.available_from_date <= CURRENT_DATE
 ORDER BY sp.supplier_ranking_preference
 LIMIT 1;
@@ -518,7 +522,7 @@ LIMIT 1;
 </OrderHeader>
 
 <OrderItem orderId="PO-2025-001" orderItemSeqId="00001">
-    <productId>FTM-FABRIC-COTTON-TWILL-NAVY-60</productId>
+    <productId>FTM-FAB-CTN-NVY</productId>
     <quantity>1600</quantity>
     <unitPrice>8.00</unitPrice>
 </OrderItem>
@@ -530,7 +534,7 @@ Once materials are available (or scheduled to arrive), create production run:
 
 ```xml
 <WorkEffort workEffortId="PR-PANT-001" workEffortTypeId="PROD_ORDER_HEADER">
-    <productId>FTM-PANT-CASUAL-32X32-NAVY</productId>
+    <productId>FTM-PNT-32-NVY</productId>
     <quantityToProduce>1000</quantityToProduce>
     <estimatedStartDate>2025-02-08</estimatedStartDate>
 </WorkEffort>
@@ -566,15 +570,15 @@ When changing BOM, use date-based versions:
 
 ```xml
 <!-- Old BOM - expire old version -->
-<ProductAssoc productId="FTM-PANT-CASUAL-32X32-NAVY"
-              productIdTo="FTM-ZIP-METAL-BRASS-7INCH"
+<ProductAssoc productId="FTM-PNT-32-NVY"
+              productIdTo="FTM-ZIP-7IN"
               fromDate="2025-01-01"
               thruDate="2025-02-28">  <!-- Expire old version -->
     <quantity>1</quantity>
 </ProductAssoc>
 
 <!-- New BOM - use longer zipper -->
-<ProductAssoc productId="FTM-PANT-CASUAL-32X32-NAVY"
+<ProductAssoc productId="FTM-PNT-32-NVY"
               productIdTo="FTM-ZIP-METAL-BRASS-9INCH"
               fromDate="2025-03-01">  <!-- New version -->
     <quantity>1</quantity>
@@ -624,7 +628,7 @@ Schedule quarterly BOM reviews:
 **Fix**:
 ```xml
 <!-- Add missing component -->
-<ProductAssoc productId="FTM-PANT-CASUAL-32X32-NAVY"
+<ProductAssoc productId="FTM-PNT-32-NVY"
               productIdTo="FTM-FASTENER-PLASTIC-HANGTAG"
               productAssocTypeId="MANUF_COMPONENT"
               fromDate="2025-01-20"

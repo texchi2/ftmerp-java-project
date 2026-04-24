@@ -33,7 +33,7 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 
 ```xml
 <!-- Men's Casual Pant - Navy Blue, 32W x 32L -->
-<Product productId="FTM-PANT-CASUAL-32X32-NAVY" productTypeId="FINISHED_GOOD">
+<Product productId="FTM-PNT-32-NVY" productTypeId="FINISHED_GOOD">
     <internalName>Men's Casual Pant 32W x 32L Navy Blue</internalName>
     <primaryProductCategoryId>CASUAL_PANTS</primaryProductCategoryId>
     <quantityUomId>ea</quantityUomId> <!-- each -->
@@ -52,15 +52,15 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
     <description>32W x 32L</description>
 </ProductFeature>
 
-<ProductFeatureAppl productId="FTM-PANT-CASUAL-32X32-NAVY" productFeatureId="COLOR_NAVY" fromDate="2025-01-01"/>
-<ProductFeatureAppl productId="FTM-PANT-CASUAL-32X32-NAVY" productFeatureId="SIZE_32W32L" fromDate="2025-01-01"/>
+<ProductFeatureAppl productId="FTM-PNT-32-NVY" productFeatureId="COLOR_NAVY" fromDate="2025-01-01"/>
+<ProductFeatureAppl productId="FTM-PNT-32-NVY" productFeatureId="SIZE_32W32L" fromDate="2025-01-01"/>
 ```
 
 #### **Raw Materials**
 
 ```xml
 <!-- Main Fabric - Cotton Twill Navy, 60" width -->
-<Product productId="FTM-FABRIC-COTTON-TWILL-NAVY-60" productTypeId="RAW_MATERIAL">
+<Product productId="FTM-FAB-CTN-NVY" productTypeId="RAW_MATERIAL">
     <internalName>Cotton Twill Fabric Navy 60 inch</internalName>
     <quantityUomId>m</quantityUomId> <!-- meter -->
     <defaultPrice>8.00</defaultPrice>
@@ -68,7 +68,7 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 </Product>
 
 <!-- Pocket Lining Fabric - Polyester White -->
-<Product productId="FTM-FABRIC-POLYESTER-POCKET-WHITE" productTypeId="RAW_MATERIAL">
+<Product productId="FTM-FAB-PLY-PKT" productTypeId="RAW_MATERIAL">
     <internalName>Polyester Pocket Lining White</internalName>
     <quantityUomId>m</quantityUomId>
     <defaultPrice>3.00</defaultPrice>
@@ -76,7 +76,7 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 </Product>
 
 <!-- Metal Zipper 7 inch Brass -->
-<Product productId="FTM-ZIP-METAL-BRASS-7INCH" productTypeId="RAW_MATERIAL">
+<Product productId="FTM-ZIP-7IN" productTypeId="RAW_MATERIAL">
     <internalName>Metal Zipper Brass 7 inch</internalName>
     <quantityUomId>ea</quantityUomId>
     <defaultPrice>0.80</defaultPrice>
@@ -84,7 +84,7 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 </Product>
 
 <!-- Metal Button 20mm Brass -->
-<Product productId="FTM-BTN-METAL-BRASS-20MM" productTypeId="RAW_MATERIAL">
+<Product productId="FTM-BTN-BRS-20MM" productTypeId="RAW_MATERIAL">
     <internalName>Metal Button Brass 20mm</internalName>
     <quantityUomId>ea</quantityUomId>
     <defaultPrice>0.15</defaultPrice>
@@ -92,7 +92,7 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 </Product>
 
 <!-- Copper Rivets 10mm -->
-<Product productId="FTM-RIVET-COPPER-10MM" productTypeId="RAW_MATERIAL">
+<Product productId="FTM-RVT-10MM" productTypeId="RAW_MATERIAL">
     <internalName>Copper Rivet 10mm</internalName>
     <quantityUomId>ea</quantityUomId>
     <defaultPrice>0.05</defaultPrice>
@@ -100,7 +100,7 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 </Product>
 
 <!-- Sewing Thread - Navy Polyester -->
-<Product productId="FTM-THREAD-POLY-NAVY-CONE" productTypeId="RAW_MATERIAL">
+<Product productId="FTM-THD-NVY-CN" productTypeId="RAW_MATERIAL">
     <internalName>Polyester Sewing Thread Navy Cone</internalName>
     <quantityUomId>m</quantityUomId>
     <defaultPrice>0.01</defaultPrice>
@@ -108,7 +108,7 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 </Product>
 
 <!-- Brand Label - Woven -->
-<Product productId="FTM-LABEL-BRAND-WOVEN" productTypeId="RAW_MATERIAL">
+<Product productId="FTM-LBL-BRD" productTypeId="RAW_MATERIAL">
     <internalName>Brand Label Woven</internalName>
     <quantityUomId>ea</quantityUomId>
     <defaultPrice>0.20</defaultPrice>
@@ -116,7 +116,7 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 </Product>
 
 <!-- Care Label English -->
-<Product productId="FTM-LABEL-CARE-EN-WASH" productTypeId="RAW_MATERIAL">
+<Product productId="FTM-LBL-CAR" productTypeId="RAW_MATERIAL">
     <internalName>Care Label English Wash Instructions</internalName>
     <quantityUomId>ea</quantityUomId>
     <defaultPrice>0.10</defaultPrice>
@@ -132,7 +132,7 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 </Product>
 
 <!-- Elastic Waistband 40mm -->
-<Product productId="FTM-ELASTIC-WAIST-40MM-WHITE" productTypeId="RAW_MATERIAL">
+<Product productId="FTM-ELS-40-WHT" productTypeId="RAW_MATERIAL">
     <internalName>Elastic Waistband 40mm White</internalName>
     <quantityUomId>m</quantityUomId>
     <defaultPrice>0.50</defaultPrice>
@@ -140,7 +140,7 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 </Product>
 
 <!-- Fusible Interfacing -->
-<Product productId="FTM-INTERFACING-FUSIBLE-WHITE" productTypeId="RAW_MATERIAL">
+<Product productId="FTM-INT-FUS" productTypeId="RAW_MATERIAL">
     <internalName>Fusible Interfacing White</internalName>
     <quantityUomId>m</quantityUomId>
     <defaultPrice>1.50</defaultPrice>
@@ -148,7 +148,7 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 </Product>
 
 <!-- Poly Bag 12x16 -->
-<Product productId="FTM-POLYBAG-12X16-CLEAR" productTypeId="RAW_MATERIAL">
+<Product productId="FTM-BAG-12X16" productTypeId="RAW_MATERIAL">
     <internalName>Poly Bag 12x16 inch Clear</internalName>
     <quantityUomId>ea</quantityUomId>
     <defaultPrice>0.08</defaultPrice>
@@ -159,12 +159,12 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 ### 2. Bill of Materials (BOM)
 
 ```xml
-<!-- BOM for FTM-PANT-CASUAL-32X32-NAVY -->
+<!-- BOM for FTM-PNT-32-NVY -->
 
 <!-- Main Fabric -->
 <ProductAssoc
-    productId="FTM-PANT-CASUAL-32X32-NAVY"
-    productIdTo="FTM-FABRIC-COTTON-TWILL-NAVY-60"
+    productId="FTM-PNT-32-NVY"
+    productIdTo="FTM-FAB-CTN-NVY"
     productAssocTypeId="MANUF_COMPONENT"
     fromDate="2025-01-01 00:00:00"
     quantity="1.8"
@@ -176,8 +176,8 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 
 <!-- Pocket Lining -->
 <ProductAssoc
-    productId="FTM-PANT-CASUAL-32X32-NAVY"
-    productIdTo="FTM-FABRIC-POLYESTER-POCKET-WHITE"
+    productId="FTM-PNT-32-NVY"
+    productIdTo="FTM-FAB-PLY-PKT"
     productAssocTypeId="MANUF_COMPONENT"
     fromDate="2025-01-01 00:00:00"
     quantity="0.3"
@@ -189,8 +189,8 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 
 <!-- Zipper -->
 <ProductAssoc
-    productId="FTM-PANT-CASUAL-32X32-NAVY"
-    productIdTo="FTM-ZIP-METAL-BRASS-7INCH"
+    productId="FTM-PNT-32-NVY"
+    productIdTo="FTM-ZIP-7IN"
     productAssocTypeId="MANUF_COMPONENT"
     fromDate="2025-01-01 00:00:00"
     quantity="1"
@@ -202,8 +202,8 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 
 <!-- Button -->
 <ProductAssoc
-    productId="FTM-PANT-CASUAL-32X32-NAVY"
-    productIdTo="FTM-BTN-METAL-BRASS-20MM"
+    productId="FTM-PNT-32-NVY"
+    productIdTo="FTM-BTN-BRS-20MM"
     productAssocTypeId="MANUF_COMPONENT"
     fromDate="2025-01-01 00:00:00"
     quantity="1"
@@ -215,8 +215,8 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 
 <!-- Rivets -->
 <ProductAssoc
-    productId="FTM-PANT-CASUAL-32X32-NAVY"
-    productIdTo="FTM-RIVET-COPPER-10MM"
+    productId="FTM-PNT-32-NVY"
+    productIdTo="FTM-RVT-10MM"
     productAssocTypeId="MANUF_COMPONENT"
     fromDate="2025-01-01 00:00:00"
     quantity="4"
@@ -228,8 +228,8 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 
 <!-- Main Sewing Thread -->
 <ProductAssoc
-    productId="FTM-PANT-CASUAL-32X32-NAVY"
-    productIdTo="FTM-THREAD-POLY-NAVY-CONE"
+    productId="FTM-PNT-32-NVY"
+    productIdTo="FTM-THD-NVY-CN"
     productAssocTypeId="MANUF_COMPONENT"
     fromDate="2025-01-01 00:00:00"
     quantity="150"
@@ -241,8 +241,8 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 
 <!-- Brand Label -->
 <ProductAssoc
-    productId="FTM-PANT-CASUAL-32X32-NAVY"
-    productIdTo="FTM-LABEL-BRAND-WOVEN"
+    productId="FTM-PNT-32-NVY"
+    productIdTo="FTM-LBL-BRD"
     productAssocTypeId="MANUF_COMPONENT"
     fromDate="2025-01-01 00:00:00"
     quantity="1"
@@ -254,8 +254,8 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 
 <!-- Care Label -->
 <ProductAssoc
-    productId="FTM-PANT-CASUAL-32X32-NAVY"
-    productIdTo="FTM-LABEL-CARE-EN-WASH"
+    productId="FTM-PNT-32-NVY"
+    productIdTo="FTM-LBL-CAR"
     productAssocTypeId="MANUF_COMPONENT"
     fromDate="2025-01-01 00:00:00"
     quantity="1"
@@ -267,7 +267,7 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 
 <!-- Size Label -->
 <ProductAssoc
-    productId="FTM-PANT-CASUAL-32X32-NAVY"
+    productId="FTM-PNT-32-NVY"
     productIdTo="FTM-LABEL-SIZE-32X32"
     productAssocTypeId="MANUF_COMPONENT"
     fromDate="2025-01-01 00:00:00"
@@ -280,8 +280,8 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 
 <!-- Elastic Waistband -->
 <ProductAssoc
-    productId="FTM-PANT-CASUAL-32X32-NAVY"
-    productIdTo="FTM-ELASTIC-WAIST-40MM-WHITE"
+    productId="FTM-PNT-32-NVY"
+    productIdTo="FTM-ELS-40-WHT"
     productAssocTypeId="MANUF_COMPONENT"
     fromDate="2025-01-01 00:00:00"
     quantity="0.9"
@@ -293,8 +293,8 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 
 <!-- Interfacing -->
 <ProductAssoc
-    productId="FTM-PANT-CASUAL-32X32-NAVY"
-    productIdTo="FTM-INTERFACING-FUSIBLE-WHITE"
+    productId="FTM-PNT-32-NVY"
+    productIdTo="FTM-INT-FUS"
     productAssocTypeId="MANUF_COMPONENT"
     fromDate="2025-01-01 00:00:00"
     quantity="0.4"
@@ -306,8 +306,8 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 
 <!-- Poly Bag -->
 <ProductAssoc
-    productId="FTM-PANT-CASUAL-32X32-NAVY"
-    productIdTo="FTM-POLYBAG-12X16-CLEAR"
+    productId="FTM-PNT-32-NVY"
+    productIdTo="FTM-BAG-12X16"
     productAssocTypeId="MANUF_COMPONENT"
     fromDate="2025-01-01 00:00:00"
     quantity="1"
@@ -528,7 +528,7 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 <!-- Main Fabric Inventory -->
 <InventoryItem
     inventoryItemId="INV-FABRIC-001"
-    productId="FTM-FABRIC-COTTON-TWILL-NAVY-60"
+    productId="FTM-FAB-CTN-NVY"
     facilityId="FTM-FAC-MAIN"
     locationSeqId="RAW-001"
     inventoryItemTypeId="NON_SERIAL_INV_ITEM"
@@ -542,7 +542,7 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 <!-- Pocket Lining Inventory -->
 <InventoryItem
     inventoryItemId="INV-POCKET-LINING-001"
-    productId="FTM-FABRIC-POLYESTER-POCKET-WHITE"
+    productId="FTM-FAB-PLY-PKT"
     facilityId="FTM-FAC-MAIN"
     locationSeqId="RAW-001"
     datetimeReceived="2025-01-05"
@@ -554,7 +554,7 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 <!-- Zippers Inventory -->
 <InventoryItem
     inventoryItemId="INV-ZIP-001"
-    productId="FTM-ZIP-METAL-BRASS-7INCH"
+    productId="FTM-ZIP-7IN"
     facilityId="FTM-FAC-MAIN"
     locationSeqId="RAW-001"
     datetimeReceived="2025-01-05"
@@ -566,7 +566,7 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 <!-- Buttons Inventory -->
 <InventoryItem
     inventoryItemId="INV-BTN-001"
-    productId="FTM-BTN-METAL-BRASS-20MM"
+    productId="FTM-BTN-BRS-20MM"
     facilityId="FTM-FAC-MAIN"
     locationSeqId="RAW-001"
     datetimeReceived="2025-01-05"
@@ -578,7 +578,7 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 <!-- Rivets Inventory -->
 <InventoryItem
     inventoryItemId="INV-RIVET-001"
-    productId="FTM-RIVET-COPPER-10MM"
+    productId="FTM-RVT-10MM"
     facilityId="FTM-FAC-MAIN"
     locationSeqId="RAW-001"
     datetimeReceived="2025-01-05"
@@ -590,7 +590,7 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 <!-- Thread Inventory -->
 <InventoryItem
     inventoryItemId="INV-THREAD-001"
-    productId="FTM-THREAD-POLY-NAVY-CONE"
+    productId="FTM-THD-NVY-CN"
     facilityId="FTM-FAC-MAIN"
     locationSeqId="RAW-001"
     datetimeReceived="2025-01-05"
@@ -602,7 +602,7 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 <!-- Labels Inventory -->
 <InventoryItem
     inventoryItemId="INV-LABEL-001"
-    productId="FTM-LABEL-BRAND-WOVEN"
+    productId="FTM-LBL-BRD"
     facilityId="FTM-FAC-MAIN"
     locationSeqId="RAW-001"
     datetimeReceived="2025-01-05"
@@ -614,7 +614,7 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 <!-- Elastic Inventory -->
 <InventoryItem
     inventoryItemId="INV-ELASTIC-001"
-    productId="FTM-ELASTIC-WAIST-40MM-WHITE"
+    productId="FTM-ELS-40-WHT"
     facilityId="FTM-FAC-MAIN"
     locationSeqId="RAW-001"
     datetimeReceived="2025-01-05"
@@ -626,7 +626,7 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 <!-- Interfacing Inventory -->
 <InventoryItem
     inventoryItemId="INV-INTERFACING-001"
-    productId="FTM-INTERFACING-FUSIBLE-WHITE"
+    productId="FTM-INT-FUS"
     facilityId="FTM-FAC-MAIN"
     locationSeqId="RAW-001"
     datetimeReceived="2025-01-05"
@@ -638,7 +638,7 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 <!-- Poly Bags Inventory -->
 <InventoryItem
     inventoryItemId="INV-POLYBAG-001"
-    productId="FTM-POLYBAG-12X16-CLEAR"
+    productId="FTM-BAG-12X16"
     facilityId="FTM-FAC-MAIN"
     locationSeqId="RAW-001"
     datetimeReceived="2025-01-05"
@@ -673,7 +673,7 @@ Complete end-to-end workflow dataset for garment manufacturing business operatio
 
 <OrderItem orderId="SO-2025-001" orderItemSeqId="00001">
     <orderItemTypeId>PRODUCT_ORDER_ITEM</orderItemTypeId>
-    <productId>FTM-PANT-CASUAL-32X32-NAVY</productId>
+    <productId>FTM-PNT-32-NVY</productId>
     <prodCatalogId>FTM_CATALOG</prodCatalogId>
     <quantity>300</quantity>
     <selectedAmount>0</selectedAmount>
@@ -717,7 +717,7 @@ result:
 
 **Material Requirements Calculation**:
 
-For 300 units of FTM-PANT-CASUAL-32X32-NAVY:
+For 300 units of FTM-PNT-32-NVY:
 - Main Fabric: 300 × 1.8m × 1.15 (scrap) = **621 meters**
 - Pocket Lining: 300 × 0.3m × 1.10 (scrap) = **99 meters**
 - Zippers: 300 × 1 × 1.02 (scrap) = **306 units**
@@ -748,7 +748,7 @@ For 300 units of FTM-PANT-CASUAL-32X32-NAVY:
 
 ```xml
 <!-- Demand Event -->
-<MrpEvent mrpId="MRP-001" productId="FTM-PANT-CASUAL-32X32-NAVY">
+<MrpEvent mrpId="MRP-001" productId="FTM-PNT-32-NVY">
     <mrpEventTypeId>DEMAND</mrpEventTypeId>
     <eventDate>2025-02-28</eventDate>
     <quantity>300</quantity>
@@ -757,21 +757,21 @@ For 300 units of FTM-PANT-CASUAL-32X32-NAVY:
 </MrpEvent>
 
 <!-- Component Demand Events -->
-<MrpEvent mrpId="MRP-002" productId="FTM-FABRIC-COTTON-TWILL-NAVY-60">
+<MrpEvent mrpId="MRP-002" productId="FTM-FAB-CTN-NVY">
     <mrpEventTypeId>DEMAND</mrpEventTypeId>
     <eventDate>2025-02-01</eventDate>
     <quantity>621</quantity>
     <facilityId>FTM-FAC-MAIN</facilityId>
 </MrpEvent>
 
-<MrpEvent mrpId="MRP-003" productId="FTM-THREAD-POLY-NAVY-CONE">
+<MrpEvent mrpId="MRP-003" productId="FTM-THD-NVY-CN">
     <mrpEventTypeId>DEMAND</mrpEventTypeId>
     <eventDate>2025-02-01</eventDate>
     <quantity>54000</quantity>
     <facilityId>FTM-FAC-MAIN</facilityId>
 </MrpEvent>
 
-<MrpEvent mrpId="MRP-004" productId="FTM-RIVET-COPPER-10MM">
+<MrpEvent mrpId="MRP-004" productId="FTM-RVT-10MM">
     <mrpEventTypeId>DEMAND</mrpEventTypeId>
     <eventDate>2025-02-01</eventDate>
     <quantity>1320</quantity>
@@ -779,14 +779,14 @@ For 300 units of FTM-PANT-CASUAL-32X32-NAVY:
 </MrpEvent>
 
 <!-- Supply Events (from existing inventory) -->
-<MrpEvent mrpId="MRP-101" productId="FTM-FABRIC-COTTON-TWILL-NAVY-60">
+<MrpEvent mrpId="MRP-101" productId="FTM-FAB-CTN-NVY">
     <mrpEventTypeId>SUPPLY</mrpEventTypeId>
     <eventDate>2025-01-05</eventDate>
     <quantity>800</quantity>
     <facilityId>FTM-FAC-MAIN</facilityId>
 </MrpEvent>
 
-<MrpEvent mrpId="MRP-102" productId="FTM-THREAD-POLY-NAVY-CONE">
+<MrpEvent mrpId="MRP-102" productId="FTM-THD-NVY-CN">
     <mrpEventTypeId>SUPPLY</mrpEventTypeId>
     <eventDate>2025-01-05</eventDate>
     <quantity>100000</quantity>
@@ -1335,7 +1335,7 @@ nano ~/development/ofbiz-plugins/ftm-garments/data/FtmWorkflowData.xml
 <?xml version="1.0" encoding="UTF-8"?>
 <entity-engine-xml>
     <!-- Product Catalog -->
-    <Product productId="FTM-PANT-CASUAL-32X32-NAVY" productTypeId="FINISHED_GOOD">
+    <Product productId="FTM-PNT-32-NVY" productTypeId="FINISHED_GOOD">
         <internalName>Men's Casual Pant 32W x 32L Navy Blue</internalName>
         <primaryProductCategoryId>CASUAL_PANTS</primaryProductCategoryId>
         <quantityUomId>ea</quantityUomId>
@@ -1345,8 +1345,8 @@ nano ~/development/ofbiz-plugins/ftm-garments/data/FtmWorkflowData.xml
 
     <!-- BOM -->
     <ProductAssoc
-        productId="FTM-PANT-CASUAL-32X32-NAVY"
-        productIdTo="FTM-FABRIC-COTTON-TWILL-NAVY-60"
+        productId="FTM-PNT-32-NVY"
+        productIdTo="FTM-FAB-CTN-NVY"
         productAssocTypeId="MANUF_COMPONENT"
         fromDate="2025-01-01 00:00:00"
         quantity="1.8"
@@ -1612,7 +1612,7 @@ SELECT product_id, internal_name FROM product WHERE product_id LIKE 'FTM-%';
 -- Check BOM
 SELECT product_id, product_id_to, quantity, scrap_factor
 FROM product_assoc
-WHERE product_id = 'FTM-PANT-CASUAL-32X32-NAVY';
+WHERE product_id = 'FTM-PNT-32-NVY';
 
 -- Count imported records
 SELECT COUNT(*) FROM product WHERE product_id LIKE 'FTM-%';
@@ -1621,7 +1621,7 @@ SELECT COUNT(*) FROM product WHERE product_id LIKE 'FTM-%';
 #### Method 3: Check Logs
 
 ```bash
-grep "FTM-PANT-CASUAL-32X32-NAVY" runtime/logs/ofbiz.log
+grep "FTM-PNT-32-NVY" runtime/logs/ofbiz.log
 ```
 
 ### Exporting Existing Data
@@ -1691,7 +1691,7 @@ tail -f runtime/logs/ofbiz.log
 psql -U ftmuser -d ftmerp -c "SELECT COUNT(*) FROM product WHERE product_id LIKE 'FTM-%';"
 
 # 7. Check in browser
-# Open: https://localhost:8443/catalog/control/EditProduct?productId=FTM-PANT-CASUAL-32X32-NAVY
+# Open: https://localhost:8443/catalog/control/EditProduct?productId=FTM-PNT-32-NVY
 ```
 
 ---

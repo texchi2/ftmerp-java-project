@@ -319,8 +319,8 @@ def orders = EntityQuery.use(delegator)
 **Example**:
 ```xml
 <ProductAssoc
-    productId="FTM-PANT-CASUAL-32X32-NAVY"
-    productIdTo="FTM-FABRIC-COTTON-TWILL-NAVY-60"
+    productId="FTM-PNT-32-NVY"
+    productIdTo="FTM-FAB-CTN-NVY"
     productAssocTypeId="MANUF_COMPONENT"
     quantity="1.8"
     scrapFactor="1.15"

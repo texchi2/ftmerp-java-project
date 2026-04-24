@@ -23,36 +23,59 @@ Documentation for FTM Garments ERP system, customized from Apache OFBiz.
 
 Located in `scripts/` directory:
 
-- **`setup-plugins-repo.sh`** - Initialize and push ofbiz-plugins to GitHub
-- **`setup-database.sh`** - Set up PostgreSQL database for FTM ERP
-- **`clone-ftm-erp.sh`** - Clone both repositories on new machines
+- **`clone-ftm-erp.sh`** - One-command setup for new development machines
+  - Clones framework and plugins repositories
+  - Creates symlinks
+  - Configures git to ignore local database changes
+  - Provides password configuration instructions
+- **`setup-database.sh`** - Set up PostgreSQL databases (ftmerp, ftm_enrollment, ftm_ofbiz)
+  - Creates three databases with appropriate users
+  - Prompts for passwords (never stores real passwords in scripts)
+  - Provides instructions for gradle.properties.local configuration
+- **`setup-plugins-repo.sh`** - Initialize and push ofbiz-plugins to GitHub (for maintainers)
+
+**Deprecated (Phase 9C):**
+- `llm-client.py`, `llm-server.py`, `start-llm-server.sh` - Superseded by Claude Code with MCP
 
 ## 🎯 Quick Start
 
-### For First-Time Setup (on rpitex)
+### For New Development Machine
 
 ```bash
-# 1. Set up plugins repository
-cd ~/development/ofbiz-framework/docs/scripts
-./setup-plugins-repo.sh
+# 1. Clone and set up repositories (one command)
+git clone git@github.com:texchi2/ftmerp-java-project.git ofbiz-framework
+bash ofbiz-framework/docs/scripts/clone-ftm-erp.sh
 
-# 2. Set up database
+# 2. Set up PostgreSQL databases
+cd ofbiz-framework/docs/scripts
 ./setup-database.sh
 
-# 3. Configure OFBiz (see FTM-SETUP-GUIDE.adoc)
-
-# 4. Build and run
+# 3. Configure passwords in gradle.properties.local
 cd ~/development/ofbiz-framework
+cat > gradle.properties.local << 'EOF'
+# Database passwords (gitignored - safe to store real passwords)
+dbPassword.ftmuser=YOUR_FTMUSER_PASSWORD
+dbPassword.enrolladmin=YOUR_ENROLLADMIN_PASSWORD
+dbPassword.ftmofbiz=YOUR_FTMOFBIZ_PASSWORD
+dbPassword.mcp_readonly=YOUR_MCP_READONLY_PASSWORD
+EOF
+
+# 4. Build and load data
 ./gradlew build
 ./gradlew loadAll
+
+# 5. Load BOM data
+./gradlew ofbiz --args="--load-data file=plugins/ftm-garments/data/FtmBomData.xml"
+
+# 6. Start OFBiz
 ./gradlew ofbiz
 ```
 
-### For Cloning on New Machines
+### For Branch Selection
 
 ```bash
-cd ~/development/ofbiz-framework/docs/scripts
-./clone-ftm-erp.sh
+# Clone with specific plugins branch
+bash ofbiz-framework/docs/scripts/clone-ftm-erp.sh --branch main
 ```
 
 ## 📂 Repository Structure

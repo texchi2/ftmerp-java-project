@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 """
+DEPRECATED as of Phase 9C (2026-04-22)
+This script is superseded by: Claude Code with MCP PostgreSQL integration
+See docs/MAKE-TO-ORDER-WORKFLOW.md for current approach
+Kept for historical reference only
+
 FTM ERP LLM Server - macOS
 Flask API server for MLX-LM and Ollama models
 Provides unified interface for code completion, FIM, reasoning, and refactoring

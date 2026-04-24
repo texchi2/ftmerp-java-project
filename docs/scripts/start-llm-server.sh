@@ -1,9 +1,23 @@
 #!/bin/bash
+# DEPRECATED as of Phase 9C (2026-04-22)
+# This script is superseded by: Claude Code with MCP PostgreSQL integration
+# See docs/MAKE-TO-ORDER-WORKFLOW.md for current approach
+# Kept for historical reference only
+#
 # Start LLM Server on macOS
 # Run this on your macOS M2 Ultra machine
 
 set -e
 
+echo "========================================="
+echo "DEPRECATED SCRIPT - Use Claude Code Instead"
+echo "========================================="
+echo ""
+echo "This script has been superseded by Claude Code with MCP."
+echo "See docs/MAKE-TO-ORDER-WORKFLOW.md for current setup."
+echo ""
+echo "Original functionality below (for reference):"
+echo ""
 echo "========================================="
 echo "FTM ERP LLM Server Startup (macOS)"
 echo "========================================="
