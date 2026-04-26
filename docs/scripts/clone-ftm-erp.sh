@@ -73,7 +73,7 @@ if [ -d "$FRAMEWORK_DIR" ]; then
     fi
 else
     echo "Cloning framework repository..."
-    git clone "https://github.com/$GITHUB_USER/$FRAMEWORK_REPO.git" ofbiz-framework
+    git clone "git@github.com:$GITHUB_USER/$FRAMEWORK_REPO.git" ofbiz-framework
     echo "✓ Framework cloned"
 fi
 
@@ -93,7 +93,7 @@ if [ -d "$PLUGINS_DIR" ]; then
     fi
 else
     echo "Cloning plugins repository..."
-    git clone "https://github.com/$GITHUB_USER/$PLUGINS_REPO.git" ofbiz-plugins
+    git clone "git@github.com:$GITHUB_USER/$PLUGINS_REPO.git" ofbiz-plugins
     echo "✓ Plugins cloned"
 
     # Checkout specified branch
