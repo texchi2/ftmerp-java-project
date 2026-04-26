@@ -77,6 +77,9 @@ else
     echo "✓ Framework cloned"
 fi
 
+# Ensure we're in development directory before cloning plugins
+cd "$DEV_DIR"
+
 # Clone plugins repository
 PLUGINS_DIR="$DEV_DIR/ofbiz-plugins"
 if [ -d "$PLUGINS_DIR" ]; then
