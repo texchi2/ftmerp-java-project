@@ -43,7 +43,8 @@ node_modules/
 gradle.properties.local
 start-ftm.sh
 
-# OpenWolf: only cerebrum.md (accumulated knowledge) is shared via git.
-# OPENWOLF.md, anatomy.md, and other .wolf/ contents stay per-machine.
-.wolf/*
-!.wolf/cerebrum.md
+# OpenWolf: only .wolf/cerebrum.md is shared via git.
+# Every other .wolf/ file is per-machine — list them explicitly here.
+# (Negation patterns like !.wolf/cerebrum.md do not work in our setup.)
+.wolf/OPENWOLF.md
+.wolf/anatomy.md

@@ -295,7 +295,7 @@ Gitignored (per-machine, copy manually):
   start-ftm.sh                    ← recreate after re-clone
 ```
 
-`.gitignore` enforces this with `.wolf/*` + `!.wolf/cerebrum.md`. If you add new sharable knowledge files under `.wolf/`, add another `!` exception explicitly.
+`.gitignore` lists each non-shared `.wolf/` file by name (negation patterns are not used). When a new per-machine file appears under `.wolf/`, add an explicit line for it. If you want a new file to be shared via git, simply do not list it.
 
 ### Context continuity across model switches
 
