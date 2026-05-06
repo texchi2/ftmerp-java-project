@@ -42,3 +42,21 @@ node_modules/
 # .pgpass locally
 gradle.properties.local
 start-ftm.sh
+
+# OpenWolf: only .wolf/cerebrum.md is shared via git.
+# Every other .wolf/ file is per-machine — list them explicitly here.
+# (Negation patterns like !.wolf/cerebrum.md do not work in our setup.)
+.wolf/OPENWOLF.md
+.wolf/anatomy.md
+.wolf/buglog.json
+.wolf/config.json
+.wolf/cron-manifest.json
+.wolf/cron-state.json
+.wolf/daemon.log
+.wolf/designqc-report.json
+.wolf/hooks/
+.wolf/identity.md
+.wolf/memory.md
+.wolf/reframe-frameworks.md
+.wolf/suggestions.json
+.wolf/token-ledger.json
