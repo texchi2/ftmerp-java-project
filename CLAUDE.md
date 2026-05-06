@@ -283,13 +283,19 @@ Tracked in git (auto-shared across instances):
   applications/CLAUDE.md          ← business-component rules
   framework/CLAUDE.md             ← core-engine caution
   .wolf/cerebrum.md               ← OFBiz knowledge + failure patterns
+                                    (the ONLY .wolf/ file in git)
 
 Gitignored (per-machine, copy manually):
+  .wolf/OPENWOLF.md               ← OpenWolf bootstrap; copy from ftmerp-java-plugins
+  .wolf/anatomy.md                ← repo file map; copy from ftmerp-java-plugins
+  .wolf/* (everything else)       ← per-machine working files
   .claude-code-state.json         ← session handoff
   gradle.properties.local         ← real passwords
   framework/entity/config/entityengine.xml  ← real passwords (assume-unchanged)
   start-ftm.sh                    ← recreate after re-clone
 ```
+
+`.gitignore` enforces this with `.wolf/*` + `!.wolf/cerebrum.md`. If you add new sharable knowledge files under `.wolf/`, add another `!` exception explicitly.
 
 ### Context continuity across model switches
 

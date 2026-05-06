@@ -42,3 +42,8 @@ node_modules/
 # .pgpass locally
 gradle.properties.local
 start-ftm.sh
+
+# OpenWolf: only cerebrum.md (accumulated knowledge) is shared via git.
+# OPENWOLF.md, anatomy.md, and other .wolf/ contents stay per-machine.
+.wolf/*
+!.wolf/cerebrum.md
