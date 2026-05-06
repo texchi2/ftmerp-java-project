@@ -11,23 +11,23 @@ Each subdirectory is an OFBiz component (accounting, content, datamodel, humanre
 | Task | Tool |
 |---|---|
 | New persistent entity | `entitymodel.xml` (ASK Dr Tex first — schema change) |
-| Service that mutates one entity with simple rules | **MiniLang** (`*.xml` under `script/` or `minilang/`) |
-| Service with conditionals, loops, joins, external SQL | **Groovy** (`*.groovy` under `groovyScripts/`) |
-| Service requiring strong typing, transactions, or perf | **Java** (last resort — discuss with Dr Tex) |
+| New lightweight, script-based service | **Groovy DSL** (`*.groovy` under `groovyScripts/`) |
+| Service requiring strong typing, transactions, or perf | **Java** (heavier — discuss with Dr Tex) |
+| Touching an EXISTING MiniLang service | leave it in MiniLang; do not write new MiniLang |
 | UI screen | `widget-screen.xml` |
 | UI form | `widget-form.xml` |
 | Menu | `widget-menu.xml` |
 
-Default to MiniLang or Groovy. Java is the exception, not the rule.
+Default to **Groovy DSL**. Java for typed/transactional/perf-critical work. **MiniLang is deprecated** by the Apache OFBiz community — do not author new MiniLang services. Existing MiniLang may be maintained in place; port to Groovy only on explicit request.
 
 ## Entity engine — do / don't
 
 **Do**:
 
-- Use `<entity-and>`, `<entity-condition>`, `<entity-find>` from MiniLang.
 - Use `delegator.findByAnd(...)` / `EntityQuery.use(delegator)...` from Groovy/Java.
 - Set `no-auto-stamp="true"` on entities mapped to external (non-OFBiz) DBs.
 - Add `<view-entity>` for read-only joins instead of N+1 queries.
+- (Legacy MiniLang uses `<entity-and>`, `<entity-condition>`, `<entity-find>` — maintain in place if encountered, do not author new.)
 
 **Don't**:
 
@@ -46,8 +46,9 @@ Never trust `userLogin` from the request alone.
 
 ## Service return contract
 
-- MiniLang: `<field-to-result>` for each output, with `<check-errors/>` at the end.
 - Groovy: `return success([key: value])` for success; `return error("message")` for failure. Do not throw — return.
+- Java: `return ServiceUtil.returnSuccess(...)` / `ServiceUtil.returnError(...)`.
+- Legacy MiniLang (maintenance only): `<field-to-result>` for each output, with `<check-errors/>` at the end.
 
 ## Screen / form XML
 

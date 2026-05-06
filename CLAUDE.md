@@ -10,7 +10,7 @@ Sister repo: `ftmerp-java-plugins` (custom plugins, including `ftm-wifi-enrollme
 
 @.wolf/OPENWOLF.md
 
-If `.wolf/OPENWOLF.md` does not resolve, **stop and tell Dr Tex** — OpenWolf must be copied or symlinked from `ftmerp-java-plugins/.wolf/` before continuing. Do not invent context.
+If `.wolf/OPENWOLF.md` does not resolve, **stop and tell Dr Tex** — OpenWolf must be initialized on this machine for this repo before continuing. Do not invent context.
 
 Each session: read `.wolf/OPENWOLF.md`, check `.wolf/cerebrum.md` before generating code, check `.wolf/anatomy.md` before reading large files.
 
@@ -72,9 +72,9 @@ Convert vague requests into verifiable goals:
 
 ### TDD MANDATORY for
 
-- **Service engine** code (`*.xml` service definitions + Java/Groovy/MiniLang implementations)
+- **Service engine** code (`*.xml` service definitions + Java/Groovy implementations; legacy MiniLang too if you must touch it)
 - **Entity engine** changes (entitymodel, view-entity, EECA)
-- Business logic in MiniLang or Groovy services
+- Business logic in Groovy or Java services
 
 Use `./gradlew "ofbiz --test component=<name>"` or write JUnit under `framework/testtools/`.
 
@@ -100,6 +100,7 @@ For these, browser-test via **agent-browser** (see §10).
 7. **Never bypass the entity engine** with raw JDBC except inside a Groovy service via `groovy.sql.Sql` for read-only reporting against external DBs.
 8. **Never skip permission services** on user-facing service definitions. Use `<check-permission>` or service `auth="true"`.
 9. **New component** requires entries in `applications/component-load.xml` or `framework/component-load.xml` plus a valid `ofbiz-component.xml`.
+10. **MiniLang is deprecated** by the Apache OFBiz community — limited debugging, refactoring, and maintainability. **Do not write new MiniLang services.** New services use **Groovy DSL** (lightweight, script-based) or **Java** (heavier, typed). Existing MiniLang may be maintained in place; port to Groovy only when explicitly asked (Surgical Edits, §3).
 
 ---
 
@@ -285,12 +286,12 @@ Tracked in git (auto-shared across instances):
   .wolf/cerebrum.md               ← OFBiz knowledge + failure patterns
                                     (the ONLY .wolf/ file in git)
 
-Gitignored (per-machine, copy manually):
-  .wolf/OPENWOLF.md               ← OpenWolf bootstrap; copy from ftmerp-java-plugins
-  .wolf/anatomy.md                ← repo file map; copy from ftmerp-java-plugins
-  .wolf/* (everything else)       ← per-machine working files
-  .claude-code-state.json         ← session handoff
-  gradle.properties.local         ← real passwords
+Gitignored (per-machine, never tracked):
+  .wolf/OPENWOLF.md               ← OpenWolf bootstrap (managed by local OpenWolf install)
+  .wolf/anatomy.md                ← repo file map (managed by local OpenWolf install)
+  .wolf/* (everything else)       ← per-machine OpenWolf working files
+  .claude-code-state.json         ← session handoff (recreate per machine)
+  gradle.properties.local         ← real passwords (recreate per machine)
   framework/entity/config/entityengine.xml  ← real passwords (assume-unchanged)
   start-ftm.sh                    ← recreate after re-clone
 ```
