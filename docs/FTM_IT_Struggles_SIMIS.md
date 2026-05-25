@@ -85,7 +85,8 @@
 
 ### 自主開發的首個上線系統：erp1 的 aaPanel MERN 應用（ftm-enquiry）
 
-自主開發的決心，最早落地於 **erp1**（主機代號 `ftm-server`）上的 **ftm-enquiry** 系統——一套以 **MERN（MongoDB / Express.js / React / Node.js）** 打造的 Web 應用，由 **Kona、Boniswa 等五位 FTM IT 開發者**，依循「一位開發者，配對一個部門」的原則，以 siSwati／英語與第一線同仁共同完成。它正是前述「將業務同仁腦中與試算表裡的隱性關聯式資料模型，化為真正的資料庫與網頁查詢」的具體實現。
+自主開發的決心，目前正在 **erp1**（主機代號 `ftm-server`）上的 **ftm-enquiry** 系統，進入最後測試階段——
+以 **MERN（MongoDB / Express.js / React / Node.js）** 打造的 Web application，由 **FTM IT team 五位開發者**，依循「一位開發者，配對一個部門」的原則，以 siSwati／英語與第一線同仁共同完成。它正是前述「將業務同仁腦中與試算表裡的隱性關聯式資料模型，化為真正的資料庫與網頁查詢」的具體實現。
 
 佈署實況（2026 年 5 月現場勘查）：
 
