@@ -83,6 +83,21 @@
 - **每日訪談，持續精進，讓系統跟著實務工作流程走**
 - **採用現代化開源 Web 架構（Java / PostgreSQL / REST API），完整呈現 server/clients 的架構，並確保更新以及資訊安全**
 
+### 自主開發的首個上線系統：erp1 的 aaPanel MERN 應用（ftm-enquiry）
+
+自主開發的決心，最早落地於 **erp1**（主機代號 `ftm-server`）上的 **ftm-enquiry** 系統——一套以 **MERN（MongoDB / Express.js / React / Node.js）** 打造的 Web 應用，由 **Kona、Boniswa 等五位 FTM IT 開發者**，依循「一位開發者，配對一個部門」的原則，以 siSwati／英語與第一線同仁共同完成。它正是前述「將業務同仁腦中與試算表裡的隱性關聯式資料模型，化為真正的資料庫與網頁查詢」的具體實現。
+
+佈署實況（2026 年 5 月現場勘查）：
+
+- **前端**：React（CRA）單頁應用，由 **aaPanel 所管理的 nginx** 提供服務；對外經 Cloudflare（`ftmswaziland.com`）與 cloudflared 具名通道發佈。
+- **後端**：Express / Node.js（pm2 程序 `ftm-dev-backend`，執行身分 `ftmit-server`，監聽 `127.0.0.1:5000`），採 JWT 驗證；即時聊天與「詢問／清單／簡報」功能以 Server-Sent Events 串流，並透過 `stream.ftmswaziland.com`（DNS-only 直連源站）繞過 Cloudflare 對 `text/event-stream` 的緩衝。
+- **資料層**：MongoDB（文件型資料庫）；另有姊妹服務 **ScanIQ**（`scaniq-api`）。
+- **資訊安全**：沿用 FTM 既有的 pfSense／OPNsense 防火牆、VLAN 分段、EAP-TLS WiFi 與 VPN 身分基礎設施。
+
+這套系統讓業務同仁第一次能在瀏覽器中，直接完成過去靠人腦與滑鼠跨試算表執行的查詢——是「自主開發並非口號」的最佳證明：SIMIS 無法交付的，FTM IT 團隊已實際上線運行。
+
+> **雙 ERP 分工與整合藍圖：** erp1（MERN，面向詢問／業務與 AI 對話）與 **erp2** 新建之 **Apache OFBiz** 製造業 ERP（PostgreSQL 16 ＋ pgvector）互補分工；第十階段（Phase 10）將以 **Apache Camel** 整合骨幹串接兩套系統，並導入 LangChain4j ＋ 本地 Ollama 的 AI 能力。
+
 截至 2026 年 5 月，FTM IT 團隊已完成多個核心模組的開發與部署，系統正在逐步取代過去依賴試算表的工作環節。
 
 ---
