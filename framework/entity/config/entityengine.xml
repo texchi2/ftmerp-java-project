@@ -475,6 +475,7 @@ access. For a detailed description see the core/docs/entityconfig.html file.
     </datasource>
     <datasource name="localpostgres"
 	helper-class="org.apache.ofbiz.entity.datasource.GenericHelperDAO"
+    	schema-name="public"
     	field-type-name="postgres"
     	check-on-start="true"
     	add-missing-on-start="true"
@@ -482,8 +483,13 @@ access. For a detailed description see the core/docs/entityconfig.html file.
     	alias-view-columns="false"
     	join-style="ansi"
     	result-fetch-size="50">
-    	<read-data helper-name="localpostgres"/>
-    	<write-data helper-name="localpostgres"/>
+        <read-data reader-name="tenant"/>
+        <read-data reader-name="seed"/>
+        <read-data reader-name="seed-initial"/>
+        <read-data reader-name="demo"/>
+        <read-data reader-name="ext"/>
+        <read-data reader-name="ext-test"/>
+        <read-data reader-name="ext-demo"/>
     	<inline-jdbc
         	jdbc-driver="org.postgresql.Driver"
         	jdbc-uri="jdbc:postgresql://192.168.30.3:5432/ftm_ofbiz"
